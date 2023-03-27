@@ -99,7 +99,25 @@ namespace Paytrail_dotnet_sdk
         public GetPaymentResponse GetPaymentInfo(string transactionId)
         {
             GetPaymentResponse res = new GetPaymentResponse();
-            return res;
+            if (string.IsNullOrEmpty(transactionId))
+            {
+                res.ReturnCode = (int)ErrorMessage.RequestNull;
+                res.ReturnMessage = ErrorMessage.RequestNull.GetEnumDescription();
+                return res;
+            }
+
+            //
+            try
+            {
+                res = GetPayment(transactionId);
+                return res;
+            }
+            catch (Exception ex)
+            {
+                res.ReturnCode = (int)ErrorMessage.Exception;
+                res.ReturnMessage = ex.ToString();
+                return res;
+            }
         }
 
         public RefundResponse RefundPayment(RefundRequest refundRequest, string transactionId)
@@ -173,6 +191,75 @@ namespace Paytrail_dotnet_sdk
                 }
                 res.ReturnCode = (int)ErrorMessage.Success;
                 res.ReturnMessage = ErrorMessage.Success.GetEnumDescription();
+                return res;
+
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+        private GetPaymentResponse GetPayment(string transactionId)
+        {
+            GetPaymentResponse res = new GetPaymentResponse();
+            try
+            {
+                //get default headers
+                Dictionary<string, string> hdparams = GetHeaders("GET", transactionId);
+
+                //sign data
+                string signature = CalculateHmac(hdparams);
+                if (string.IsNullOrEmpty(signature))
+                {
+                    res.ReturnCode = (int)ErrorMessage.SignatureNull;
+                    res.ReturnMessage = ErrorMessage.SignatureNull.GetEnumDescription();
+                    return res;
+                }
+
+                //add signature into headers
+                hdparams = GetHeaders(hdparams, "signature", signature);
+
+                //create new request
+                string url = API_ENDPOINT + "/payments/" + transactionId;
+                RestClient client = new RestClient();
+                RestRequest request = SetHeaders(hdparams, url, Method.Get);
+
+                //Response
+                RestResponse response = client.Execute(request) as RestResponse;
+
+                //response = null;
+
+                if (response == null)
+                {
+                    res.ReturnCode = (int)ErrorMessage.ResponseNull;
+                    res.ReturnMessage = ErrorMessage.ResponseNull.GetEnumDescription();
+                    return res;
+                }
+
+
+
+                //
+                if (response.StatusCode != HttpStatusCode.OK && response.StatusCode != HttpStatusCode.Created)
+                {
+                    res.ReturnCode = (int)ErrorMessage.ResponseError;
+                    res.ReturnMessage = "Call service return: " + response.StatusCode + " Detail: " + response.Content + JsonConvert.SerializeObject(request) + " . Response: " + JsonConvert.SerializeObject(response);
+                    return res;
+                }
+
+                //
+                try
+                {
+                    res.data = JsonConvert.DeserializeObject<GetPaymentData>(response.Content);
+                }
+                catch (Exception ex)
+                {
+                    res.ReturnCode = (int)ErrorMessage.Exception;
+                    res.ReturnMessage = "Response's content: " + response.Content + ". Error: " + ex.Message;
+                    return res;
+                }
+                res.ReturnCode = (int)ErrorMessage.Success;
+                //res.ReturnMessage = ErrorMessage.Success.GetEnumDescription() + "D";
+                res.ReturnMessage = " Detail: " + response.Content + JsonConvert.SerializeObject(request) + " . Response: " + JsonConvert.SerializeObject(response);
                 return res;
 
             }
