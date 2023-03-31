@@ -1,8 +1,5 @@
 ﻿using Paytrail_dotnet_sdk.Model.Request;
 using Paytrail_dotnet_sdk.Model.Response;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Paytrail_dotnet_sdk.Interface
 {

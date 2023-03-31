@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Paytrail_dotnet_sdk.Model.Response
+﻿namespace Paytrail_dotnet_sdk.Model.Response
 {
     public class RefundResponse: Response
     {

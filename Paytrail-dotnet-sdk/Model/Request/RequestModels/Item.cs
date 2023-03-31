@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace Paytrail_dotnet_sdk.Model.Request.RequestModels

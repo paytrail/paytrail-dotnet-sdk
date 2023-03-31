@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using Paytrail_dotnet_sdk.Interface;
-using Paytrail_dotnet_sdk.Model;
 using Paytrail_dotnet_sdk.Model.Request;
 using Paytrail_dotnet_sdk.Model.Response;
 using Paytrail_dotnet_sdk.Util;
@@ -57,7 +56,6 @@ namespace Paytrail_dotnet_sdk
                 res.ReturnMessage = ex.ToString();
                 return res;
             }
-
         }
 
         public PaymentResponse CreateShopInShopPayment(ShopInShopPaymentRequest paymentRequest)
@@ -94,7 +92,6 @@ namespace Paytrail_dotnet_sdk
                 return res;
             }
         }
-
 
         public GetPaymentResponse GetPaymentInfo(string transactionId)
         {
@@ -161,8 +158,6 @@ namespace Paytrail_dotnet_sdk
                 //Response
                 RestResponse response = client.Execute(request) as RestResponse;
 
-                //response = null;
-
                 if (response == null)
                 {
                     res.ReturnCode = (int)ErrorMessage.ResponseNull;
@@ -189,16 +184,17 @@ namespace Paytrail_dotnet_sdk
                     res.ReturnMessage = "Response's content: " + response.Content + ". Error: " + ex.Message;
                     return res;
                 }
+
                 res.ReturnCode = (int)ErrorMessage.Success;
                 res.ReturnMessage = ErrorMessage.Success.GetEnumDescription();
                 return res;
-
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
         }
+
         private GetPaymentResponse GetPayment(string transactionId)
         {
             GetPaymentResponse res = new GetPaymentResponse();
@@ -207,6 +203,7 @@ namespace Paytrail_dotnet_sdk
                 //get default headers
                 Dictionary<string, string> hdparams = GetHeaders("GET", transactionId);
 
+                // create request
                 //sign data
                 string signature = CalculateHmac(hdparams);
                 if (string.IsNullOrEmpty(signature))
@@ -236,8 +233,6 @@ namespace Paytrail_dotnet_sdk
                     return res;
                 }
 
-
-
                 //
                 if (response.StatusCode != HttpStatusCode.OK && response.StatusCode != HttpStatusCode.Created)
                 {
@@ -258,12 +253,10 @@ namespace Paytrail_dotnet_sdk
                     return res;
                 }
                 res.ReturnCode = (int)ErrorMessage.Success;
-                //res.ReturnMessage = ErrorMessage.Success.GetEnumDescription() + "D";
                 res.ReturnMessage = " Detail: " + response.Content + JsonConvert.SerializeObject(request) + " . Response: " + JsonConvert.SerializeObject(response);
                 return res;
-
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }

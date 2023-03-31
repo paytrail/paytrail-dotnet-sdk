@@ -1,7 +1,4 @@
 ﻿using Paytrail_dotnet_sdk.Model.Response.ResponseModels;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Paytrail_dotnet_sdk.Model.Response
 {
@@ -20,8 +17,6 @@ namespace Paytrail_dotnet_sdk.Model.Response
         public Provider[] providers { get; set; }
         public ApplePay customProviders { get; set; }
     }
-
-    
 }
 
 

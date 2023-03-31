@@ -34,7 +34,6 @@ namespace Paytrail_dotnet_sdk.Util
                     // ComputeHash - returns byte array
                     var hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(message));
                     outMsg = BitConverter.ToString(hash).Replace("-", "").ToLower();
-
                 }
             }
             return outMsg;
@@ -70,7 +69,6 @@ namespace Paytrail_dotnet_sdk.Util
             }
             catch (Exception)
             {
-
                 return false;
             }
         }

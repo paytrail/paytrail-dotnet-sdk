@@ -1,11 +1,7 @@
-﻿using Paytrail_dotnet_sdk.Model.Request;
-using Paytrail_dotnet_sdk.Model.Response;
-using Paytrail_dotnet_sdk.Util;
+﻿using Paytrail_dotnet_sdk.Util;
 using RestSharp;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text;
 
 namespace Paytrail_dotnet_sdk
 {
@@ -37,7 +33,6 @@ namespace Paytrail_dotnet_sdk
             }
             catch (Exception)
             {
-
                 return null;
             }
         }
@@ -87,6 +82,7 @@ namespace Paytrail_dotnet_sdk
             {
                 request.AddHeader("signature", hdparams["signature"]);
             }
+
             return request;
         }
 
@@ -94,6 +90,5 @@ namespace Paytrail_dotnet_sdk
         {
             return Signature.CalculateHmac(this.secretKey, hparams, body);
         }
-        
     }
 }
