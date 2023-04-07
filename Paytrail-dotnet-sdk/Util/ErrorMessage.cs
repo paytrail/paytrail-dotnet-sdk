@@ -1,27 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text;
 
 namespace Paytrail_dotnet_sdk.Util
 {
-    public enum ErrorMessage
+    public enum ResponseMessage
     {
         [Description("Success")]
-        Success = 1,
-        [Description("Exception")]
+        Success = 200,
+        [Description("Exception")]  // Exception from sdk
         Exception = 100,
-        [Description("Call service return null")]
+        [Description("Call service return null")] // Error from paytrail API
         ResponseNull = 300,
-        [Description("Call service return error")]
+        [Description("Call service return error")] // Exception from paytrail API
         ResponseError = 301,
-        [Description("Request is null")]
-        RequestNull = 200,
-        [Description("Validation return fail")]
-        ValidateFail = 201,
-        [Description("Signature is null")]
-        SignatureNull = 202
-        
+        [Description("Request body is null")] // Validate
+        RequestNull = 400,
+        [Description("Validation failed")] // Validate
+        ValidateFail = 403,
+        [Description("Unauthorize")] // Authorize
+        SignatureNull = 401
     }
 
     public static class Extension

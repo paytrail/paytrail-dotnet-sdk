@@ -19,7 +19,7 @@ namespace Paytrail_dotnet_sdk.UnitTest
         public void CreateShopInShopPayment_RequestNull_ReturnCode200()
         {
             //Arrange
-            int expected = (int)Paytrail_dotnet_sdk.Util.ErrorMessage.RequestNull;
+            int expected = (int)Paytrail_dotnet_sdk.Util.ResponseMessage.RequestNull;
 
             //Act
             PayTrailClient payTrail = new PayTrailClient(MERCHANTIDSIS, SECRETKEYSIS, "test");
@@ -35,7 +35,7 @@ namespace Paytrail_dotnet_sdk.UnitTest
         public void CreateShopInShopPayment_ValidateFalse_ReturnCode201()
         {
             //Arrage
-            int expected = (int)Paytrail_dotnet_sdk.Util.ErrorMessage.ValidateFail;
+            int expected = (int)Paytrail_dotnet_sdk.Util.ResponseMessage.ValidateFail;
 
             //Act
             PayTrailClient payTrail = new PayTrailClient(MERCHANTIDSIS, SECRETKEYSIS, "test");
@@ -53,7 +53,7 @@ namespace Paytrail_dotnet_sdk.UnitTest
         public void CreateShopInShopPayment_Success_ReturnCode1()
         {
             //Arrage
-            int expected = (int)Paytrail_dotnet_sdk.Util.ErrorMessage.Success;
+            int expected = (int)Paytrail_dotnet_sdk.Util.ResponseMessage.Success;
 
             //Act
             PayTrailClient payTrail = new PayTrailClient(MERCHANTIDSIS, SECRETKEYSIS, "test");
@@ -143,7 +143,7 @@ namespace Paytrail_dotnet_sdk.UnitTest
         public void CreateShopInShopPayment_CallPayTrailReturnNull_ReturnCode300()
         {
             //Arrage
-            int expected = (int)Paytrail_dotnet_sdk.Util.ErrorMessage.ResponseNull;
+            int expected = (int)Paytrail_dotnet_sdk.Util.ResponseMessage.ResponseNull;
 
             //Act
             PayTrailClient payTrail = new PayTrailClient(MERCHANTIDSIS, SECRETKEYSIS, "test");
@@ -232,7 +232,7 @@ namespace Paytrail_dotnet_sdk.UnitTest
         public void CreateShopInShopPayment_CallPayTrailReturnFail_ReturnCode301()
         {
             //Arrage
-            int expected = (int)Paytrail_dotnet_sdk.Util.ErrorMessage.ResponseError;
+            int expected = (int)Paytrail_dotnet_sdk.Util.ResponseMessage.ResponseError;
 
             //Act
             PayTrailClient payTrail = new PayTrailClient(MERCHANTIDSIS, SECRETKEYSIS, "test");
@@ -315,7 +315,7 @@ namespace Paytrail_dotnet_sdk.UnitTest
         public void CreateShopInShopPayment_CallPayException_ReturnCode100()
         {
             //Arrage
-            int expected = (int)Paytrail_dotnet_sdk.Util.ErrorMessage.Exception;
+            int expected = (int)Paytrail_dotnet_sdk.Util.ResponseMessage.Exception;
 
             //Act
             PayTrailClient payTrail = new PayTrailClient(MERCHANTIDSIS, SECRETKEYSIS, "test");
@@ -403,7 +403,7 @@ namespace Paytrail_dotnet_sdk.UnitTest
         public void CreatePayment_RequestNull_ReturnCode200()
         {
             //Arrange
-            int expected = (int)Paytrail_dotnet_sdk.Util.ErrorMessage.RequestNull;
+            int expected = (int)Paytrail_dotnet_sdk.Util.ResponseMessage.RequestNull;
 
             //Act
             PayTrailClient payTrail = new PayTrailClient(MERCHANTIDN, SECRETKEYN, "test");
@@ -419,7 +419,7 @@ namespace Paytrail_dotnet_sdk.UnitTest
         public void CreatePayment_ValidateFalse_ReturnCode201()
         {
             //Arrage
-            int expected = (int)Paytrail_dotnet_sdk.Util.ErrorMessage.ValidateFail;
+            int expected = (int)Paytrail_dotnet_sdk.Util.ResponseMessage.ValidateFail;
 
             //Act
             PayTrailClient payTrail = new PayTrailClient(MERCHANTIDN, SECRETKEYN, "test");
@@ -437,7 +437,7 @@ namespace Paytrail_dotnet_sdk.UnitTest
         public void CreatePayment_Success_ReturnCode1()
         {
             //Arrage
-            int expected = (int)Paytrail_dotnet_sdk.Util.ErrorMessage.Success;
+            int expected = (int)Paytrail_dotnet_sdk.Util.ResponseMessage.Success;
 
             //Act
             PayTrailClient payTrail = new PayTrailClient(MERCHANTIDN, SECRETKEYN, "test");
@@ -517,7 +517,7 @@ namespace Paytrail_dotnet_sdk.UnitTest
         public void CreatePayment_CallPayTrailReturnNull_ReturnCode300()
         {
             //Arrage
-            int expected = (int)Paytrail_dotnet_sdk.Util.ErrorMessage.ResponseNull;
+            int expected = (int)Paytrail_dotnet_sdk.Util.ResponseMessage.ResponseNull;
 
             //Act
             PayTrailClient payTrail = new PayTrailClient(MERCHANTIDN, SECRETKEYN, "test");
@@ -597,7 +597,7 @@ namespace Paytrail_dotnet_sdk.UnitTest
         public void CreatePayment_CallPayTrailReturnFail_ReturnCode301()
         {
             //Arrage
-            int expected = (int)Paytrail_dotnet_sdk.Util.ErrorMessage.ResponseError;
+            int expected = (int)Paytrail_dotnet_sdk.Util.ResponseMessage.ResponseError;
 
             //Act
             PayTrailClient payTrail = new PayTrailClient(MERCHANTIDN, SECRETKEYN, "test");
@@ -681,7 +681,7 @@ namespace Paytrail_dotnet_sdk.UnitTest
         public void CreatePayment_CallPayException_ReturnCode100()
         {
             //Arrage
-            int expected = (int)Paytrail_dotnet_sdk.Util.ErrorMessage.Exception;
+            int expected = (int)Paytrail_dotnet_sdk.Util.ResponseMessage.Exception;
 
             //Act
             PayTrailClient payTrail = new PayTrailClient(MERCHANTIDN, SECRETKEYN, "test");
