@@ -5,19 +5,19 @@ namespace Paytrail_dotnet_sdk.Util
 {
     public enum ResponseMessage
     {
-        [Description("Success")]
+        [Description("Success")]                    
         Success = 200,
-        [Description("Exception")]  // Exception from sdk
-        Exception = 100,
-        [Description("Call service return null")] // Error from paytrail API
-        ResponseNull = 300,
-        [Description("Call service return error")] // Exception from paytrail API
-        ResponseError = 301,
-        [Description("Request body is null")] // Validate
+        [Description("Exception")]            
+        Exception = 503,
+        [Description("Paytrail Server Return Null")]
+        ResponseNull = 404,
+        [Description("Paytrail Server Error")]          
+        ResponseError = 500,
+        [Description("Request Body Is Null")]       
         RequestNull = 400,
-        [Description("Validation failed")] // Validate
+        [Description("Validation Failed")]
         ValidateFail = 403,
-        [Description("Unauthorize")] // Authorize
+        [Description("Unauthorized")]
         SignatureNull = 401
     }
 

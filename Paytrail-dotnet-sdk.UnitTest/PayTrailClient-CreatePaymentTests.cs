@@ -16,23 +16,23 @@ namespace Paytrail_dotnet_sdk.UnitTest
         #region Create Payment
 
         [Fact]
-        public void CreateShopInShopPayment_RequestNull_ReturnCode200()
+        public void CreateShopInShopPayment_RequestNull_ReturnCode400()
         {
             //Arrange
             int expected = (int)Paytrail_dotnet_sdk.Util.ResponseMessage.RequestNull;
 
             //Act
             PayTrailClient payTrail = new PayTrailClient(MERCHANTIDSIS, SECRETKEYSIS, "test");
-            PaymentRequest request = null;
+            PaymentRequest? request = null;
             PaymentResponse res = payTrail.CreatePayment(request);
             int actual = res.ReturnCode;
-            string a = res.ReturnMessage;
+
             //Assert
             Assert.Equal(expected, actual);
         }
 
         [Fact]
-        public void CreateShopInShopPayment_ValidateFalse_ReturnCode201()
+        public void CreateShopInShopPayment_ValidateFalse_ReturnCode403()
         {
             //Arrage
             int expected = (int)Paytrail_dotnet_sdk.Util.ResponseMessage.ValidateFail;
@@ -46,11 +46,10 @@ namespace Paytrail_dotnet_sdk.UnitTest
 
             //Assert
             Assert.Equal(expected, actual);
-
         }
 
         [Fact]
-        public void CreateShopInShopPayment_Success_ReturnCode1()
+        public void CreateShopInShopPayment_Success_ReturnCode200()
         {
             //Arrage
             int expected = (int)Paytrail_dotnet_sdk.Util.ResponseMessage.Success;
@@ -126,21 +125,16 @@ namespace Paytrail_dotnet_sdk.UnitTest
                 groups = new List<string>()
             {
                 PaymentMethodGroup.mobile.ToString()
-            }.ToArray()
-
-            };
+            }.ToArray()};
             PaymentResponse res = payTrail.CreateShopInShopPayment(request);
             int actual = res.ReturnCode;
-            string a = res.ReturnMessage;
-            string data = JsonConvert.SerializeObject(res.data);
 
             //Assert
             Assert.Equal(expected, actual);
-
         }
 
         [Fact]
-        public void CreateShopInShopPayment_CallPayTrailReturnNull_ReturnCode300()
+        public void CreateShopInShopPayment_CallPayTrailReturnNull_ReturnCode404()
         {
             //Arrage
             int expected = (int)Paytrail_dotnet_sdk.Util.ResponseMessage.ResponseNull;
@@ -229,7 +223,7 @@ namespace Paytrail_dotnet_sdk.UnitTest
         }
 
         [Fact]
-        public void CreateShopInShopPayment_CallPayTrailReturnFail_ReturnCode301()
+        public void CreateShopInShopPayment_CallPayTrailReturnFail_ReturnCode500()
         {
             //Arrage
             int expected = (int)Paytrail_dotnet_sdk.Util.ResponseMessage.ResponseError;
@@ -312,7 +306,7 @@ namespace Paytrail_dotnet_sdk.UnitTest
         }
 
         [Fact]
-        public void CreateShopInShopPayment_CallPayException_ReturnCode100()
+        public void CreateShopInShopPayment_CallPayException_ReturnCode503()
         {
             //Arrage
             int expected = (int)Paytrail_dotnet_sdk.Util.ResponseMessage.Exception;
@@ -393,30 +387,29 @@ namespace Paytrail_dotnet_sdk.UnitTest
             };
             PaymentResponse res = payTrail.CreateShopInShopPayment(request);
             int actual = res.ReturnCode;
-            string a = res.ReturnMessage;
 
             //Assert
             Assert.Equal(expected, actual);
         }
 
         [Fact]
-        public void CreatePayment_RequestNull_ReturnCode200()
+        public void CreatePayment_RequestNull_ReturnCode400()
         {
             //Arrange
             int expected = (int)Paytrail_dotnet_sdk.Util.ResponseMessage.RequestNull;
 
             //Act
             PayTrailClient payTrail = new PayTrailClient(MERCHANTIDN, SECRETKEYN, "test");
-            PaymentRequest request = null;
+            PaymentRequest? request = null;
             PaymentResponse res = payTrail.CreatePayment(request);
             int actual = res.ReturnCode;
-            string a = res.ReturnMessage;
+
             //Assert
             Assert.Equal(expected, actual);
         }
 
         [Fact]
-        public void CreatePayment_ValidateFalse_ReturnCode201()
+        public void CreatePayment_ValidateFalse_ReturnCode403()
         {
             //Arrage
             int expected = (int)Paytrail_dotnet_sdk.Util.ResponseMessage.ValidateFail;
@@ -430,11 +423,10 @@ namespace Paytrail_dotnet_sdk.UnitTest
 
             //Assert
             Assert.Equal(expected, actual);
-
         }
 
         [Fact]
-        public void CreatePayment_Success_ReturnCode1()
+        public void CreatePayment_Success_ReturnCode200()
         {
             //Arrage
             int expected = (int)Paytrail_dotnet_sdk.Util.ResponseMessage.Success;
@@ -501,20 +493,16 @@ namespace Paytrail_dotnet_sdk.UnitTest
                 groups = new List<string>()
             {
                 PaymentMethodGroup.mobile.ToString()
-            }.ToArray()
-
-            };
+            }.ToArray()};
             PaymentResponse res = payTrail.CreatePayment(request);
             int actual = res.ReturnCode;
-            string a = res.ReturnMessage;
 
             //Assert
             Assert.Equal(expected, actual);
-
         }
 
         [Fact]
-        public void CreatePayment_CallPayTrailReturnNull_ReturnCode300()
+        public void CreatePayment_CallPayTrailReturnNull_ReturnCode404()
         {
             //Arrage
             int expected = (int)Paytrail_dotnet_sdk.Util.ResponseMessage.ResponseNull;
@@ -581,20 +569,16 @@ namespace Paytrail_dotnet_sdk.UnitTest
                 groups = new List<string>()
             {
                 PaymentMethodGroup.mobile.ToString()
-            }.ToArray()
-
-            };
+            }.ToArray()};
             PaymentResponse res = payTrail.CreatePayment(request);
             int actual = res.ReturnCode;
-            string a = res.ReturnMessage;
-            string json = JsonConvert.SerializeObject(request);
 
             //Assert
             Assert.Equal(expected, actual);
         }
 
         [Fact]
-        public void CreatePayment_CallPayTrailReturnFail_ReturnCode301()
+        public void CreatePayment_CallPayTrailReturnFail_ReturnCode500()
         {
             //Arrage
             int expected = (int)Paytrail_dotnet_sdk.Util.ResponseMessage.ResponseError;
@@ -665,20 +649,17 @@ namespace Paytrail_dotnet_sdk.UnitTest
                 groups = new List<string>()
             {
                 PaymentMethodGroup.mobile.ToString()
-            }.ToArray()
-
-            };
+            }.ToArray()};
             PaymentResponse res = payTrail.CreatePayment(request);
             int actual = res.ReturnCode;
             string a = res.ReturnMessage;
 
             //Assert
             Assert.Equal(expected, actual);
-
         }
 
         [Fact]
-        public void CreatePayment_CallPayException_ReturnCode100()
+        public void CreatePayment_CallPayException_ReturnCode503()
         {
             //Arrage
             int expected = (int)Paytrail_dotnet_sdk.Util.ResponseMessage.Exception;
@@ -745,18 +726,14 @@ namespace Paytrail_dotnet_sdk.UnitTest
                 groups = new List<string>()
             {
                 PaymentMethodGroup.mobile.ToString()
-            }.ToArray()
-
-            };
+            }.ToArray()};
             PaymentResponse res = payTrail.CreatePayment(request);
             int actual = res.ReturnCode;
             string a = res.ReturnMessage;
 
             //Assert
             Assert.Equal(expected, actual);
-
         }
-
         #endregion Create Payment
     }
 }

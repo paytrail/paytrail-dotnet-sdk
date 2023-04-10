@@ -63,7 +63,7 @@ namespace Paytrail_dotnet_sdk
             try
             {
                 // Validate payment SiS request
-                if (!ValidateCreateSiSPaymentRequest(res, paymentRequest)) 
+                if (!ValidateCreateSiSPaymentRequest(res, paymentRequest))
                 {
                     return res;
                 }
@@ -149,10 +149,10 @@ namespace Paytrail_dotnet_sdk
             PaymentResponse res = new PaymentResponse();
             try
             {
-                // Get default headers
+                // Create header
                 Dictionary<string, string> hdparams = GetHeaders("POST");
 
-                // 
+                // Add signature for header
                 string signature = CalculateHmac(hdparams, bodyContent);
                 if (string.IsNullOrEmpty(signature))
                 {
@@ -160,8 +160,6 @@ namespace Paytrail_dotnet_sdk
                     res.ReturnMessage = ResponseMessage.SignatureNull.GetEnumDescription();
                     return res;
                 }
-
-                //add signature into headers
                 hdparams = GetHeaders(hdparams, "signature", signature);
 
                 // Create new request
@@ -170,23 +168,12 @@ namespace Paytrail_dotnet_sdk
                 RestRequest request = SetHeaders(hdparams, url, Method.Post);
                 request.AddParameter("application/json", bodyContent, ParameterType.RequestBody);
 
-                //Response
+                // Execute to Paytrail API
                 RestResponse response = client.Execute(request) as RestResponse;
                 if (!ValidateResponse(response, res))
                     return res;
 
-                try
-                {
-                    res.data = JsonConvert.DeserializeObject<PaymentData>(response.Content);
-                }
-                catch (Exception ex)
-                {
-                    // Refactor
-                    res.ReturnCode = (int)ResponseMessage.Exception;
-                    res.ReturnMessage = "Response's content: " + response.Content + ". Error: " + ex.Message;
-                    return res;
-                }
-
+                res.data = JsonConvert.DeserializeObject<PaymentData>(response.Content);
                 res.ReturnCode = (int)ResponseMessage.Success;
                 res.ReturnMessage = ResponseMessage.Success.GetEnumDescription();
                 return res;
@@ -202,11 +189,10 @@ namespace Paytrail_dotnet_sdk
             GetPaymentResponse res = new GetPaymentResponse();
             try
             {
-                //get default headers
+                // Create header
                 Dictionary<string, string> hdparams = GetHeaders("GET", transactionId);
 
-                // create request
-                //sign data
+                // Add signature for header
                 string signature = CalculateHmac(hdparams);
                 if (string.IsNullOrEmpty(signature))
                 {
@@ -214,46 +200,19 @@ namespace Paytrail_dotnet_sdk
                     res.ReturnMessage = ResponseMessage.SignatureNull.GetEnumDescription();
                     return res;
                 }
-
-                //add signature into headers
                 hdparams = GetHeaders(hdparams, "signature", signature);
 
-                //create new request
+                // Create new request
                 string url = API_ENDPOINT + "/payments/" + transactionId;
                 RestClient client = new RestClient();
                 RestRequest request = SetHeaders(hdparams, url, Method.Get);
 
-                //Response
+                // Execute to Paytrail API 
                 RestResponse response = client.Execute(request) as RestResponse;
-
-                //response = null;
-
-                if (response == null)
-                {
-                    res.ReturnCode = (int)ResponseMessage.ResponseNull;
-                    res.ReturnMessage = ResponseMessage.ResponseNull.GetEnumDescription();
+                if (!ValidateResponse(response, res))
                     return res;
-                }
 
-                //
-                if (response.StatusCode != HttpStatusCode.OK && response.StatusCode != HttpStatusCode.Created)
-                {
-                    res.ReturnCode = (int)ResponseMessage.ResponseError;
-                    res.ReturnMessage = "Call service return: " + response.StatusCode + " Detail: " + response.Content + JsonConvert.SerializeObject(request) + " . Response: " + JsonConvert.SerializeObject(response);
-                    return res;
-                }
-
-                //
-                try
-                {
-                    res.data = JsonConvert.DeserializeObject<GetPaymentData>(response.Content);
-                }
-                catch (Exception ex)
-                {
-                    res.ReturnCode = (int)ResponseMessage.Exception;
-                    res.ReturnMessage = "Response's content: " + response.Content + ". Error: " + ex.Message;
-                    return res;
-                }
+                res.data = JsonConvert.DeserializeObject<GetPaymentData>(response.Content);
                 res.ReturnCode = (int)ResponseMessage.Success;
                 res.ReturnMessage = "Detail: " + response.Content + JsonConvert.SerializeObject(request) + " . Response: " + JsonConvert.SerializeObject(response);
                 return res;
@@ -269,10 +228,10 @@ namespace Paytrail_dotnet_sdk
             RefundResponse res = new RefundResponse();
             try
             {
-                //get default headers
+                // Create header
                 Dictionary<string, string> hdparams = GetHeaders("POST", transactionId);
 
-                //sign data
+                // Add signature for header
                 string signature = CalculateHmac(hdparams, bodyContent);
                 if (string.IsNullOrEmpty(signature))
                 {
@@ -280,46 +239,20 @@ namespace Paytrail_dotnet_sdk
                     res.ReturnMessage = ResponseMessage.SignatureNull.GetEnumDescription();
                     return res;
                 }
-
-                //add signature into headers
                 hdparams = GetHeaders(hdparams, "signature", signature);
 
-                //create new request
+                // Create new request
                 string url = API_ENDPOINT + "/payments/" + transactionId + "/refund";
                 RestClient client = new RestClient();
                 RestRequest request = SetHeaders(hdparams, url, Method.Post);
                 request.AddParameter("application/json", bodyContent, ParameterType.RequestBody);
 
-                //Response
+                // Execute to Paytrail API 
                 RestResponse response = client.Execute(request) as RestResponse;
-
-                if (response == null)
-                {
-                    res.ReturnCode = (int)ResponseMessage.ResponseNull;
-                    res.ReturnMessage = ResponseMessage.ResponseNull.GetEnumDescription();
+                if (!ValidateResponse(response, res))
                     return res;
-                }
 
-                //
-                if (response.StatusCode != HttpStatusCode.OK && response.StatusCode != HttpStatusCode.Created)
-                {
-                    res.ReturnCode = (int)ResponseMessage.ResponseError;
-                    res.ReturnMessage = "Call service return: " + response.StatusCode + " Detail: " + response.Content;
-                    return res;
-                }
-
-                //
-                try
-                {
-                    res.data = JsonConvert.DeserializeObject<RefundData>(response.Content);
-                }
-                catch (Exception ex)
-                {
-                    res.ReturnCode = (int)ResponseMessage.Exception;
-                    res.ReturnMessage = "Response's content: " + response.Content + ". Error: " + ex.Message;
-                    return res;
-                }
-
+                res.data = JsonConvert.DeserializeObject<RefundData>(response.Content);
                 res.ReturnCode = (int)ResponseMessage.Success;
                 res.ReturnMessage = ResponseMessage.Success.GetEnumDescription();
                 return res;
@@ -398,7 +331,7 @@ namespace Paytrail_dotnet_sdk
             return true;
         }
 
-        private bool ValidateResponse(RestResponse response, PaymentResponse res)
+        private bool ValidateResponse(RestResponse response, Response res)
         {
             if (response == null)
             {

@@ -10,6 +10,7 @@ namespace Paytrail_dotnet_sdk
         public string merchantId;
         public string secretKey;
         public string platformName;
+
         public abstract bool ValidateHmac(Dictionary<string, string> hparams, string body = "", string signature = "");
 
         public Dictionary<string, string> GetHeaders(string method, string transactionId = null)

@@ -13,7 +13,7 @@ namespace Paytrail_dotnet_sdk.UnitTest
         const string SECRETKEYSIS = "MONISAIPPUAKAUPPIAS";
 
         [Fact]
-        public void GetPayment_RequestNull_ReturnCode200()
+        public void GetPayment_RequestNull_ReturnCode400()
         {
             //Arrange
             int expected = (int)Paytrail_dotnet_sdk.Util.ResponseMessage.RequestNull;
@@ -23,15 +23,14 @@ namespace Paytrail_dotnet_sdk.UnitTest
             string request = null;
             GetPaymentResponse res = payTrail.GetPaymentInfo(request);
             int actual = res.ReturnCode;
-            string a = res.ReturnMessage;
+
             //Assert
             Assert.Equal(expected, actual);
-
         }
 
 
         [Fact]
-        public void GetPayment_Success_ReturnCode1()
+        public void GetPayment_Success_ReturnCode200()
         {
             //Arrage
             int expected = (int)Paytrail_dotnet_sdk.Util.ResponseMessage.Success;
@@ -40,35 +39,30 @@ namespace Paytrail_dotnet_sdk.UnitTest
             PayTrailClient ptrail = new PayTrailClient(MERCHANTIDN, SECRETKEYN, "test");
             GetPaymentResponse res = ptrail.GetPaymentInfo("4bd78702-c9ea-11ed-beb7-ab93e0fdf0aa");
             int actual = res.ReturnCode;
-            string a = res.ReturnMessage;
-            string data = JsonConvert.SerializeObject(res.data);
 
             //Assert
             Assert.Equal(expected, actual);
-
         }
 
 
 
         [Fact]
-        public void GetPayment_CallPayTrailReturnNull_ReturnCode300()
+        public void GetPayment_CallPayTrailReturnNull_ReturnCode404()
         {
             //Arrage
             int expected = (int)Paytrail_dotnet_sdk.Util.ResponseMessage.ResponseNull;
 
             //Act
             PayTrailClient payTrail = new PayTrailClient(MERCHANTIDN, SECRETKEYN, "test");
-
             GetPaymentResponse res = payTrail.GetPaymentInfo("");
             int actual = res.ReturnCode;
-            string a = res.ReturnMessage;
+
             //Assert
             Assert.Equal(expected, actual);
-
         }
 
         [Fact]
-        public void GetPayment_CallPayTrailReturnFail_ReturnCode301()
+        public void GetPayment_CallPayTrailReturnFail_ReturnCode500()
         {
             //Arrage
             int expected = (int)Paytrail_dotnet_sdk.Util.ResponseMessage.ResponseError;
@@ -77,31 +71,26 @@ namespace Paytrail_dotnet_sdk.UnitTest
             PayTrailClient ptrail = new PayTrailClient(MERCHANTIDSIS, SECRETKEYSIS, "test");
             GetPaymentResponse res = ptrail.GetPaymentInfo("2b67605c-c948-11ed-94a5-43738adc3579");
             int actual = res.ReturnCode;
-            string a = res.ReturnMessage;
-            string data = JsonConvert.SerializeObject(res.data);
 
             //Assert
             Assert.Equal(expected, actual);
-
         }
 
 
         [Fact]
-        public void GetPayment_CallPayException_ReturnCode100()
+        public void GetPayment_CallPayException_ReturnCode503()
         {
             //Arrage
             int expected = (int)Paytrail_dotnet_sdk.Util.ResponseMessage.Exception;
 
             //Act
             PayTrailClient payTrail = new PayTrailClient(MERCHANTIDN, SECRETKEYN, "test");
-
             GetPaymentResponse res = payTrail.GetPaymentInfo("");
             int actual = res.ReturnCode;
             string a = res.ReturnMessage;
 
             //Assert
             Assert.Equal(expected, actual);
-
         }
         #endregion Get Payment Info
     }

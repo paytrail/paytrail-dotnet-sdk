@@ -9,13 +9,12 @@
     <RepositoryUrl>https://github.com/paytrail/paytrail-dotnet-sdk</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>pay payment </PackageTags>
-    <Version>1.0.1</Version>
+    <Version>1.0.2</Version>
     <Company>Paytrail</Company>
     <Authors>Paytrail by nets</Authors>
     <TargetFramework>netstandard2.0</TargetFramework>
-	<PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://www.paytrail.com/</PackageProjectUrl>
-	<PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>
@@ -27,7 +26,6 @@
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
-	<None Include="..\LICENSE.txt" Pack="true" PackagePath=""/>
   </ItemGroup>
 
   <ItemGroup>

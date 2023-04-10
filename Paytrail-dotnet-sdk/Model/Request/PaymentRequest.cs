@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using Paytrail_dotnet_sdk.Model.Request.RequestModels;
+using System;
 using System.Text;
-using Paytrail_dotnet_sdk.Model.Request.RequestModels;
 
 namespace Paytrail_dotnet_sdk.Model.Request
 {

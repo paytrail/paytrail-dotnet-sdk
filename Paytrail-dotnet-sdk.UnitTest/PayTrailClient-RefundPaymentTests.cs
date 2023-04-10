@@ -13,7 +13,7 @@ namespace Paytrail_dotnet_sdk.UnitTest
         const string SECRETKEYSIS = "MONISAIPPUAKAUPPIAS";
 
         [Fact]
-        public void RefundPayment_RequestNull_ReturnCode200()
+        public void RefundPayment_RequestNull_ReturnCode400()
         {
             //Arrange
             int expected = (int)Paytrail_dotnet_sdk.Util.ResponseMessage.RequestNull;
@@ -24,14 +24,14 @@ namespace Paytrail_dotnet_sdk.UnitTest
             RefundRequest? refundRequest = null;
             RefundResponse res = payTrail.RefundPayment(refundRequest, transactionId);
             int actual = res.ReturnCode;
-            string a = res.ReturnMessage;
+
             //Assert
             Assert.Equal(expected, actual);
         }
 
 
         [Fact]
-        public void RefundPayment_Success_ReturnCode1()
+        public void RefundPayment_Success_ReturnCode200()
         {
             //Arrage
             int expected = (int)Paytrail_dotnet_sdk.Util.ResponseMessage.Success;
@@ -56,16 +56,13 @@ namespace Paytrail_dotnet_sdk.UnitTest
             };
             RefundResponse res = ptrail.RefundPayment(refundRequest, transactionId);
             int actual = res.ReturnCode;
-            string a = res.ReturnMessage;
-            string data = JsonConvert.SerializeObject(res.data);
 
             //Assert
             Assert.Equal(expected, actual);
-
         }
 
         [Fact]
-        public void RefundPayment_CallPayTrailReturnNull_ReturnCode300()
+        public void RefundPayment_CallPayTrailReturnNull_ReturnCode404()
         {
             //Arrage
             int expected = (int)Paytrail_dotnet_sdk.Util.ResponseMessage.ResponseNull;
@@ -74,19 +71,16 @@ namespace Paytrail_dotnet_sdk.UnitTest
             PayTrailClient payTrail = new PayTrailClient(MERCHANTIDSIS, SECRETKEYSIS, "test");
             string transactionId = "2f8a77ce-c861-11ed-be51-07513ab7f2f0";
             RefundRequest refundRequest = new RefundRequest(){};
-
             RefundResponse res = payTrail.RefundPayment(refundRequest, transactionId);
-
             int actual = res.ReturnCode;
-            string a = res.ReturnMessage;
+
             //Assert
             Assert.Equal(expected, actual);
-
         }
 
 
         [Fact]
-        public void RefundPayment_CallPayException_ReturnCode100()
+        public void RefundPayment_CallPayException_ReturnCode503()
         {
             //Arrage
             int expected = (int)Paytrail_dotnet_sdk.Util.ResponseMessage.Exception;
@@ -98,10 +92,8 @@ namespace Paytrail_dotnet_sdk.UnitTest
             {
                 items = new RefundItem[0],
             };
-
             RefundResponse res = payTrail.RefundPayment(refundRequest, transactionId);
             int actual = res.ReturnCode;
-            string a = res.ReturnMessage;
 
             //Assert
             Assert.Equal(expected, actual);
