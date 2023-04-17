@@ -5,22 +5,22 @@ namespace Paytrail_dotnet_sdk.Model.Request.RequestModels
 {
     public class Commission
     {
-        public string merchant { get; set; }
-        public int amount { get; set; }
+        public string Merchant { get; set; }
+        public int Amount { get; set; }
         public (bool, StringBuilder) Validate()
         {
             bool ret = false;
             StringBuilder message = new StringBuilder();
             try
             {
-                if (merchant is null)
+                if (Merchant is null)
                 {
                     message.Append(" commission's merchant is null or empty.");
                     ret = false;
                 }
 
                 //
-                if (amount < 0)
+                if (Amount < 0)
                 {
                     message.Append(" commission's amount can't be a negative number.");
                     ret = false;

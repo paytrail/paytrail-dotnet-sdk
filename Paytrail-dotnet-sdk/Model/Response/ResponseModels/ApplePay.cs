@@ -2,6 +2,6 @@
 {
     public class ApplePay
     {
-        public FormField[] parameters { get; set; }
+        public FormField[] Parameters { get; set; }
     }
 }

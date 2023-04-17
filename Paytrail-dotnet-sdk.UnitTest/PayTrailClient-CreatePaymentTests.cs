@@ -58,73 +58,73 @@ namespace Paytrail_dotnet_sdk.UnitTest
             PayTrailClient payTrail = new PayTrailClient(MERCHANTIDSIS, SECRETKEYSIS, "test");
             ShopInShopPaymentRequest request = new ShopInShopPaymentRequest()
             {
-                stamp = Guid.NewGuid().ToString(),
-                reference = "9187445",
-                amount = 1590,
-                currency = "EUR",
-                language = "FI",
-                orderId = "",
-                items = new List<ShopInShopItem>()
+                Stamp = Guid.NewGuid().ToString(),
+                Reference = "9187445",
+                Amount = 1590,
+                Currency = "EUR",
+                Language = "FI",
+                OrderId = "",
+                Items = new List<ShopInShopItem>()
             {
                 new ShopInShopItem
                 {
-                    unitPrice = 1590,
-                    units = 1,
-                    vatPercentage = 24,
-                    productCode = "#927502759",
-                    category = "Pet supplies",
-                    description = "Cat ladder",
-                    merchant = MERCHANTIDSISS,
-                    stamp = Guid.NewGuid().ToString(),
-                    reference = "",
-                    orderId = "",
-                    commission = new Commission()
+                    UnitPrice = 1590,
+                    Units = 1,
+                    VatPercentage = 24,
+                    ProductCode = "#927502759",
+                    Category = "Pet supplies",
+                    Description = "Cat ladder",
+                    Merchant = MERCHANTIDSISS,
+                    Stamp = Guid.NewGuid().ToString(),
+                    Reference = "",
+                    OrderId = "",
+                    Commission = new Commission()
                     {
-                        merchant = MERCHANTIDSISS,
-                        amount = 159
+                        Merchant = MERCHANTIDSISS,
+                        Amount = 159
                     }
                 }
             }.ToArray(),
-                customer = new Customer()
+                Customer = new Customer()
                 {
-                    email = "erja.esimerkki@example.org",
-                    firstName = "Erja",
-                    vatId = "FI12345671",
-                    companyName = "nothing",
-                    lastName = "+358501234567",
-                    phone = "123",
+                    Email = "erja.esimerkki@example.org",
+                    FirstName = "Erja",
+                    VatId = "FI12345671",
+                    CompanyName = "nothing",
+                    LastName = "+358501234567",
+                    Phone = "123",
                 },
-                redirectUrls = new CallbackUrl()
+                RedirectUrls = new CallbackUrl()
                 {
-                    success = "https://ecom.example.org/success",
-                    cancel = "https://ecom.example.org/cancel",
+                    Success = "https://ecom.example.org/success",
+                    Cancel = "https://ecom.example.org/cancel",
                 },
 
-                callbackUrls = new CallbackUrl()
+                CallbackUrls = new CallbackUrl()
                 {
-                    success = "https://ecom.example.org/success",
-                    cancel = "https://ecom.example.org/cancel"
+                    Success = "https://ecom.example.org/success",
+                    Cancel = "https://ecom.example.org/cancel"
                 },
-                deliveryAddress = new Address()
+                DeliveryAddress = new Address()
                 {
-                    city = "Tampere",
-                    country = "FI",
-                    county = "Pirkanmaa",
-                    postalCode = "33100",
-                    streetAddress = "Hämeenkatu 6 B"
+                    City = "Tampere",
+                    Country = "FI",
+                    County = "Pirkanmaa",
+                    PostalCode = "33100",
+                    StreetAddress = "Hämeenkatu 6 B"
                 },
-                invoicingAddress = new Address()
+                InvoicingAddress = new Address()
                 {
-                    city = "Helsinki",
-                    country = "FI",
-                    county = "Uusimaa",
-                    postalCode = "00510",
-                    streetAddress = "Testikatu 1"
+                    City = "Helsinki",
+                    Country = "FI",
+                    County = "Uusimaa",
+                    PostalCode = "00510",
+                    StreetAddress = "Testikatu 1"
 
                 },
-                groups = new List<string>()
+                Groups = new List<string>()
             {
-                PaymentMethodGroup.mobile.ToString()
+                PaymentMethod.Mobile.ToString()
             }.ToArray()};
             PaymentResponse res = payTrail.CreateShopInShopPayment(request);
             int actual = res.ReturnCode;
@@ -143,73 +143,73 @@ namespace Paytrail_dotnet_sdk.UnitTest
             PayTrailClient payTrail = new PayTrailClient(MERCHANTIDSIS, SECRETKEYSIS, "test");
             ShopInShopPaymentRequest request = new ShopInShopPaymentRequest()
             {
-                stamp = Guid.NewGuid().ToString(),
-                reference = "9187445",
-                amount = 1590,
-                currency = "EUR",
-                language = "FI",
-                orderId = "",
-                items = new List<ShopInShopItem>()
+                Stamp = Guid.NewGuid().ToString(),
+                Reference = "9187445",
+                Amount = 1590,
+                Currency = "EUR",
+                Language = "FI",
+                OrderId = "",
+                Items = new List<ShopInShopItem>()
             {
                 new ShopInShopItem
                 {
-                    orderId = "",
-                    unitPrice = 1590,
-                    units = 1,
-                    vatPercentage = 24,
-                    productCode = "#927502759",
-                    category = "Pet supplies",
-                    description = "Cat ladder",
-                    merchant = MERCHANTIDSISS,
-                    stamp = Guid.NewGuid().ToString(),
-                    reference = "",
-                    commission = new Commission()
+                    OrderId = "",
+                    UnitPrice = 1590,
+                    Units = 1,
+                    VatPercentage = 24,
+                    ProductCode = "#927502759",
+                    Category = "Pet supplies",
+                    Description = "Cat ladder",
+                    Merchant = MERCHANTIDSISS,
+                    Stamp = Guid.NewGuid().ToString(),
+                    Reference = "",
+                    Commission = new Commission()
                     {
-                        merchant = MERCHANTIDSISS,
-                        amount = 159
+                        Merchant = MERCHANTIDSISS,
+                        Amount = 159
                     }
                 }
             }.ToArray(),
-                customer = new Customer()
+                Customer = new Customer()
                 {
-                    email = "erja.esimerkki@example.org",
-                    firstName = "Erja",
-                    vatId = "FI12345671",
-                    companyName = "nothing",
-                    lastName = "+358501234567",
-                    phone = "123",
+                    Email = "erja.esimerkki@example.org",
+                    FirstName = "Erja",
+                    VatId = "FI12345671",
+                    CompanyName = "nothing",
+                    LastName = "+358501234567",
+                    Phone = "123",
                 },
-                redirectUrls = new CallbackUrl()
+                RedirectUrls = new CallbackUrl()
                 {
-                    success = "https://ecom.example.org/success",
-                    cancel = "https://ecom.example.org/cancel",
+                    Success = "https://ecom.example.org/success",
+                    Cancel = "https://ecom.example.org/cancel",
                 },
 
-                callbackUrls = new CallbackUrl()
+                CallbackUrls = new CallbackUrl()
                 {
-                    success = "https://ecom.example.org/success",
-                    cancel = "https://ecom.example.org/cancel"
+                    Success = "https://ecom.example.org/success",
+                    Cancel = "https://ecom.example.org/cancel"
                 },
-                deliveryAddress = new Address()
+                DeliveryAddress = new Address()
                 {
-                    city = "Tampere",
-                    country = "FI",
-                    county = "Pirkanmaa",
-                    postalCode = "33100",
-                    streetAddress = "Hämeenkatu 6 B"
+                    City = "Tampere",
+                    Country = "FI",
+                    County = "Pirkanmaa",
+                    PostalCode = "33100",
+                    StreetAddress = "Hämeenkatu 6 B"
                 },
-                invoicingAddress = new Address()
+                InvoicingAddress = new Address()
                 {
-                    city = "Helsinki",
-                    country = "FI",
-                    county = "Uusimaa",
-                    postalCode = "00510",
-                    streetAddress = "Testikatu 1"
+                    City = "Helsinki",
+                    Country = "FI",
+                    County = "Uusimaa",
+                    PostalCode = "00510",
+                    StreetAddress = "Testikatu 1"
 
                 },
-                groups = new List<string>()
+                Groups = new List<string>()
             {
-                PaymentMethodGroup.mobile.ToString()
+                PaymentMethod.Mobile.ToString()
             }.ToArray()
 
             };
@@ -232,67 +232,67 @@ namespace Paytrail_dotnet_sdk.UnitTest
             PayTrailClient payTrail = new PayTrailClient(MERCHANTIDSIS, SECRETKEYSIS, "test");
             ShopInShopPaymentRequest request = new ShopInShopPaymentRequest()
             {
-                stamp = Guid.NewGuid().ToString(),
-                reference = "9187445",
-                amount = 1590,
-                currency = "EUR",
-                language = "FI",
-                orderId = "",
-                items = new List<ShopInShopItem>()
+                Stamp = Guid.NewGuid().ToString(),
+                Reference = "9187445",
+                Amount = 1590,
+                Currency = "EUR",
+                Language = "FI",
+                OrderId = "",
+                Items = new List<ShopInShopItem>()
             {
                 new ShopInShopItem
                 {
-                    unitPrice = 1590,
-                    units = 1,
-                    vatPercentage = 24,
-                    productCode = "#927502759",
-                    category = "Pet supplies",
-                    description = "Cat ladder",
-                    merchant = MERCHANTIDSISS,
-                    stamp = Guid.NewGuid().ToString(),
-                    reference = ""
+                    UnitPrice = 1590,
+                    Units = 1,
+                    VatPercentage = 24,
+                    ProductCode = "#927502759",
+                    Category = "Pet supplies",
+                    Description = "Cat ladder",
+                    Merchant = MERCHANTIDSISS,
+                    Stamp = Guid.NewGuid().ToString(),
+                    Reference = ""
                 }
             }.ToArray(),
-                customer = new Customer()
+                Customer = new Customer()
                 {
-                    email = "erja.esimerkki@example.org",
-                    firstName = "Erja",
-                    vatId = "FI12345671",
-                    companyName = "nothing",
-                    lastName = "+358501234567",
-                    phone = "123",
+                    Email = "erja.esimerkki@example.org",
+                    FirstName = "Erja",
+                    VatId = "FI12345671",
+                    CompanyName = "nothing",
+                    LastName = "+358501234567",
+                    Phone = "123",
                 },
-                redirectUrls = new CallbackUrl()
+                RedirectUrls = new CallbackUrl()
                 {
-                    success = "https://ecom.example.org/success",
-                    cancel = "https://ecom.example.org/cancel",
+                    Success = "https://ecom.example.org/success",
+                    Cancel = "https://ecom.example.org/cancel",
                 },
 
-                callbackUrls = new CallbackUrl()
+                CallbackUrls = new CallbackUrl()
                 {
-                    success = "https://ecom.example.org/success",
-                    cancel = "https://ecom.example.org/cancel"
+                    Success = "https://ecom.example.org/success",
+                    Cancel = "https://ecom.example.org/cancel"
                 },
-                deliveryAddress = new Address()
+                DeliveryAddress = new Address()
                 {
-                    city = "Tampere",
-                    country = "FI",
-                    county = "Pirkanmaa",
-                    postalCode = "33100",
-                    streetAddress = "Hämeenkatu 6 B"
+                    City = "Tampere",
+                    Country = "FI",
+                    County = "Pirkanmaa",
+                    PostalCode = "33100",
+                    StreetAddress = "Hämeenkatu 6 B"
                 },
-                invoicingAddress = new Address()
+                InvoicingAddress = new Address()
                 {
-                    city = "Helsinki",
-                    country = "FI",
-                    county = "Uusimaa",
-                    postalCode = "00510",
-                    streetAddress = "Testikatu 1"
+                    City = "Helsinki",
+                    Country = "FI",
+                    County = "Uusimaa",
+                    PostalCode = "00510",
+                    StreetAddress = "Testikatu 1"
 
                 },
-                groups = new List<string>()
+                Groups = new List<string>()
             {
-                PaymentMethodGroup.mobile.ToString()
+                PaymentMethod.Mobile.ToString()
             }.ToArray()
 
             };
@@ -315,73 +315,73 @@ namespace Paytrail_dotnet_sdk.UnitTest
             PayTrailClient payTrail = new PayTrailClient(MERCHANTIDSIS, SECRETKEYSIS, "test");
             ShopInShopPaymentRequest request = new ShopInShopPaymentRequest()
             {
-                stamp = Guid.NewGuid().ToString(),
-                reference = "9187445",
-                amount = 1590,
-                currency = "EUR",
-                language = "FI",
-                orderId = "",
-                items = new List<ShopInShopItem>()
+                Stamp = Guid.NewGuid().ToString(),
+                Reference = "9187445",
+                Amount = 1590,
+                Currency = "EUR",
+                Language = "FI",
+                OrderId = "",
+                Items = new List<ShopInShopItem>()
             {
                 new ShopInShopItem
                 {
-                    unitPrice = 1590,
-                    units = 1,
-                    vatPercentage = 24,
-                    productCode = "#927502759",
-                    category = "Pet supplies",
-                    description = "Cat ladder",
-                    merchant = MERCHANTIDSISS,
-                    stamp = Guid.NewGuid().ToString(),
-                    reference = "",
-                    orderId = "",
-                    commission = new Commission()
+                    UnitPrice = 1590,
+                    Units = 1,
+                    VatPercentage = 24,
+                    ProductCode = "#927502759",
+                    Category = "Pet supplies",
+                    Description = "Cat ladder",
+                    Merchant = MERCHANTIDSISS,
+                    Stamp = Guid.NewGuid().ToString(),
+                    Reference = "",
+                    OrderId = "",
+                    Commission = new Commission()
                     {
-                        merchant = MERCHANTIDSISS,
-                        amount = 159
+                        Merchant = MERCHANTIDSISS,
+                        Amount = 159
                     }
                 }
             }.ToArray(),
-                customer = new Customer()
+                Customer = new Customer()
                 {
-                    email = "erja.esimerkki@example.org",
-                    firstName = "Erja",
-                    vatId = "FI12345671",
-                    companyName = "nothing",
-                    lastName = "+358501234567",
-                    phone = "123",
+                    Email = "erja.esimerkki@example.org",
+                    FirstName = "Erja",
+                    VatId = "FI12345671",
+                    CompanyName = "nothing",
+                    LastName = "+358501234567",
+                    Phone = "123",
                 },
-                redirectUrls = new CallbackUrl()
+                RedirectUrls = new CallbackUrl()
                 {
-                    success = "https://ecom.example.org/success",
-                    cancel = "https://ecom.example.org/cancel",
+                    Success = "https://ecom.example.org/success",
+                    Cancel = "https://ecom.example.org/cancel",
                 },
 
-                callbackUrls = new CallbackUrl()
+                CallbackUrls = new CallbackUrl()
                 {
-                    success = "https://ecom.example.org/success",
-                    cancel = "https://ecom.example.org/cancel"
+                    Success = "https://ecom.example.org/success",
+                    Cancel = "https://ecom.example.org/cancel"
                 },
-                deliveryAddress = new Address()
+                DeliveryAddress = new Address()
                 {
-                    city = "Tampere",
-                    country = "FI",
-                    county = "Pirkanmaa",
-                    postalCode = "33100",
-                    streetAddress = "Hämeenkatu 6 B"
+                    City = "Tampere",
+                    Country = "FI",
+                    County = "Pirkanmaa",
+                    PostalCode = "33100",
+                    StreetAddress = "Hämeenkatu 6 B"
                 },
-                invoicingAddress = new Address()
+                InvoicingAddress = new Address()
                 {
-                    city = "Helsinki",
-                    country = "FI",
-                    county = "Uusimaa",
-                    postalCode = "00510",
-                    streetAddress = "Testikatu 1"
+                    City = "Helsinki",
+                    Country = "FI",
+                    County = "Uusimaa",
+                    PostalCode = "00510",
+                    StreetAddress = "Testikatu 1"
 
                 },
-                groups = new List<string>()
+                Groups = new List<string>()
             {
-                PaymentMethodGroup.mobile.ToString()
+                PaymentMethod.Mobile.ToString()
             }.ToArray()
 
             };
@@ -435,64 +435,64 @@ namespace Paytrail_dotnet_sdk.UnitTest
             PayTrailClient payTrail = new PayTrailClient(MERCHANTIDN, SECRETKEYN, "test");
             PaymentRequest request = new PaymentRequest()
             {
-                stamp = Guid.NewGuid().ToString(),
-                reference = "9187445",
-                amount = 1590,
-                currency = "EUR",
-                language = "FI",
-                orderId = "",
-                items = new List<Item>()
+                Stamp = Guid.NewGuid().ToString(),
+                Reference = "9187445",
+                Amount = 1590,
+                Currency = "EUR",
+                Language = "FI",
+                OrderId = "",
+                Items = new List<Item>()
             {
                 new Item
                 {
-                    unitPrice = 1590,
-                    units = 1,
-                    vatPercentage = 24,
-                    productCode = "#927502759",
-                    category = "Pet supplies",
-                    description = "Cat ladder"
+                    UnitPrice = 1590,
+                    Units = 1,
+                    VatPercentage = 24,
+                    ProductCode = "#927502759",
+                    Category = "Pet supplies",
+                    Description = "Cat ladder"
                 }
             }.ToArray(),
-                customer = new Customer()
+                Customer = new Customer()
                 {
-                    email = "erja.esimerkki@example.org",
-                    firstName = "Erja",
-                    vatId = "FI12345671",
-                    companyName = "nothing",
-                    lastName = "+358501234567",
-                    phone = "123",
+                    Email = "erja.esimerkki@example.org",
+                    FirstName = "Erja",
+                    VatId = "FI12345671",
+                    CompanyName = "nothing",
+                    LastName = "+358501234567",
+                    Phone = "123",
                 },
-                redirectUrls = new CallbackUrl()
+                RedirectUrls = new CallbackUrl()
                 {
-                    success = "https://ecom.example.org/success",
-                    cancel = "https://ecom.example.org/cancel",
+                    Success = "https://ecom.example.org/success",
+                    Cancel = "https://ecom.example.org/cancel",
                 },
 
-                callbackUrls = new CallbackUrl()
+                CallbackUrls = new CallbackUrl()
                 {
-                    success = "https://ecom.example.org/success",
-                    cancel = "https://ecom.example.org/cancel"
+                    Success = "https://ecom.example.org/success",
+                    Cancel = "https://ecom.example.org/cancel"
                 },
-                deliveryAddress = new Address()
+                DeliveryAddress = new Address()
                 {
-                    city = "Tampere",
-                    country = "FI",
-                    county = "Pirkanmaa",
-                    postalCode = "33100",
-                    streetAddress = "Hämeenkatu 6 B"
+                    City = "Tampere",
+                    Country = "FI",
+                    County = "Pirkanmaa",
+                    PostalCode = "33100",
+                    StreetAddress = "Hämeenkatu 6 B"
                 },
-                invoicingAddress = new Address()
+                InvoicingAddress = new Address()
                 {
-                    city = "Helsinki",
-                    country = "FI",
-                    county = "Uusimaa",
-                    postalCode = "00510",
-                    streetAddress = "Testikatu 1"
+                    City = "Helsinki",
+                    Country = "FI",
+                    County = "Uusimaa",
+                    PostalCode = "00510",
+                    StreetAddress = "Testikatu 1"
 
                 },
-                groups = new List<string>()
+                Groups = new List<string>()
             {
-                PaymentMethodGroup.mobile.ToString()
+                PaymentMethod.Mobile.ToString()
             }.ToArray()};
             PaymentResponse res = payTrail.CreatePayment(request);
             int actual = res.ReturnCode;
@@ -511,64 +511,64 @@ namespace Paytrail_dotnet_sdk.UnitTest
             PayTrailClient payTrail = new PayTrailClient(MERCHANTIDN, SECRETKEYN, "test");
             PaymentRequest request = new PaymentRequest()
             {
-                stamp = Guid.NewGuid().ToString(),
-                reference = "9187445",
-                amount = 1590,
-                currency = "EUR",
-                language = "FI",
-                orderId = "",
-                items = new List<Item>()
+                Stamp = Guid.NewGuid().ToString(),
+                Reference = "9187445",
+                Amount = 1590,
+                Currency = "EUR",
+                Language = "FI",
+                OrderId = "",
+                Items = new List<Item>()
             {
                 new Item
                 {
-                    unitPrice = 1590,
-                    units = 1,
-                    vatPercentage = 24,
-                    productCode = "#927502759",
-                    category = "Pet supplies",
-                    description = "Cat ladder"
+                    UnitPrice = 1590,
+                    Units = 1,
+                    VatPercentage = 24,
+                    ProductCode = "#927502759",
+                    Category = "Pet supplies",
+                    Description = "Cat ladder"
                 }
             }.ToArray(),
-                customer = new Customer()
+                Customer = new Customer()
                 {
-                    email = "erja.esimerkki@example.org",
-                    firstName = "Erja",
-                    vatId = "FI12345671",
-                    companyName = "nothing",
-                    lastName = "+358501234567",
-                    phone = "123",
+                    Email = "erja.esimerkki@example.org",
+                    FirstName = "Erja",
+                    VatId = "FI12345671",
+                    CompanyName = "nothing",
+                    LastName = "+358501234567",
+                    Phone = "123",
                 },
-                redirectUrls = new CallbackUrl()
+                RedirectUrls = new CallbackUrl()
                 {
-                    success = "https://ecom.example.org/success",
-                    cancel = "https://ecom.example.org/cancel",
+                    Success = "https://ecom.example.org/success",
+                    Cancel = "https://ecom.example.org/cancel",
                 },
 
-                callbackUrls = new CallbackUrl()
+                CallbackUrls = new CallbackUrl()
                 {
-                    success = "https://ecom.example.org/success",
-                    cancel = "https://ecom.example.org/cancel"
+                    Success = "https://ecom.example.org/success",
+                    Cancel = "https://ecom.example.org/cancel"
                 },
-                deliveryAddress = new Address()
+                DeliveryAddress = new Address()
                 {
-                    city = "Tampere",
-                    country = "FI",
-                    county = "Pirkanmaa",
-                    postalCode = "33100",
-                    streetAddress = "Hämeenkatu 6 B"
+                    City = "Tampere",
+                    Country = "FI",
+                    County = "Pirkanmaa",
+                    PostalCode = "33100",
+                    StreetAddress = "Hämeenkatu 6 B"
                 },
-                invoicingAddress = new Address()
+                InvoicingAddress = new Address()
                 {
-                    city = "Helsinki",
-                    country = "FI",
-                    county = "Uusimaa",
-                    postalCode = "00510",
-                    streetAddress = "Testikatu 1"
+                    City = "Helsinki",
+                    Country = "FI",
+                    County = "Uusimaa",
+                    PostalCode = "00510",
+                    StreetAddress = "Testikatu 1"
 
                 },
-                groups = new List<string>()
+                Groups = new List<string>()
             {
-                PaymentMethodGroup.mobile.ToString()
+                PaymentMethod.Mobile.ToString()
             }.ToArray()};
             PaymentResponse res = payTrail.CreatePayment(request);
             int actual = res.ReturnCode;
@@ -587,68 +587,68 @@ namespace Paytrail_dotnet_sdk.UnitTest
             PayTrailClient payTrail = new PayTrailClient(MERCHANTIDN, SECRETKEYN, "test");
             PaymentRequest request = new PaymentRequest()
             {
-                stamp = Guid.NewGuid().ToString(),
-                reference = "9187445",
-                amount = 1590,
-                currency = "EUR",
-                language = "FI",
-                orderId = "",
-                items = new List<ShopInShopItem>()
+                Stamp = Guid.NewGuid().ToString(),
+                Reference = "9187445",
+                Amount = 1590,
+                Currency = "EUR",
+                Language = "FI",
+                OrderId = "",
+                Items = new List<ShopInShopItem>()
             {
                 new ShopInShopItem
                 {
-                    unitPrice = 1590,
-                    units = 1,
-                    vatPercentage = 24,
-                    productCode = "#927502759",
-                    category = "Pet supplies",
-                    description = "Cat ladder",
-                    merchant = MERCHANTIDSISS,
-                    stamp = Guid.NewGuid().ToString(),
-                    reference = "",
-                    orderId = ""
+                    UnitPrice = 1590,
+                    Units = 1,
+                    VatPercentage = 24,
+                    ProductCode = "#927502759",
+                    Category = "Pet supplies",
+                    Description = "Cat ladder",
+                    Merchant = MERCHANTIDSISS,
+                    Stamp = Guid.NewGuid().ToString(),
+                    Reference = "",
+                    OrderId = ""
                 }
             }.ToArray(),
-                customer = new Customer()
+                Customer = new Customer()
                 {
-                    email = "erja.esimerkki@example.org",
-                    firstName = "Erja",
-                    vatId = "FI12345671",
-                    companyName = "nothing",
-                    lastName = "+358501234567",
-                    phone = "123",
+                    Email = "erja.esimerkki@example.org",
+                    FirstName = "Erja",
+                    VatId = "FI12345671",
+                    CompanyName = "nothing",
+                    LastName = "+358501234567",
+                    Phone = "123",
                 },
-                redirectUrls = new CallbackUrl()
+                RedirectUrls = new CallbackUrl()
                 {
-                    success = "https://ecom.example.org/success",
-                    cancel = "https://ecom.example.org/cancel",
+                    Success = "https://ecom.example.org/success",
+                    Cancel = "https://ecom.example.org/cancel",
                 },
 
-                callbackUrls = new CallbackUrl()
+                CallbackUrls = new CallbackUrl()
                 {
-                    success = "https://ecom.example.org/success",
-                    cancel = "https://ecom.example.org/cancel"
+                    Success = "https://ecom.example.org/success",
+                    Cancel = "https://ecom.example.org/cancel"
                 },
-                deliveryAddress = new Address()
+                DeliveryAddress = new Address()
                 {
-                    city = "Tampere",
-                    country = "FI",
-                    county = "Pirkanmaa",
-                    postalCode = "33100",
-                    streetAddress = "Hämeenkatu 6 B"
+                    City = "Tampere",
+                    Country = "FI",
+                    County = "Pirkanmaa",
+                    PostalCode = "33100",
+                    StreetAddress = "Hämeenkatu 6 B"
                 },
-                invoicingAddress = new Address()
+                InvoicingAddress = new Address()
                 {
-                    city = "Helsinki",
-                    country = "FI",
-                    county = "Uusimaa",
-                    postalCode = "00510",
-                    streetAddress = "Testikatu 1"
+                    City = "Helsinki",
+                    Country = "FI",
+                    County = "Uusimaa",
+                    PostalCode = "00510",
+                    StreetAddress = "Testikatu 1"
 
                 },
-                groups = new List<string>()
+                Groups = new List<string>()
             {
-                PaymentMethodGroup.mobile.ToString()
+                PaymentMethod.Mobile.ToString()
             }.ToArray()};
             PaymentResponse res = payTrail.CreatePayment(request);
             int actual = res.ReturnCode;
@@ -668,64 +668,64 @@ namespace Paytrail_dotnet_sdk.UnitTest
             PayTrailClient payTrail = new PayTrailClient(MERCHANTIDN, SECRETKEYN, "test");
             PaymentRequest request = new PaymentRequest()
             {
-                stamp = "1222",
-                reference = "9187445",
-                amount = 1590,
-                currency = "EUR",
-                language = "FI",
-                orderId = "",
-                items = new List<Item>()
+                Stamp = "1222",
+                Reference = "9187445",
+                Amount = 1590,
+                Currency = "EUR",
+                Language = "FI",
+                OrderId = "",
+                Items = new List<Item>()
             {
                 new Item
                 {
-                    unitPrice = 1590,
-                    units = 1,
-                    vatPercentage = 24,
-                    productCode = "#927502759",
-                    category = "Pet supplies",
-                    description = "Cat ladder"
+                    UnitPrice = 1590,
+                    Units = 1,
+                    VatPercentage = 24,
+                    ProductCode = "#927502759",
+                    Category = "Pet supplies",
+                    Description = "Cat ladder"
                 }
             }.ToArray(),
-                customer = new Customer()
+                Customer = new Customer()
                 {
-                    email = "erja.esimerkki@example.org",
-                    firstName = "Erja",
-                    vatId = "FI12345671",
-                    companyName = "nothing",
-                    lastName = "+358501234567",
-                    phone = "123",
+                    Email = "erja.esimerkki@example.org",
+                    FirstName = "Erja",
+                    VatId = "FI12345671",
+                    CompanyName = "nothing",
+                    LastName = "+358501234567",
+                    Phone = "123",
                 },
-                redirectUrls = new CallbackUrl()
+                RedirectUrls = new CallbackUrl()
                 {
-                    success = "https://ecom.example.org/success",
-                    cancel = "https://ecom.example.org/cancel",
+                    Success = "https://ecom.example.org/success",
+                    Cancel = "https://ecom.example.org/cancel",
                 },
 
-                callbackUrls = new CallbackUrl()
+                CallbackUrls = new CallbackUrl()
                 {
-                    success = "https://ecom.example.org/success",
-                    cancel = "https://ecom.example.org/cancel"
+                    Success = "https://ecom.example.org/success",
+                    Cancel = "https://ecom.example.org/cancel"
                 },
-                deliveryAddress = new Address()
+                DeliveryAddress = new Address()
                 {
-                    city = "Tampere",
-                    country = "FI",
-                    county = "Pirkanmaa",
-                    postalCode = "33100",
-                    streetAddress = "Hämeenkatu 6 B"
+                    City = "Tampere",
+                    Country = "FI",
+                    County = "Pirkanmaa",
+                    PostalCode = "33100",
+                    StreetAddress = "Hämeenkatu 6 B"
                 },
-                invoicingAddress = new Address()
+                InvoicingAddress = new Address()
                 {
-                    city = "Helsinki",
-                    country = "FI",
-                    county = "Uusimaa",
-                    postalCode = "00510",
-                    streetAddress = "Testikatu 1"
+                    City = "Helsinki",
+                    Country = "FI",
+                    County = "Uusimaa",
+                    PostalCode = "00510",
+                    StreetAddress = "Testikatu 1"
 
                 },
-                groups = new List<string>()
+                Groups = new List<string>()
             {
-                PaymentMethodGroup.mobile.ToString()
+                PaymentMethod.Mobile.ToString()
             }.ToArray()};
             PaymentResponse res = payTrail.CreatePayment(request);
             int actual = res.ReturnCode;

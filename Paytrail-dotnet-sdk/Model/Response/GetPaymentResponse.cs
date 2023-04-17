@@ -2,21 +2,21 @@
 {
     public class GetPaymentResponse: Response
     {
-        public GetPaymentData data { get; set; }
+        public GetPaymentData Data { get; set; }
     }
 
     public class GetPaymentData
     {
-        public string transactionId { get; set; }
-        public string status { get; set; }
-        public int amount { get; set; }
-        public string currency { get; set; }
-        public string reference { get; set; }
-        public string stamp { get; set; }
-        public string createdAt { get; set; }
-        public string href { get; set; }
-        public string provider { get; set; }
-        public string filingCode { get; set; }
-        public string paidAt { get; set; }
+        public string TransactionId { get; set; }
+        public string Status { get; set; }
+        public int Amount { get; set; }
+        public string Currency { get; set; }
+        public string Reference { get; set; }
+        public string Stamp { get; set; }
+        public string CreatedAt { get; set; }
+        public string Href { get; set; }
+        public string Provider { get; set; }
+        public string FilingCode { get; set; }
+        public string PaidAt { get; set; }
     }
 }

@@ -4,12 +4,12 @@ using System.Text;
 namespace Paytrail_dotnet_sdk.Model.Request.RequestModels
 {
     public class Address
-    {
-        public string streetAddress { get; set; }
-        public string postalCode { get; set; }
-        public string city { get; set; }
-        public string county { get; set; }
-        public string country { get; set; }
+    {        
+        public string StreetAddress { get; set; }
+        public string PostalCode { get; set; }
+        public string City { get; set; }
+        public string County { get; set; }
+        public string Country { get; set; }
 
         public (bool, StringBuilder) Validate()
         {
@@ -17,14 +17,14 @@ namespace Paytrail_dotnet_sdk.Model.Request.RequestModels
             StringBuilder message = new StringBuilder();
             try
             {
-                if (streetAddress is null)
+                if (StreetAddress is null)
                 {
                     message.Append(" address's streetAddress can't be null.");
                     ret = false;
                 }
                 else
                 {
-                    if (streetAddress.Length > 50)
+                    if (StreetAddress.Length > 50)
                     {
                         message.Append(" address's streetAddress is more than 100 characters.");
                         ret = false;
@@ -32,14 +32,14 @@ namespace Paytrail_dotnet_sdk.Model.Request.RequestModels
                 }
 
                 //
-                if (postalCode is null)
+                if (PostalCode is null)
                 {
                     message.Append(" address's postalCode can't be null");
                     ret = false;
                 }
                 else
                 {
-                    if (postalCode.Length > 50)
+                    if (PostalCode.Length > 50)
                     {
                         message.Append(" address's postalCode is more than 15 characters.");
                         ret = false;
@@ -47,14 +47,14 @@ namespace Paytrail_dotnet_sdk.Model.Request.RequestModels
                 }
 
                 //
-                if (city is null)
+                if (City is null)
                 {
                     message.Append(" address's city can't be null.");
                     ret = false;
                 }
                 else
                 {
-                    if (city.Length > 50)
+                    if (City.Length > 50)
                     {
                         message.Append(" address's city is more than 30 characters.");
                         ret = false;
@@ -62,7 +62,7 @@ namespace Paytrail_dotnet_sdk.Model.Request.RequestModels
                 }
 
                 //
-                if (country is null)
+                if (Country is null)
                 {
                     message.Append(" address's country can't be null.");
                     ret = false;

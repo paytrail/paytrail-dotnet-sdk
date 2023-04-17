@@ -4,18 +4,18 @@ namespace Paytrail_dotnet_sdk.Model.Response
 {
     public class PaymentResponse : Response
     {
-        public PaymentData data { get; set; }
+        public PaymentData Data { get; set; }
     }
 
     public class PaymentData
     {
-        public string transactionId { get; set; }
-        public string href { get; set; }
-        public string reference { get; set; }
-        public string terms { get; set; }
-        public PaymentMethodGroupData[] groups { get; set; }
-        public Provider[] providers { get; set; }
-        public ApplePay customProviders { get; set; }
+        public string TransactionId { get; set; }
+        public string Href { get; set; }
+        public string Reference { get; set; }
+        public string Terms { get; set; }
+        public PaymentMethodGroupData[] Groups { get; set; }
+        public Provider[] Providers { get; set; }
+        public ApplePay CustomProviders { get; set; }
     }
 }
 

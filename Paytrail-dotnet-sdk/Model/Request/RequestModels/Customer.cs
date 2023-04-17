@@ -5,12 +5,12 @@ namespace Paytrail_dotnet_sdk.Model.Request.RequestModels
 {
     public class Customer
     {
-        public string email { get; set; }
-        public string firstName { get; set; }
-        public string lastName { get; set; }
-        public string phone { get; set; }
-        public string vatId { get; set; }
-        public string companyName { get; set; }
+        public string Email { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Phone { get; set; }
+        public string VatId { get; set; }
+        public string CompanyName { get; set; }
 
         public (bool, StringBuilder) Validate()
         {
@@ -18,14 +18,14 @@ namespace Paytrail_dotnet_sdk.Model.Request.RequestModels
             StringBuilder message = new StringBuilder();
             try
             {
-                if (email is null)
+                if (Email is null)
                 {
                     ret = false;
                     message.Append(" customer's email can't be null.");
                 }
                 else
                 {
-                    if (email.Length > 200)
+                    if (Email.Length > 200)
                     {
                         ret = false;
                         message.Append(" customer's email is more than 100 characters.");
@@ -33,14 +33,14 @@ namespace Paytrail_dotnet_sdk.Model.Request.RequestModels
                 }
 
                 //
-                if (firstName is null)
+                if (FirstName is null)
                 {
                     ret = false;
                     message.Append(" customer's firstName can't be null.");
                 }
                 else
                 {
-                    if (firstName.Length > 50)
+                    if (FirstName.Length > 50)
                     {
                         ret = false;
                         message.Append(" customer's firstName is more than 100 characters.");
@@ -48,14 +48,14 @@ namespace Paytrail_dotnet_sdk.Model.Request.RequestModels
                 }
 
                 //
-                if (lastName is null)
+                if (LastName is null)
                 {
                     ret = false;
                     message.Append(" customer's lastName can't be null.");
                 }
                 else
                 {
-                    if (lastName.Length > 50)
+                    if (LastName.Length > 50)
                     {
                         ret = false;
                         message.Append(" customer's lastName is more than 100 characters.");
@@ -63,21 +63,21 @@ namespace Paytrail_dotnet_sdk.Model.Request.RequestModels
                 }
 
                 //
-                if (phone is null)
+                if (Phone is null)
                 {
                     ret = false;
                     message.Append(" customer's phone can't be null.");
                 }
 
                 //
-                if (vatId is null)
+                if (VatId is null)
                 {
                     ret = false;
                     message.Append(" customer's vatId can't be null.");
                 }
 
                 //
-                if (companyName is null)
+                if (CompanyName is null)
                 {
                     ret = false;
                     message.Append(" customer's companyName can't be null.");

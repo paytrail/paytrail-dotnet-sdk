@@ -173,7 +173,7 @@ namespace Paytrail_dotnet_sdk
                 if (!ValidateResponse(response, res))
                     return res;
 
-                res.data = JsonConvert.DeserializeObject<PaymentData>(response.Content);
+                res.Data = JsonConvert.DeserializeObject<PaymentData>(response.Content);
                 res.ReturnCode = (int)ResponseMessage.Success;
                 res.ReturnMessage = ResponseMessage.Success.GetEnumDescription();
                 return res;
@@ -212,7 +212,7 @@ namespace Paytrail_dotnet_sdk
                 if (!ValidateResponse(response, res))
                     return res;
 
-                res.data = JsonConvert.DeserializeObject<GetPaymentData>(response.Content);
+                res.Data = JsonConvert.DeserializeObject<GetPaymentData>(response.Content);
                 res.ReturnCode = (int)ResponseMessage.Success;
                 res.ReturnMessage = "Detail: " + response.Content + JsonConvert.SerializeObject(request) + " . Response: " + JsonConvert.SerializeObject(response);
                 return res;
@@ -252,7 +252,7 @@ namespace Paytrail_dotnet_sdk
                 if (!ValidateResponse(response, res))
                     return res;
 
-                res.data = JsonConvert.DeserializeObject<RefundData>(response.Content);
+                res.Data = JsonConvert.DeserializeObject<RefundData>(response.Content);
                 res.ReturnCode = (int)ResponseMessage.Success;
                 res.ReturnMessage = ResponseMessage.Success.GetEnumDescription();
                 return res;

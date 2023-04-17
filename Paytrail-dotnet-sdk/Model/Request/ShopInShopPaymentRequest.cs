@@ -1,27 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Paytrail_dotnet_sdk.Model.Request.RequestModels;
+using System;
 using System.Text;
-using Paytrail_dotnet_sdk.Model.Request.RequestModels;
 
 namespace Paytrail_dotnet_sdk.Model.Request
 {
     public class ShopInShopPaymentRequest
     {
-        public string stamp { get; set; }
-        public string reference { get; set; }
-        public int amount { get; set; }
-        public string currency { get; set; }
-        public string language { get; set; }
-        public string orderId { get; set; }
-        public ShopInShopItem[] items { get; set; }
-        public Customer customer { get; set; }
-        public Address deliveryAddress { get; set; }
-        public Address invoicingAddress { get; set; }
-        public CallbackUrl redirectUrls { get; set; }
-        public CallbackUrl callbackUrls { get; set; }
-        public int callbackDelay { get; set; }
-        public string[] groups { get; set; }
-        public bool usePricesWithoutVat { get; set; }
+        public string Stamp { get; set; }
+        public string Reference { get; set; }
+        public int Amount { get; set; }
+        public string Currency { get; set; }
+        public string Language { get; set; }
+        public string OrderId { get; set; }
+        public ShopInShopItem[] Items { get; set; }
+        public Customer Customer { get; set; }
+        public Address DeliveryAddress { get; set; }
+        public Address InvoicingAddress { get; set; }
+        public CallbackUrl RedirectUrls { get; set; }
+        public CallbackUrl CallbackUrls { get; set; }
+        public int CallbackDelay { get; set; }
+        public string[] Groups { get; set; }
+        public bool UsePricesWithoutVat { get; set; }
 
         internal (bool, StringBuilder) Validate()
         {
@@ -29,14 +28,14 @@ namespace Paytrail_dotnet_sdk.Model.Request
             try
             {
                 bool ret = true;
-                if (string.IsNullOrEmpty(stamp))
+                if (string.IsNullOrEmpty(Stamp))
                 {
                     ret = false;
                     message.Append(" stamp can't be null or empty.");
                 }
                 else
                 {
-                    if (stamp.Length > 200)
+                    if (Stamp.Length > 200)
                     {
                         ret = false;
                         message.Append(" stamp is more than 200 characters.");
@@ -44,14 +43,14 @@ namespace Paytrail_dotnet_sdk.Model.Request
                 }
 
                 //
-                if (reference is null)
+                if (Reference is null)
                 {
                     ret = false;
                     message.Append(" reference can't be null.");
                 }
                 else
                 {
-                    if (reference.Length > 200)
+                    if (Reference.Length > 200)
                     {
                         ret = false;
                         message.Append(" reference is more than 200 characters.");
@@ -59,21 +58,21 @@ namespace Paytrail_dotnet_sdk.Model.Request
                 }
 
                 //
-                if (orderId is null)
+                if (OrderId is null)
                 {
                     ret = false;
                     message.Append(" orderId can't be null.");
                 }
 
                 //
-                if (amount < 0)
+                if (Amount < 0)
                 {
                     ret = false;
                     message.Append(" amount can't be less than zero.");
                 }
                 else
                 {
-                    if (amount > 99999999)
+                    if (Amount > 99999999)
                     {
                         ret = false;
                         message.Append(" amount can't be more than 99999999.");
@@ -81,14 +80,14 @@ namespace Paytrail_dotnet_sdk.Model.Request
                 }
 
                 //
-                if (customer is null)
+                if (Customer is null)
                 {
                     ret = false;
                     message.Append(" object customer can't be null.");
                 }
                 else
                 {
-                    (bool isSuccess, StringBuilder valMess) = customer.Validate();
+                    (bool isSuccess, StringBuilder valMess) = Customer.Validate();
                     if (!isSuccess)
                     {
                         ret = false;
@@ -97,14 +96,14 @@ namespace Paytrail_dotnet_sdk.Model.Request
                 }
 
                 //
-                if (items is null)
+                if (Items is null)
                 {
                     ret = false;
                     message.Append(" object items can't be null.");
                 }
                 else
                 {
-                    foreach (var item in items)
+                    foreach (var item in Items)
                     {
                         (bool isSuccess, StringBuilder valMess) = item.Validate();
                         if (!isSuccess)
@@ -118,14 +117,14 @@ namespace Paytrail_dotnet_sdk.Model.Request
                 }
 
                 //
-                if (deliveryAddress is null)
+                if (DeliveryAddress is null)
                 {
                     ret = false;
                     message.Append(" object deliveryAddress can't be null.");
                 }
                 else
                 {
-                    (bool isSuccess, StringBuilder valMess) = deliveryAddress.Validate();
+                    (bool isSuccess, StringBuilder valMess) = DeliveryAddress.Validate();
 
                     if (!isSuccess)
                     {
@@ -135,14 +134,14 @@ namespace Paytrail_dotnet_sdk.Model.Request
                 }
 
                 //
-                if (invoicingAddress is null)
+                if (InvoicingAddress is null)
                 {
                     ret = false;
                     message.Append(" object invoicingAddress can't be null.");
                 }
                 else
                 {
-                    (bool isSuccess, StringBuilder valMess) = invoicingAddress.Validate();
+                    (bool isSuccess, StringBuilder valMess) = InvoicingAddress.Validate();
 
                     if (!isSuccess)
                     {
@@ -152,14 +151,14 @@ namespace Paytrail_dotnet_sdk.Model.Request
                 }
 
                 //
-                if (redirectUrls is null)
+                if (RedirectUrls is null)
                 {
                     ret = false;
                     message.Append(" object redirectUrls can't be null.");
                 }
                 else
                 {
-                    (bool isSuccess, StringBuilder valMess) = redirectUrls.Validate();
+                    (bool isSuccess, StringBuilder valMess) = RedirectUrls.Validate();
                     if (!isSuccess)
                     {
                         ret = false;
@@ -168,14 +167,14 @@ namespace Paytrail_dotnet_sdk.Model.Request
                 }
 
                 //
-                if (callbackUrls is null)
+                if (CallbackUrls is null)
                 {
                     ret = false;
                     message.Append(" object callbackUrls can't be null.");
                 }
                 else
                 {
-                    (bool isSuccess, StringBuilder valMess) = callbackUrls.Validate();
+                    (bool isSuccess, StringBuilder valMess) = CallbackUrls.Validate();
                     if (!isSuccess)
                     {
                         ret = false;
@@ -184,20 +183,20 @@ namespace Paytrail_dotnet_sdk.Model.Request
                 }
 
                 //
-                if (groups is null)
+                if (Groups is null)
                 {
                     ret = false;
                     message.Append(" object groups can't be null.");
                 }
                 else
                 {
-                    for (int i = 0; i < groups.Length; i++)
+                    for (int i = 0; i < Groups.Length; i++)
                     {
                         bool flagContain = false;
 
-                        foreach (var item in Enum.GetValues(typeof(PaymentMethodGroup)))
+                        foreach (var item in Enum.GetValues(typeof(PaymentMethod)))
                         {
-                            if (groups[i] == item.ToString())
+                            if (Groups[i] == item.ToString())
                             {
                                 flagContain = true;
                             }
@@ -207,7 +206,7 @@ namespace Paytrail_dotnet_sdk.Model.Request
                         if (!flagContain)
                         {
                             ret = false;
-                            message.Append(" value " + groups[i] + " is not in list payment method");
+                            message.Append(" value " + Groups[i] + " is not in list payment method");
                         }
                     }
                 }

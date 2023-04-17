@@ -5,11 +5,11 @@ namespace Paytrail_dotnet_sdk.Model.Request.RequestModels
 {
     public class ShopInShopItem : Item
     {
-        public string orderId { get; set; }
-        public string stamp { get; set; }
-        public string reference { get; set; }
-        public string merchant { get; set; }
-        public Commission commission { get; set; }
+        public string OrderId { get; set; }
+        public string Stamp { get; set; }
+        public string Reference { get; set; }
+        public string Merchant { get; set; }
+        public Commission Commission { get; set; }
 
         public (bool, StringBuilder) Validate(ShopInShopItem itemShopInShop)
         {
@@ -27,28 +27,28 @@ namespace Paytrail_dotnet_sdk.Model.Request.RequestModels
                     return (false, valMess);
 
                 //
-                if (itemShopInShop.orderId is null)
+                if (itemShopInShop.OrderId is null)
                 {
                     message.Append(" Item's orderId can't be null.");
                     ret = false;
                 }
 
                 //
-                if (string.IsNullOrEmpty(itemShopInShop.stamp))
+                if (string.IsNullOrEmpty(itemShopInShop.Stamp))
                 {
                     message.Append(" Item's stamp can't be null or empty.");
                     ret = false;
                 }
 
                 //
-                if (itemShopInShop.reference is null)
+                if (itemShopInShop.Reference is null)
                 {
                     message.Append(" Item's reference can't be null.");
                     ret = false;
                 }
 
                 //
-                if (string.IsNullOrEmpty(itemShopInShop.merchant))
+                if (string.IsNullOrEmpty(itemShopInShop.Merchant))
                 {
                     message.Append(" Item's merchant can't be null or empty.");
                     ret = false;
@@ -56,14 +56,14 @@ namespace Paytrail_dotnet_sdk.Model.Request.RequestModels
 
                 //
 
-                if (commission is null)
+                if (Commission is null)
                 {
                     ret = false;
                     message.Append(" object commission can't be null.");
                 }
                 else
                 {
-                    (isSuccess, valMess) = commission.Validate();
+                    (isSuccess, valMess) = Commission.Validate();
 
                     if (!isSuccess)
                     {

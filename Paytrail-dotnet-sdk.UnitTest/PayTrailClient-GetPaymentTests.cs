@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using Paytrail_dotnet_sdk.Model.Response;
+﻿using Paytrail_dotnet_sdk.Model.Response;
 
 namespace Paytrail_dotnet_sdk.UnitTest
 {
@@ -20,7 +19,7 @@ namespace Paytrail_dotnet_sdk.UnitTest
 
             //Act
             PayTrailClient payTrail = new PayTrailClient(MERCHANTIDN, SECRETKEYN, "test");
-            string request = null;
+            string? request = null;
             GetPaymentResponse res = payTrail.GetPaymentInfo(request);
             int actual = res.ReturnCode;
 
@@ -87,7 +86,6 @@ namespace Paytrail_dotnet_sdk.UnitTest
             PayTrailClient payTrail = new PayTrailClient(MERCHANTIDN, SECRETKEYN, "test");
             GetPaymentResponse res = payTrail.GetPaymentInfo("");
             int actual = res.ReturnCode;
-            string a = res.ReturnMessage;
 
             //Assert
             Assert.Equal(expected, actual);

@@ -43,16 +43,16 @@ namespace Paytrail_dotnet_sdk.UnitTest
             string refundStamp = Guid.NewGuid().ToString();
             RefundRequest refundRequest = new RefundRequest()
             {
-                amount = 1590,
-                email = "test@gmail.com",
-                refundStamp = refundStamp,
-                refundReference = "1234",
-                callbackUrls = new Model.Request.RequestModels.CallbackUrl
+                Amount = 1590,
+                Email = "test@gmail.com",
+                RefundStamp = refundStamp,
+                RefundReference = "1234",
+                CallbackUrls = new Model.Request.RequestModels.CallbackUrl
                 {
-                    cancel = "https://ecom.example.org/refund/cancel",
-                    success = "https://ecom.example.org/refund/success"
+                    Cancel = "https://ecom.example.org/refund/cancel",
+                    Success = "https://ecom.example.org/refund/success"
                 },
-                items = new RefundItem[0],
+                Items = new RefundItem[0],
             };
             RefundResponse res = ptrail.RefundPayment(refundRequest, transactionId);
             int actual = res.ReturnCode;
@@ -90,7 +90,7 @@ namespace Paytrail_dotnet_sdk.UnitTest
             string transactionId = "2f8a77ce-c861-11ed-be51-07513ab7f2f0";
             RefundRequest refundRequest = new RefundRequest()
             {
-                items = new RefundItem[0],
+                Items = new RefundItem[0],
             };
             RefundResponse res = payTrail.RefundPayment(refundRequest, transactionId);
             int actual = res.ReturnCode;

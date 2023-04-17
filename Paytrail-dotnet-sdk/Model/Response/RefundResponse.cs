@@ -2,13 +2,13 @@
 {
     public class RefundResponse: Response
     {
-        public RefundData data { get; set; }
+        public RefundData Data { get; set; }
     }
 
     public class RefundData
     {
-        public string transactionId { get; set; }
-        public string provider { get; set; }
-        public string status { get; set; }
+        public string TransactionId { get; set; }
+        public string Provider { get; set; }
+        public string Status { get; set; }
     }
 }

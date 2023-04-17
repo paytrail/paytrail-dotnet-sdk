@@ -1,5 +1,4 @@
-﻿using Paytrail_dotnet_sdk.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;

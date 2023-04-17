@@ -5,8 +5,8 @@ namespace Paytrail_dotnet_sdk.Model.Request.RequestModels
 {
     public class CallbackUrl
     {
-        public string success { get; set; }
-        public string cancel { get; set; }
+        public string Success { get; set; }
+        public string Cancel { get; set; }
 
         public (bool, StringBuilder) Validate()
         {
@@ -15,14 +15,14 @@ namespace Paytrail_dotnet_sdk.Model.Request.RequestModels
 
             try
             {
-                if (success is null)
+                if (Success is null)
                 {
                     ret = false;
                     message.Append(" url success can't be null.");
                 }
 
                 //
-                if (cancel is null)
+                if (Cancel is null)
                 {
                     ret = false;
                     message.Append(" url cancel can't be null.");
