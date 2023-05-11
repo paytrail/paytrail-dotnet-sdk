@@ -124,7 +124,7 @@ namespace Paytrail_dotnet_sdk.UnitTest
                 },
                 Groups = new List<string>()
             {
-                PaymentMethod.Mobile.ToString()
+                PaymentMethod.mobile.ToString()
             }.ToArray()};
             PaymentResponse res = payTrail.CreateShopInShopPayment(request);
             int actual = res.ReturnCode;
@@ -209,7 +209,7 @@ namespace Paytrail_dotnet_sdk.UnitTest
                 },
                 Groups = new List<string>()
             {
-                PaymentMethod.Mobile.ToString()
+                PaymentMethod.mobile.ToString()
             }.ToArray()
 
             };
@@ -292,7 +292,7 @@ namespace Paytrail_dotnet_sdk.UnitTest
                 },
                 Groups = new List<string>()
             {
-                PaymentMethod.Mobile.ToString()
+                PaymentMethod.mobile.ToString()
             }.ToArray()
 
             };
@@ -381,7 +381,7 @@ namespace Paytrail_dotnet_sdk.UnitTest
                 },
                 Groups = new List<string>()
             {
-                PaymentMethod.Mobile.ToString()
+                PaymentMethod.mobile.ToString()
             }.ToArray()
 
             };
@@ -492,7 +492,7 @@ namespace Paytrail_dotnet_sdk.UnitTest
                 },
                 Groups = new List<string>()
             {
-                PaymentMethod.Mobile.ToString()
+                PaymentMethod.mobile.ToString()
             }.ToArray()};
             PaymentResponse res = payTrail.CreatePayment(request);
             int actual = res.ReturnCode;
@@ -568,7 +568,7 @@ namespace Paytrail_dotnet_sdk.UnitTest
                 },
                 Groups = new List<string>()
             {
-                PaymentMethod.Mobile.ToString()
+                PaymentMethod.mobile.ToString()
             }.ToArray()};
             PaymentResponse res = payTrail.CreatePayment(request);
             int actual = res.ReturnCode;
@@ -648,7 +648,7 @@ namespace Paytrail_dotnet_sdk.UnitTest
                 },
                 Groups = new List<string>()
             {
-                PaymentMethod.Mobile.ToString()
+                PaymentMethod.mobile.ToString()
             }.ToArray()};
             PaymentResponse res = payTrail.CreatePayment(request);
             int actual = res.ReturnCode;
@@ -725,7 +725,7 @@ namespace Paytrail_dotnet_sdk.UnitTest
                 },
                 Groups = new List<string>()
             {
-                PaymentMethod.Mobile.ToString()
+                PaymentMethod.mobile.ToString()
             }.ToArray()};
             PaymentResponse res = payTrail.CreatePayment(request);
             int actual = res.ReturnCode;

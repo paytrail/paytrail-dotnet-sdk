@@ -54,11 +54,15 @@ Some of the key features are:
 ### Shop-in-shop
 - Creating Shop-in-shop payment request
 
+### Token payments
+- [Pay and add card](https://docs.paytrail.com/#/?id=pay-and-add-card)
+
 ## Methods
-| Method                    |Description			|
-| ------------------------- |----------------------	|
-| CreatePayment()			| Create payment		|
-| CreateShopInShopPayment()	| Create SiS payment	|
-| GetPaymentInfo()			| Request payment status|
-| RefundPayment()			| Create refund request |
+| Method                    |Description			                                       |
+| ------------------------- |--------------------------------------------------------------|
+| CreatePayment()			| Create payment		                                       |
+| CreateShopInShopPayment()	| Create SiS payment	                                       |
+| GetPaymentInfo()			| Request payment status									   |
+| RefundPayment()			| Create refund request										   |
+| PayAndAddCardRequest()	| Combine a payment and adding a new card with a single request| 
 

@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using Paytrail_dotnet_sdk.Interface;
 using Paytrail_dotnet_sdk.Model.Request;
 using Paytrail_dotnet_sdk.Model.Response;
@@ -40,7 +41,10 @@ namespace Paytrail_dotnet_sdk
                 }
 
                 // Create payment
-                res = CreatePayment(JsonConvert.SerializeObject(paymentRequest));
+                res = CreatePayment(JsonConvert.SerializeObject(paymentRequest, new JsonSerializerSettings
+                {
+                    ContractResolver = new CamelCasePropertyNamesContractResolver()
+                }));
                 return res;
             }
             catch (Exception ex)
@@ -69,7 +73,10 @@ namespace Paytrail_dotnet_sdk
                 }
 
                 // Create SiS payment
-                res = CreatePayment(JsonConvert.SerializeObject(paymentRequest));
+                res = CreatePayment(JsonConvert.SerializeObject(paymentRequest, new JsonSerializerSettings
+                {
+                    ContractResolver = new CamelCasePropertyNamesContractResolver()
+                }));
                 return res;
             }
             catch (Exception ex)
@@ -128,7 +135,10 @@ namespace Paytrail_dotnet_sdk
                 }
 
                 // Create refund request
-                res = CreateRefundRequest(JsonConvert.SerializeObject(refundRequest), transactionId);
+                res = CreateRefundRequest(JsonConvert.SerializeObject(refundRequest, new JsonSerializerSettings
+                {
+                    ContractResolver = new CamelCasePropertyNamesContractResolver()
+                }), transactionId);
                 return res;
             }
             catch (Exception ex)
@@ -138,6 +148,32 @@ namespace Paytrail_dotnet_sdk
                 return res;
             }
         }
+
+        public PayAddCardResponse PayAndAddCard(PayAddCardRequest request)
+        {
+            PayAddCardResponse response = new PayAddCardResponse();
+            try
+            {   
+                // Validate pay and add card request
+                if (!ValidatePayAndAddCardRequest(response, request))
+                {
+                    return response;
+                }
+
+                // Create pay and add card request
+                response = CreatePayAndAddCardRequest(JsonConvert.SerializeObject(request,new JsonSerializerSettings
+                    {
+                       ContractResolver = new CamelCasePropertyNamesContractResolver()
+                    }));
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response.ReturnCode = (int)ResponseMessage.Exception;
+                response.ReturnMessage = ex.ToString();
+                throw;
+            }
+        } 
 
         public override bool ValidateHmac(Dictionary<string, string> hparams, string body = "", string signature = "")
         {
@@ -172,7 +208,7 @@ namespace Paytrail_dotnet_sdk
                 RestResponse response = client.Execute(request) as RestResponse;
                 if (!ValidateResponse(response, res))
                     return res;
-
+                
                 res.Data = JsonConvert.DeserializeObject<PaymentData>(response.Content);
                 res.ReturnCode = (int)ResponseMessage.Success;
                 res.ReturnMessage = ResponseMessage.Success.GetEnumDescription();
@@ -263,6 +299,47 @@ namespace Paytrail_dotnet_sdk
             }
         }
 
+        private PayAddCardResponse CreatePayAndAddCardRequest(string bodyContent)
+        {
+            PayAddCardResponse res = new PayAddCardResponse();
+            try
+            {
+                // Create header
+                Dictionary<string, string> hdparams = GetHeaders("POST");
+
+                // Add signature for header
+                string signature = CalculateHmac(hdparams, bodyContent);
+                if (string.IsNullOrEmpty(signature))
+                {
+                    res.ReturnCode = (int)ResponseMessage.SignatureNull;
+                    res.ReturnMessage = ResponseMessage.SignatureNull.GetEnumDescription();
+                    return res;
+                }
+                hdparams = GetHeaders(hdparams, "signature", signature);
+
+                // Create new request
+                // TODO: update to string builder
+                string url = API_ENDPOINT + "/tokenization/pay-and-add-card";
+                RestClient client = new RestClient();
+                RestRequest request = SetHeaders(hdparams, url, Method.Post);
+                request.AddParameter("application/json", bodyContent, ParameterType.RequestBody);
+
+                // Execute to Paytrail API 
+                RestResponse response = client.Execute(request) as RestResponse;
+                if (!ValidateResponse(response, res))
+                    return res;
+
+                res.Data = JsonConvert.DeserializeObject<PayAddCardData>(response.Content);
+                res.ReturnCode = (int)ResponseMessage.Success;
+                res.ReturnMessage = ResponseMessage.Success.GetEnumDescription();
+                return res;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
         #region Validate Methods
         private bool ValidateRefundRequest(RefundResponse res, RefundRequest refundRequest, string transactionId)
         {
@@ -331,9 +408,29 @@ namespace Paytrail_dotnet_sdk
             return true;
         }
 
+        private bool ValidatePayAndAddCardRequest(PayAddCardResponse response, PayAddCardRequest request)
+        {
+            if (request is null)
+            {
+                response.ReturnCode = (int)ResponseMessage.RequestNull;
+                response.ReturnMessage = "Payment request can not be null";
+                return false;
+            }
+
+            (bool isValid, StringBuilder valMess) = request.Validate();
+            if (!isValid)
+            {
+                response.ReturnCode = (int)ResponseMessage.ValidateFail;
+                response.ReturnMessage = valMess.ToString();
+                return false;
+            }
+
+            return true;
+        }
+
         private bool ValidateResponse(RestResponse response, Response res)
         {
-            if (response == null)
+            if (response == null) 
             {
                 res.ReturnCode = (int)ResponseMessage.ResponseNull;
                 res.ReturnMessage = ResponseMessage.ResponseNull.GetEnumDescription();

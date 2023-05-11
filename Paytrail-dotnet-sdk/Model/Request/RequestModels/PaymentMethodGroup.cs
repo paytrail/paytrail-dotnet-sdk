@@ -2,9 +2,9 @@
 {
     public enum PaymentMethod
     {
-        Mobile,
-        Bank,
-        Creditcard,
-        Credit
+        mobile,
+        bank,
+        creditcard,
+        credit
     }
 }
