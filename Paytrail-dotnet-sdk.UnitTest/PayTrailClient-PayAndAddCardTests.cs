@@ -113,7 +113,7 @@ namespace Paytrail_dotnet_sdk.UnitTest
                 },
                 Groups = new List<string>()
             {
-                PaymentMethod.mobile.ToString()
+                PaymentMethodGroup.mobile.ToString()
             }.ToArray()
             };
             PayAddCardResponse res = payTrail.PayAndAddCard(request);
@@ -190,7 +190,7 @@ namespace Paytrail_dotnet_sdk.UnitTest
                 },
                 Groups = new List<string>()
             {
-                PaymentMethod.mobile.ToString()
+                PaymentMethodGroup.mobile.ToString()
             }.ToArray()
             };
             PayAddCardResponse res = payTrail.PayAndAddCard(request);
@@ -271,7 +271,7 @@ namespace Paytrail_dotnet_sdk.UnitTest
                 },
                 Groups = new List<string>()
             {
-                PaymentMethod.mobile.ToString()
+                PaymentMethodGroup.mobile.ToString()
             }.ToArray()
             };
             PayAddCardResponse res = payTrail.PayAndAddCard(request);
@@ -349,7 +349,7 @@ namespace Paytrail_dotnet_sdk.UnitTest
                 },
                 Groups = new List<string>()
             {
-                PaymentMethod.mobile.ToString()
+                PaymentMethodGroup.mobile.ToString()
             }.ToArray()
             };
             PayAddCardResponse res = payTrail.PayAndAddCard(request);

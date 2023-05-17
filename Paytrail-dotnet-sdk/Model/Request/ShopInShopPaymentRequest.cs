@@ -194,7 +194,7 @@ namespace Paytrail_dotnet_sdk.Model.Request
                     {
                         bool flagContain = false;
 
-                        foreach (var item in Enum.GetValues(typeof(PaymentMethod)))
+                        foreach (var item in Enum.GetValues(typeof(PaymentMethodGroup)))
                         {
                             if (Groups[i] == item.ToString())
                             {
