@@ -7,7 +7,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paytrail-dotnet-sdk", "Payt
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paytrail-dotnet-sdk.UnitTest", "Paytrail-dotnet-sdk.UnitTest\Paytrail-dotnet-sdk.UnitTest.csproj", "{69B7CCF0-9FEB-4A4F-8F3C-52B03BF227FD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{23EF843D-5C79-4C11-9822-0034BD23B6EF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{23EF843D-5C79-4C11-9822-0034BD23B6EF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B91F9067-F0FE-40BA-9978-47A4712285F8}"
+	ProjectSection(SolutionItems) = preProject
+		CHANGELOG.md = CHANGELOG.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
