@@ -40,7 +40,7 @@ namespace Paytrail_dotnet_sdk.UnitTest
             PayAddCardRequest request = new PayAddCardRequest();
             PayAddCardResponse res = payTrail.PayAndAddCard(request);
             int actual = res.ReturnCode;
-            string a = res.ReturnMessage;
+            //string a = res.ReturnMessage;
 
             //Assert
             Assert.Equal(expected, actual);
@@ -131,6 +131,7 @@ namespace Paytrail_dotnet_sdk.UnitTest
 
             //Act
             PayTrailClient payTrail = new PayTrailClient(MERCHANTIDN, SECRETKEYN, "test");
+
             PayAddCardRequest request = new PayAddCardRequest()
             {
                 Stamp = Guid.NewGuid().ToString(),
@@ -140,17 +141,18 @@ namespace Paytrail_dotnet_sdk.UnitTest
                 Language = "FI",
                 OrderId = "",
                 Items = new List<Item>()
-            {
-                new Item
-                {
-                    UnitPrice = 1590,
-                    Units = 1,
-                    VatPercentage = 24,
-                    ProductCode = "#927502759",
-                    Category = "Pet supplies",
-                    Description = "Cat ladder"
-                }
-            }.ToArray(),
+                                        {
+                                            new Item
+                                            {
+                                                UnitPrice = 1590,
+                                                Units = 1,
+                                                VatPercentage = 24,
+                                                ProductCode = "#927502759",
+                                                Category = "Pet supplies",
+                                                Description = "Cat ladder"
+                                            }
+                                        }.ToArray(),
+
                 Customer = new Customer()
                 {
                     Email = "erja.esimerkki@example.org",
@@ -160,6 +162,7 @@ namespace Paytrail_dotnet_sdk.UnitTest
                     LastName = "+358501234567",
                     Phone = "123",
                 },
+
                 RedirectUrls = new CallbackUrl()
                 {
                     Success = "https://ecom.example.org/success",
@@ -171,6 +174,7 @@ namespace Paytrail_dotnet_sdk.UnitTest
                     Success = "https://ecom.example.org/success",
                     Cancel = "https://ecom.example.org/cancel"
                 },
+
                 DeliveryAddress = new Address()
                 {
                     City = "Tampere",
@@ -179,6 +183,7 @@ namespace Paytrail_dotnet_sdk.UnitTest
                     PostalCode = "33100",
                     StreetAddress = "Hämeenkatu 6 B"
                 },
+
                 InvoicingAddress = new Address()
                 {
                     City = "Helsinki",
@@ -188,11 +193,14 @@ namespace Paytrail_dotnet_sdk.UnitTest
                     StreetAddress = "Testikatu 1"
 
                 },
+
                 Groups = new List<string>()
-            {
-                PaymentMethodGroup.mobile.ToString()
-            }.ToArray()
+                {
+                    PaymentMethodGroup.mobile.ToString()
+                }.ToArray()
+
             };
+
             PayAddCardResponse res = payTrail.PayAndAddCard(request);
             int actual = res.ReturnCode;
 
@@ -276,7 +284,7 @@ namespace Paytrail_dotnet_sdk.UnitTest
             };
             PayAddCardResponse res = payTrail.PayAndAddCard(request);
             int actual = res.ReturnCode;
-            string a = res.ReturnMessage;
+            //string a = res.ReturnMessage;
 
             //Assert
             Assert.Equal(expected, actual);
@@ -354,7 +362,7 @@ namespace Paytrail_dotnet_sdk.UnitTest
             };
             PayAddCardResponse res = payTrail.PayAndAddCard(request);
             int actual = res.ReturnCode;
-            string a = res.ReturnMessage;
+            //string a = res.ReturnMessage;
 
             //Assert
             Assert.Equal(expected, actual);
