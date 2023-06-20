@@ -28,7 +28,7 @@ namespace Paytrail_dotnet_sdk
         /// </summary>
         /// <see>https://docs.paytrail.com/#/?id=create</see>
         /// <param name="paymentRequest">A payment class instance</param>
-        /// <returns></returns>
+        /// <returns>PaymentResponse</returns>
         public PaymentResponse CreatePayment(PaymentRequest paymentRequest)
         {
             PaymentResponse res = new PaymentResponse();
@@ -60,7 +60,7 @@ namespace Paytrail_dotnet_sdk
         /// </summary>
         /// <see>https://docs.paytrail.com/#/?id=create</see>
         /// <param name="paymentRequest">A shop in shop class instance</param>
-        /// <returns></returns>
+        /// <returns>PaymentResponse (of shop)</returns>
         public PaymentResponse CreateShopInShopPayment(ShopInShopPaymentRequest paymentRequest)
         {
             PaymentResponse res = new PaymentResponse();
@@ -92,7 +92,7 @@ namespace Paytrail_dotnet_sdk
         /// </summary>
         /// <see>https://docs.paytrail.com/#/?id=get</see>
         /// <param name="transactionId"></param>
-        /// <returns></returns>
+        /// <returns>Information Payment (GetPaymentResponse)</returns>
         public GetPaymentResponse GetPaymentInfo(string transactionId)
         {
             GetPaymentResponse res = new GetPaymentResponse();
@@ -122,7 +122,7 @@ namespace Paytrail_dotnet_sdk
         /// <see>https://docs.paytrail.com/#/?id=refund</see>
         /// <param name="refundRequest">A refund instance</param>
         /// <param name="transactionId">the transaction ID</param>
-        /// <returns></returns>
+        /// <returns>RefundResponse</returns>
         public RefundResponse RefundPayment(RefundRequest refundRequest, string transactionId)
         {
             RefundResponse res = new RefundResponse();
