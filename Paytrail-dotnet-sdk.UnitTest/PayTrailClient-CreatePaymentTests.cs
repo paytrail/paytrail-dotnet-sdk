@@ -42,7 +42,6 @@ namespace Paytrail_dotnet_sdk.UnitTest
             PaymentRequest request = new PaymentRequest();
             PaymentResponse res = payTrail.CreatePayment(request);
             int actual = res.ReturnCode;
-            string a = res.ReturnMessage;
 
             //Assert
             Assert.Equal(expected, actual);
@@ -215,8 +214,6 @@ namespace Paytrail_dotnet_sdk.UnitTest
             };
             PaymentResponse res = payTrail.CreateShopInShopPayment(request);
             int actual = res.ReturnCode;
-            string a = res.ReturnMessage;
-            string json = JsonConvert.SerializeObject(request);
             //Assert
             Assert.Equal(expected, actual);
 
@@ -298,7 +295,6 @@ namespace Paytrail_dotnet_sdk.UnitTest
             };
             PaymentResponse res = payTrail.CreateShopInShopPayment(request);
             int actual = res.ReturnCode;
-            string a = res.ReturnMessage;
 
             //Assert
             Assert.Equal(expected, actual);
@@ -419,7 +415,6 @@ namespace Paytrail_dotnet_sdk.UnitTest
             PaymentRequest request = new PaymentRequest();
             PaymentResponse res = payTrail.CreatePayment(request);
             int actual = res.ReturnCode;
-            string a = res.ReturnMessage;
 
             //Assert
             Assert.Equal(expected, actual);
@@ -652,7 +647,6 @@ namespace Paytrail_dotnet_sdk.UnitTest
             }.ToArray()};
             PaymentResponse res = payTrail.CreatePayment(request);
             int actual = res.ReturnCode;
-            string a = res.ReturnMessage;
 
             //Assert
             Assert.Equal(expected, actual);
@@ -729,7 +723,6 @@ namespace Paytrail_dotnet_sdk.UnitTest
             }.ToArray()};
             PaymentResponse res = payTrail.CreatePayment(request);
             int actual = res.ReturnCode;
-            string a = res.ReturnMessage;
 
             //Assert
             Assert.Equal(expected, actual);
