@@ -10,6 +10,7 @@ namespace Paytrail_dotnet_sdk.Model.Request.RequestModels
         public string Reference { get; set; }
         public string Merchant { get; set; }
         public Commission Commission { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow; //Coordinated Universal Time (UTC)
 
         public (bool, StringBuilder) Validate(ShopInShopItem itemShopInShop)
         {

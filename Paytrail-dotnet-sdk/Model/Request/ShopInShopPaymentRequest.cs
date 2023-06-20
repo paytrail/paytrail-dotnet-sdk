@@ -21,6 +21,7 @@ namespace Paytrail_dotnet_sdk.Model.Request
         public int CallbackDelay { get; set; }
         public string[] Groups { get; set; }
         public bool UsePricesWithoutVat { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow; //Coordinated Universal Time (UTC)
 
         internal (bool, StringBuilder) Validate()
         {
