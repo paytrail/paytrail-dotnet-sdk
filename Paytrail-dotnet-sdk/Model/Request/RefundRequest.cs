@@ -12,6 +12,7 @@ namespace Paytrail_dotnet_sdk.Model.Request
         public string RefundReference { get; set; }
         public RefundItem[] Items { get; set; }
         public CallbackUrl CallbackUrls { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow; //Coordinated Universal Time (UTC)
 
         internal (bool, StringBuilder) Validate()
         {

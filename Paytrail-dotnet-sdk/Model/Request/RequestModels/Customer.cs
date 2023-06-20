@@ -11,6 +11,7 @@ namespace Paytrail_dotnet_sdk.Model.Request.RequestModels
         public string Phone { get; set; }
         public string VatId { get; set; }
         public string CompanyName { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow; //Coordinated Universal Time (UTC)
 
         public (bool, StringBuilder) Validate()
         {
