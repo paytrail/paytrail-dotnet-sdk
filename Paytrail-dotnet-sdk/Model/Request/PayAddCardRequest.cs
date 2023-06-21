@@ -59,7 +59,7 @@ namespace Paytrail_dotnet_sdk.Model.Request
                 }
 
                 //
-                if (OrderId is null)
+                if (OrderId == null || OrderId == string.Empty)
                 {
                     ret = false;
                     message.Append(" orderId can't be null.");
