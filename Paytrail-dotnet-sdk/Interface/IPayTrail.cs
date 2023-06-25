@@ -37,5 +37,6 @@ namespace Paytrail_dotnet_sdk.Interface
         /// <param name="transactionId">the transaction ID</param>
         /// <returns>RefundResponse</returns>
         RefundResponse RefundPayment(RefundRequest refundRequest, string transactionId);
+        RefundResponse RefundPartiallyPayment(RefundRequest refundRequest, string transactionId, double refundRate);
     }
 }

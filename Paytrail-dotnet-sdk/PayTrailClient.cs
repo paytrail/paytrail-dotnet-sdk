@@ -149,6 +149,34 @@ namespace Paytrail_dotnet_sdk
             }
         }
 
+        public RefundResponse RefundPartiallyPayment(RefundRequest refundRequest, string transactionId, double refundRate)
+        {
+            RefundResponse res = new RefundResponse();
+            try
+            {
+                // Validate refund request
+                if (!ValidateRefundRequest(res, refundRequest, transactionId) || refundRate < Convert.ToDouble(0))
+                {
+                    return res;
+                }
+                 
+                refundRequest.Amount = Convert.ToInt32(Math.Round((Convert.ToDouble(refundRequest.Amount) * refundRate), 0));
+
+                // Create refund request
+                res = CreateRefundRequest(JsonConvert.SerializeObject(refundRequest, new JsonSerializerSettings
+                {
+                    ContractResolver = new CamelCasePropertyNamesContractResolver()
+                }), transactionId);
+                return res;
+            }
+            catch (Exception ex)
+            {
+                res.ReturnCode = (int)ResponseMessage.Exception;
+                res.ReturnMessage = ex.ToString();
+                return res;
+            }
+        }
+
         public PayAddCardResponse PayAndAddCard(PayAddCardRequest request)
         {
             PayAddCardResponse response = new PayAddCardResponse();

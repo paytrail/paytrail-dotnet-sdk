@@ -28,8 +28,7 @@ namespace Paytrail_dotnet_sdk.UnitTest
             //Assert
             Assert.Equal(expected, actual);
         }
-
-
+         
         [Fact]
         public void RefundPayment_Success_ReturnCode200()
         {
@@ -45,8 +44,7 @@ namespace Paytrail_dotnet_sdk.UnitTest
                 Amount = 1590,
                 Email = "test@gmail.com",
                 RefundStamp = refundStamp,
-                RefundReference = "1234",
-                RefundRate = 1.0, // Full refund  
+                RefundReference = "1234",  
                 CallbackUrls = new Model.Request.RequestModels.CallbackUrl
                 {
                     Cancel = "https://ecom.example.org/refund/cancel",
@@ -77,8 +75,7 @@ namespace Paytrail_dotnet_sdk.UnitTest
             //Assert
             Assert.Equal(expected, actual);
         }
-
-
+         
         [Fact]
         public void RefundPayment_CallPayException_ReturnCode503()
         {
@@ -98,5 +95,96 @@ namespace Paytrail_dotnet_sdk.UnitTest
             //Assert
             Assert.Equal(expected, actual);
         }
+
+
+        #region Refund partially
+        [Fact]
+        public void RefundPartiallyPayment_RequestNull_ReturnCode400()
+        {
+            //Arrange
+            int expected = (int)Paytrail_dotnet_sdk.Util.ResponseMessage.RequestNull;
+
+            //Act
+            PayTrailClient payTrail = new PayTrailClient(MERCHANTIDSIS, SECRETKEYSIS, "test");
+            string? transactionId = null;
+            double refundRate = 0.5; // Haft refund 
+            RefundRequest? refundRequest = null;
+            RefundResponse res = payTrail.RefundPartiallyPayment(refundRequest, transactionId, refundRate);
+            int actual = res.ReturnCode;
+
+            //Assert
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void RefundPartiallyPayment_Success_ReturnCode200()
+        {
+            //Arrage
+            int expected = (int)Paytrail_dotnet_sdk.Util.ResponseMessage.Success;
+
+            //Act
+            PayTrailClient ptrail = new PayTrailClient(MERCHANTIDN, SECRETKEYN, "test");
+            string transactionId = "4bd78702-c9ea-11ed-beb7-ab93e0fdf0aa";
+            string refundStamp = Guid.NewGuid().ToString();
+            double refundRate = 0.5; // Haft refund  
+            RefundRequest refundRequest = new RefundRequest()
+            {
+                Amount = 1590,
+                Email = "test@gmail.com",
+                RefundStamp = refundStamp,
+                RefundReference = "1234",
+                CallbackUrls = new Model.Request.RequestModels.CallbackUrl
+                {
+                    Cancel = "https://ecom.example.org/refund/cancel",
+                    Success = "https://ecom.example.org/refund/success"
+                },
+                Items = new RefundItem[0],
+            };
+            RefundResponse res = ptrail.RefundPartiallyPayment(refundRequest, transactionId, refundRate);
+            int actual = res.ReturnCode;
+
+            //Assert
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void RefundPartiallyPayment_CallPayTrailReturnNull_ReturnCode404()
+        {
+            //Arrage
+            int expected = (int)Paytrail_dotnet_sdk.Util.ResponseMessage.ResponseNull;
+
+            //Act
+            PayTrailClient payTrail = new PayTrailClient(MERCHANTIDSIS, SECRETKEYSIS, "test");
+            string transactionId = "2f8a77ce-c861-11ed-be51-07513ab7f2f0";
+            double refundRate = 0.5; // Haft refund 
+            RefundRequest refundRequest = new RefundRequest() { };
+            RefundResponse res = payTrail.RefundPartiallyPayment(refundRequest, transactionId, refundRate);
+            int actual = res.ReturnCode;
+
+            //Assert
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void RefundPartiallyPayment_CallPayException_ReturnCode503()
+        {
+            //Arrage
+            int expected = (int)Paytrail_dotnet_sdk.Util.ResponseMessage.Exception;
+
+            //Act
+            PayTrailClient payTrail = new PayTrailClient(MERCHANTIDSIS, SECRETKEYSIS, "test");
+            string transactionId = "2f8a77ce-c861-11ed-be51-07513ab7f2f0";
+            double refundRate = 0.5; // Haft refund 
+            RefundRequest refundRequest = new RefundRequest()
+            {
+                Items = new RefundItem[0],
+            };
+            RefundResponse res = payTrail.RefundPartiallyPayment(refundRequest, transactionId, refundRate);
+            int actual = res.ReturnCode;
+
+            //Assert
+            Assert.Equal(expected, actual);
+        }
+        #endregion
     }
 }
