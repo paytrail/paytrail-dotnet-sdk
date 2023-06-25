@@ -9,5 +9,6 @@ namespace Paytrail_dotnet_sdk.Interface
         PaymentResponse CreateShopInShopPayment(ShopInShopPaymentRequest paymentRequest);
         GetPaymentResponse GetPaymentInfo(string transactionId);
         RefundResponse RefundPayment(RefundRequest refundRequest, string transactionId);
+        RefundResponse RefundPartiallyPayment(RefundRequest refundRequest, string transactionId, double refundRate);
     }
 }

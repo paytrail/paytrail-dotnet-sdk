@@ -13,22 +13,13 @@ namespace Paytrail_dotnet_sdk.Model.Request
         public RefundItem[] Items { get; set; }
         public CallbackUrl CallbackUrls { get; set; }
 
-        // Full refund or partial refund 
-        //public RefundType RefundType { get; set; }
-        public double RefundRate { get; set; }
 
         internal (bool, StringBuilder) Validate()
         {
             bool ret = true;
             StringBuilder message = new StringBuilder();
             try
-            {
-                if(RefundRate < Convert.ToDouble(0))
-                {
-                    ret = false;
-                    message.Append(" item's RefundRate cannot be less than zero.");
-                }
-
+            { 
                 if (Amount < 0)
                 {
                     ret = false;
@@ -91,10 +82,4 @@ namespace Paytrail_dotnet_sdk.Model.Request
         }
     }
 
-    public enum RefundType
-    {
-        None = 0,
-        FullRefund = 1,
-        PartialRefund = 2
-    }
 }
