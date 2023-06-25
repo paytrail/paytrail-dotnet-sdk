@@ -1,6 +1,6 @@
 ﻿using Paytrail_dotnet_sdk.Model.Request.RequestModels;
 using System;
-using System.Text;
+using System.Text; 
 
 namespace Paytrail_dotnet_sdk.Model.Request
 {
@@ -14,12 +14,22 @@ namespace Paytrail_dotnet_sdk.Model.Request
         public CallbackUrl CallbackUrls { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow; //Coordinated Universal Time (UTC)
 
+        // Full refund or partial refund 
+        //public RefundType RefundType { get; set; }
+        public double RefundRate { get; set; }
+
         internal (bool, StringBuilder) Validate()
         {
             bool ret = true;
             StringBuilder message = new StringBuilder();
             try
             {
+                if(RefundRate < 0)
+                {
+                    ret = false;
+                    message.Append(" item's RefundRate cannot be less than zero.");
+                }
+
                 if (Amount < 0)
                 {
                     ret = false;
@@ -80,5 +90,12 @@ namespace Paytrail_dotnet_sdk.Model.Request
             }
 
         }
+    }
+
+    public enum RefundType
+    {
+        None = 0,
+        FullRefund = 1,
+        PartialRefund = 2
     }
 }

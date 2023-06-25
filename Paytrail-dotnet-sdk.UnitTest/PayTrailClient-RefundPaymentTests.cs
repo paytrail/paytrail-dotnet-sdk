@@ -39,7 +39,6 @@ namespace Paytrail_dotnet_sdk.UnitTest
             //Act
             PayTrailClient ptrail = new PayTrailClient(MERCHANTIDN, SECRETKEYN, "test");
             string transactionId = "4bd78702-c9ea-11ed-beb7-ab93e0fdf0aa";
-            List<RefundItem> it = new List<RefundItem>();
             string refundStamp = Guid.NewGuid().ToString();
             RefundRequest refundRequest = new RefundRequest()
             {
@@ -47,6 +46,7 @@ namespace Paytrail_dotnet_sdk.UnitTest
                 Email = "test@gmail.com",
                 RefundStamp = refundStamp,
                 RefundReference = "1234",
+                RefundRate = 1.0, // Full refund  
                 CallbackUrls = new Model.Request.RequestModels.CallbackUrl
                 {
                     Cancel = "https://ecom.example.org/refund/cancel",
