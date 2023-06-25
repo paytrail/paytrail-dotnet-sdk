@@ -63,7 +63,7 @@ namespace Paytrail_dotnet_sdk.UnitTest
                 Amount = 1590,
                 Currency = "EUR",
                 Language = "FI",
-                OrderId = "",
+                OrderId = "", //Order ID. Used for e.g. Walley/Collector payments order ID. If not given, merchant reference is used instead.
                 Items = new List<ShopInShopItem>()
             {
                 new ShopInShopItem
@@ -440,7 +440,7 @@ namespace Paytrail_dotnet_sdk.UnitTest
                 Amount = 1590,
                 Currency = "EUR",
                 Language = "FI",
-                OrderId = "",
+                OrderId = "",  //Order ID. Used for e.g. Walley/Collector payments order ID. If not given, merchant reference is used instead.
                 Items = new List<Item>()
             {
                 new Item

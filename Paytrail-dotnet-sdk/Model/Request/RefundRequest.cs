@@ -23,7 +23,7 @@ namespace Paytrail_dotnet_sdk.Model.Request
             StringBuilder message = new StringBuilder();
             try
             {
-                if(RefundRate < 0)
+                if(RefundRate < Convert.ToDouble(0))
                 {
                     ret = false;
                     message.Append(" item's RefundRate cannot be less than zero.");
