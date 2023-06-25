@@ -40,7 +40,6 @@ namespace Paytrail_dotnet_sdk.UnitTest
             PayAddCardRequest request = new PayAddCardRequest();
             PayAddCardResponse res = payTrail.PayAndAddCard(request);
             int actual = res.ReturnCode;
-            //string a = res.ReturnMessage;
 
             //Assert
             Assert.Equal(expected, actual);
@@ -284,7 +283,6 @@ namespace Paytrail_dotnet_sdk.UnitTest
             };
             PayAddCardResponse res = payTrail.PayAndAddCard(request);
             int actual = res.ReturnCode;
-            //string a = res.ReturnMessage;
 
             //Assert
             Assert.Equal(expected, actual);
@@ -362,7 +360,6 @@ namespace Paytrail_dotnet_sdk.UnitTest
             };
             PayAddCardResponse res = payTrail.PayAndAddCard(request);
             int actual = res.ReturnCode;
-            //string a = res.ReturnMessage;
 
             //Assert
             Assert.Equal(expected, actual);
