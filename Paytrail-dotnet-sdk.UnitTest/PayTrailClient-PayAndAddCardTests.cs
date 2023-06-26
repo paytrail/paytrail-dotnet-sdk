@@ -60,7 +60,7 @@ namespace Paytrail_dotnet_sdk.UnitTest
                 Amount = 1590,
                 Currency = "EUR",
                 Language = "FI",
-                OrderId = "079599516354",
+                OrderId = "",
                 Items = new List<Item>()
             {
                 new Item
