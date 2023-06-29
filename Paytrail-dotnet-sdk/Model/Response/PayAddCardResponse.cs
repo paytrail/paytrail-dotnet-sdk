@@ -8,6 +8,6 @@
     public class PayAddCardData
     {
         public string TransactionId { get; set; }
-        public string RedirectUrl { get; set; }
+        public string RedirectUrl { get; set; } 
     }
 }

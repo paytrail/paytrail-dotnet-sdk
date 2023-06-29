@@ -11,6 +11,7 @@ namespace Paytrail_dotnet_sdk.Model.Request.RequestModels
         public string ProductCode { get; set; }
         public string Description { get; set; }
         public string Category { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow; //Coordinated Universal Time (UTC)
 
         //public string orderId { get; set; }
         //public string stamp { get; set; }
