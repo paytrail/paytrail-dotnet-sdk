@@ -37,8 +37,8 @@ dotnet add package Paytrail-dotnet-sdk --version 1.0.2
 | Paytrail-dotnet-sdk/Model/Request		| Request model and functions						|
 | Paytrail-dotnet-sdk/Model/Response	| Response model and functions						|
 | Paytrail-dotnet-sdk/Util				| Utility/Enum classes and functions				|
-| Paytrail-dotnet-sdk/PayTrail.cs		| Init paytrail service								|
-| Paytrail-dotnet-sdk/PayTrailClient.cs	| Paytrail client class and functions				|
+| Paytrail-dotnet-sdk/Paytrail.cs		| Init paytrail service								|
+| Paytrail-dotnet-sdk/PaytrailClient.cs	| Paytrail client class and functions				|
 | Paytrail-dotnet-sdk.UnitTest			| .NET unit test									|
 
 ## Basic fucntionalities

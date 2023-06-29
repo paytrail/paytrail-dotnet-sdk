@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Paytrail_dotnet_sdk
 {
-    public abstract class PayTrail
+    public abstract class Paytrail
     {
         public string merchantId;
         public string secretKey;

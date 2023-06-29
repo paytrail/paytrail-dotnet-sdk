@@ -5,7 +5,7 @@ using Paytrail_dotnet_sdk.Model.Response;
 
 namespace Paytrail_dotnet_sdk.UnitTest
 {
-    public class PayTrailClient_PayAndAddCardTests
+    public class PaytrailClient_PayAndAddCardTests
     {
         const string MERCHANTIDN = "375917";
         const string SECRETKEYN = "SAIPPUAKAUPPIAS";
@@ -20,7 +20,7 @@ namespace Paytrail_dotnet_sdk.UnitTest
             int expected = (int)Paytrail_dotnet_sdk.Util.ResponseMessage.RequestNull;
 
             //Act
-            PayTrailClient payTrail = new PayTrailClient(MERCHANTIDN, SECRETKEYN, "test");
+            PaytrailClient payTrail = new PaytrailClient(MERCHANTIDN, SECRETKEYN, "test");
             PayAddCardRequest? request = null;
             PayAddCardResponse res = payTrail.PayAndAddCard(request);
             int actual = res.ReturnCode;
@@ -36,11 +36,10 @@ namespace Paytrail_dotnet_sdk.UnitTest
             int expected = (int)Paytrail_dotnet_sdk.Util.ResponseMessage.ValidateFail;
 
             //Act
-            PayTrailClient payTrail = new PayTrailClient(MERCHANTIDN, SECRETKEYN, "test");
+            PaytrailClient payTrail = new PaytrailClient(MERCHANTIDN, SECRETKEYN, "test");
             PayAddCardRequest request = new PayAddCardRequest();
             PayAddCardResponse res = payTrail.PayAndAddCard(request);
             int actual = res.ReturnCode;
-            string a = res.ReturnMessage;
 
             //Assert
             Assert.Equal(expected, actual);
@@ -53,7 +52,7 @@ namespace Paytrail_dotnet_sdk.UnitTest
             int expected = (int)Paytrail_dotnet_sdk.Util.ResponseMessage.Success;
 
             //Act
-            PayTrailClient payTrail = new PayTrailClient(MERCHANTIDN, SECRETKEYN, "test");
+            PaytrailClient payTrail = new PaytrailClient(MERCHANTIDN, SECRETKEYN, "test");
             PayAddCardRequest request = new PayAddCardRequest()
             {
                 Stamp = Guid.NewGuid().ToString(),
@@ -124,13 +123,13 @@ namespace Paytrail_dotnet_sdk.UnitTest
         }
 
         [Fact]
-        public void PayAndAddCard_CallPayTrailReturnNull_ReturnCode404()
+        public void PayAndAddCard_CallPaytrailReturnNull_ReturnCode404()
         {
             //Arrage
             int expected = (int)Paytrail_dotnet_sdk.Util.ResponseMessage.ResponseNull;
 
             //Act
-            PayTrailClient payTrail = new PayTrailClient(MERCHANTIDN, SECRETKEYN, "test");
+            PaytrailClient payTrail = new PaytrailClient(MERCHANTIDN, SECRETKEYN, "test");
             PayAddCardRequest request = new PayAddCardRequest()
             {
                 Stamp = Guid.NewGuid().ToString(),
@@ -201,13 +200,13 @@ namespace Paytrail_dotnet_sdk.UnitTest
         }
 
         [Fact]
-        public void PayAndAddCard_CallPayTrailReturnFail_ReturnCode500()
+        public void PayAndAddCard_CallPaytrailReturnFail_ReturnCode500()
         {
             //Arrage
             int expected = (int)Paytrail_dotnet_sdk.Util.ResponseMessage.ResponseError;
 
             //Act
-            PayTrailClient payTrail = new PayTrailClient(MERCHANTIDN, SECRETKEYN, "test");
+            PaytrailClient payTrail = new PaytrailClient(MERCHANTIDN, SECRETKEYN, "test");
             PayAddCardRequest request = new PayAddCardRequest()
             {
                 Stamp = Guid.NewGuid().ToString(),
@@ -276,7 +275,6 @@ namespace Paytrail_dotnet_sdk.UnitTest
             };
             PayAddCardResponse res = payTrail.PayAndAddCard(request);
             int actual = res.ReturnCode;
-            string a = res.ReturnMessage;
 
             //Assert
             Assert.Equal(expected, actual);
@@ -289,7 +287,7 @@ namespace Paytrail_dotnet_sdk.UnitTest
             int expected = (int)Paytrail_dotnet_sdk.Util.ResponseMessage.Exception;
 
             //Act
-            PayTrailClient payTrail = new PayTrailClient(MERCHANTIDN, SECRETKEYN, "test");
+            PaytrailClient payTrail = new PaytrailClient(MERCHANTIDN, SECRETKEYN, "test");
             PayAddCardRequest request = new PayAddCardRequest()
             {
                 Stamp = "1222",
@@ -354,7 +352,6 @@ namespace Paytrail_dotnet_sdk.UnitTest
             };
             PayAddCardResponse res = payTrail.PayAndAddCard(request);
             int actual = res.ReturnCode;
-            string a = res.ReturnMessage;
 
             //Assert
             Assert.Equal(expected, actual);

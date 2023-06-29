@@ -12,11 +12,11 @@ using System.Text;
 
 namespace Paytrail_dotnet_sdk
 {
-    public class PayTrailClient : PayTrail, IPayTrail
+    public class PaytrailClient : Paytrail, IPaytrail
     {
         public const string API_ENDPOINT = @"https://services.paytrail.com";
 
-        public PayTrailClient(string merchantId, string secretKey, string platformName)
+        public PaytrailClient(string merchantId, string secretKey, string platformName)
         {
             this.merchantId = merchantId;
             this.secretKey = secretKey;
@@ -60,7 +60,7 @@ namespace Paytrail_dotnet_sdk
         /// </summary>
         /// <see>https://docs.paytrail.com/#/?id=create</see>
         /// <param name="paymentRequest">A shop in shop class instance</param>
-        /// <returns></returns>
+        /// <returns>PaymentResponse (of shop)</returns>
         public PaymentResponse CreateShopInShopPayment(ShopInShopPaymentRequest paymentRequest)
         {
             PaymentResponse res = new PaymentResponse();
@@ -92,7 +92,7 @@ namespace Paytrail_dotnet_sdk
         /// </summary>
         /// <see>https://docs.paytrail.com/#/?id=get</see>
         /// <param name="transactionId"></param>
-        /// <returns></returns>
+        /// <returns>Information Payment (GetPaymentResponse)</returns>
         public GetPaymentResponse GetPaymentInfo(string transactionId)
         {
             GetPaymentResponse res = new GetPaymentResponse();
@@ -122,7 +122,7 @@ namespace Paytrail_dotnet_sdk
         /// <see>https://docs.paytrail.com/#/?id=refund</see>
         /// <param name="refundRequest">A refund instance</param>
         /// <param name="transactionId">the transaction ID</param>
-        /// <returns></returns>
+        /// <returns>RefundResponse</returns>
         public RefundResponse RefundPayment(RefundRequest refundRequest, string transactionId)
         {
             RefundResponse res = new RefundResponse();
@@ -133,6 +133,41 @@ namespace Paytrail_dotnet_sdk
                 {
                     return res;
                 }
+
+                // Create refund request
+                res = CreateRefundRequest(JsonConvert.SerializeObject(refundRequest, new JsonSerializerSettings
+                {
+                    ContractResolver = new CamelCasePropertyNamesContractResolver()
+                }), transactionId);
+                return res;
+            }
+            catch (Exception ex)
+            {
+                res.ReturnCode = (int)ResponseMessage.Exception;
+                res.ReturnMessage = ex.ToString();
+                return res;
+            }
+        }
+
+        /// <summary>
+        /// Refund partial a payment by transaction ID
+        /// </summary>
+        /// <see>https://docs.paytrail.com/#/?id=refund</see>
+        /// <param name="refundRequest">A refund instance</param>
+        /// <param name="transactionId">the transaction ID</param>
+        /// <returns>RefundResponse</returns>
+        public RefundResponse RefundPartiallyPayment(RefundRequest refundRequest, string transactionId, double refundRate)
+        {
+            RefundResponse res = new RefundResponse();
+            try
+            {
+                // Validate refund request
+                if (!ValidateRefundRequest(res, refundRequest, transactionId) || refundRate < Convert.ToDouble(0))
+                {
+                    return res;
+                }
+
+                refundRequest.Amount = Convert.ToInt32(Math.Round((Convert.ToDouble(refundRequest.Amount) * refundRate), 0));
 
                 // Create refund request
                 res = CreateRefundRequest(JsonConvert.SerializeObject(refundRequest, new JsonSerializerSettings
