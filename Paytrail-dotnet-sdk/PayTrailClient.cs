@@ -208,7 +208,30 @@ namespace Paytrail_dotnet_sdk
                 response.ReturnMessage = ex.ToString();
                 throw;
             }
-        } 
+        }
+
+        /// <summary>
+        /// Get a list of payment providers.
+        /// </summary>
+        /// <see>https://docs.paytrail.com/#/?id=list-providers</see>
+        /// <param name="getPaymentProvidersRequest">A GetPaymentProvidersRequest class instance</param>
+        /// <returns>GetPaymentProvidersResponse</returns>
+        public GetPaymentProvidersResponse GetPaymentProviders(GetPaymentProvidersRequest getPaymentProvidersRequest)
+        {
+            GetPaymentProvidersResponse res = new GetPaymentProvidersResponse();
+            try
+            {
+                // Create payment
+                res = HandleGetPaymentProviders(getPaymentProvidersRequest);
+                return res;
+            }
+            catch (Exception ex)
+            {
+                res.ReturnCode = (int)ResponseMessage.Exception;
+                res.ReturnMessage = ex.ToString();
+                return res;
+            }
+        }
 
         public override bool ValidateHmac(Dictionary<string, string> hparams, string body = "", string signature = "")
         {
@@ -365,6 +388,47 @@ namespace Paytrail_dotnet_sdk
                     return res;
 
                 res.Data = JsonConvert.DeserializeObject<PayAddCardData>(response.Content);
+                res.ReturnCode = (int)ResponseMessage.Success;
+                res.ReturnMessage = ResponseMessage.Success.GetEnumDescription();
+                return res;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        private GetPaymentProvidersResponse HandleGetPaymentProviders(GetPaymentProvidersRequest getPaymentProvidersRequest)
+        {
+            GetPaymentProvidersResponse res = new GetPaymentProvidersResponse();
+
+            try
+            {
+                // Create header
+                Dictionary<string, string> hdparams = GetHeaders("GET");
+
+                // Add signature for header
+                string signature = CalculateHmac(hdparams);
+                if (string.IsNullOrEmpty(signature))
+                {
+                    res.ReturnCode = (int)ResponseMessage.SignatureNull;
+                    res.ReturnMessage = ResponseMessage.SignatureNull.GetEnumDescription();
+                    return res;
+                }
+                hdparams = GetHeaders(hdparams, "signature", signature);
+
+                // Create new request
+                string url = API_ENDPOINT + $"/merchants/payment-providers?{getPaymentProvidersRequest.ToString()}";
+
+                RestClient client = new RestClient();
+                RestRequest request = SetHeaders(hdparams, url, Method.Get);
+
+                // Execute to Paytrail API 
+                RestResponse response = client.Execute(request) as RestResponse;
+                if (!ValidateResponse(response, res))
+                    return res;
+
+                res.Data = JsonConvert.DeserializeObject<List<GetPaymentProvidersData>>(response.Content);
                 res.ReturnCode = (int)ResponseMessage.Success;
                 res.ReturnMessage = ResponseMessage.Success.GetEnumDescription();
                 return res;
