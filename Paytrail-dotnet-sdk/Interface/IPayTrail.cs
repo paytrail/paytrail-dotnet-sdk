@@ -54,5 +54,13 @@ namespace Paytrail_dotnet_sdk.Interface
         /// <param name="getPaymentProvidersRequest">A GetPaymentProvidersRequest class instance</param>
         /// <returns>GetPaymentProvidersResponse</returns>
         GetPaymentProvidersResponse GetPaymentProviders(GetPaymentProvidersRequest getPaymentProvidersRequest);
+
+        /// <summary>
+        /// Returns an array of following grouped payment providers fields:
+        /// </summary>
+        /// <see>https://docs.paytrail.com/#/?id=list-grouped-providers</see>
+        /// <param name="getGroupedPaymentProvidersRequest">A GetGroupedPaymentProvidersRequest class instance</param>
+        /// <returns>GetGroupedPaymentProvidersResponse</returns>
+        GetGroupedPaymentProvidersResponse GetGroupedPaymentProviders(GetGroupedPaymentProvidersRequest getGroupedPaymentProvidersRequest);
     }
 }
