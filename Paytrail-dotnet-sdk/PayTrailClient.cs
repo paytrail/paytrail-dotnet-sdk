@@ -221,7 +221,12 @@ namespace Paytrail_dotnet_sdk
             GetPaymentProvidersResponse res = new GetPaymentProvidersResponse();
             try
             {
-                // Create payment
+                if (!ValidateGetPaymentProviders(res, getPaymentProvidersRequest))
+                {
+                    return res;
+                }
+
+                // Get Payment Providers
                 res = HandleGetPaymentProviders(getPaymentProvidersRequest);
                 return res;
             }
@@ -521,6 +526,26 @@ namespace Paytrail_dotnet_sdk
             {
                 response.ReturnCode = (int)ResponseMessage.ValidateFail;
                 response.ReturnMessage = valMess.ToString();
+                return false;
+            }
+
+            return true;
+        }
+
+        private bool ValidateGetPaymentProviders(GetPaymentProvidersResponse res, GetPaymentProvidersRequest req)
+        {
+            if (req is null)
+            {
+                res.ReturnCode = (int)ResponseMessage.RequestNull;
+                res.ReturnMessage = "Get payment providers request can not be null";
+                return false;
+            }
+
+            (bool isValid, StringBuilder valMess) = req.Validate();
+            if (!isValid)
+            {
+                res.ReturnCode = (int)ResponseMessage.ValidateFail;
+                res.ReturnMessage = valMess.ToString();
                 return false;
             }
 
