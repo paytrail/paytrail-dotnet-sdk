@@ -48,7 +48,7 @@ namespace Paytrail_dotnet_sdk.Interface
         RefundResponse RefundPartiallyPayment(RefundRequest refundRequest, string transactionId, double refundRate);
 
         /// <summary>
-        /// Get a list of payment providers.
+        /// Get a list of payment providers
         /// </summary>
         /// <see>https://docs.paytrail.com/#/?id=list-providers</see>
         /// <param name="getPaymentProvidersRequest">A GetPaymentProvidersRequest class instance</param>
@@ -56,7 +56,7 @@ namespace Paytrail_dotnet_sdk.Interface
         GetPaymentProvidersResponse GetPaymentProviders(GetPaymentProvidersRequest getPaymentProvidersRequest);
 
         /// <summary>
-        /// Returns an array of following grouped payment providers fields:
+        /// Returns an array of following grouped payment providers fields
         /// </summary>
         /// <see>https://docs.paytrail.com/#/?id=list-grouped-providers</see>
         /// <param name="getGroupedPaymentProvidersRequest">A GetGroupedPaymentProvidersRequest class instance</param>
@@ -64,7 +64,7 @@ namespace Paytrail_dotnet_sdk.Interface
         GetGroupedPaymentProvidersResponse GetGroupedPaymentProviders(GetGroupedPaymentProvidersRequest getGroupedPaymentProvidersRequest);
 
         /// <summary>
-        /// Email refunds a payment by transaction ID:
+        /// Email refunds a payment by transaction ID
         /// </summary>
         /// <see>https://docs.paytrail.com/#/?id=email-refunds</see>
         /// <param name="emailRefundRequest">A EmailRefundRequest class instance</param>
