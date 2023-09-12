@@ -68,7 +68,7 @@ namespace Paytrail_dotnet_sdk.Interface
         /// </summary>
         /// <see>https://docs.paytrail.com/#/?id=email-refunds</see>
         /// <param name="emailRefundRequest">A EmailRefundRequest class instance</param>
-        /// <returns>EmailRefundRequest</returns>
+        /// <returns>EmailRefundResponse</returns>
         EmailRefundResponse EmailRefund(EmailRefundRequest emailRefundRequest, string transactionId);
     }
 }
