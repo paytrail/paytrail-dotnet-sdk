@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Text;
+using System.Transactions;
 
 namespace Paytrail_dotnet_sdk
 {
@@ -346,6 +347,38 @@ namespace Paytrail_dotnet_sdk
 
                 // Create request settlements
                 res = HandleRequestSettlements(settlementsRequest);
+                return res;
+            }
+            catch (Exception ex)
+            {
+                res.ReturnCode = (int)ResponseMessage.Exception;
+                res.ReturnMessage = ex.ToString();
+                return res;
+            }
+        }
+
+        /// <summary>
+        /// Results in a callback containing the payment report
+        /// </summary>
+        /// <see>https://docs.paytrail.com/#/?id=payment-reports</see>
+        /// <param name="paymentReportRequest">A PaymentReportRequest class instance</param>
+        /// <returns>PaymentReportResponse</returns>
+        public PaymentReportResponse RequestPaymentReport(PaymentReportRequest paymentReportRequest)
+        {
+            PaymentReportResponse res = new PaymentReportResponse();
+            try
+            {
+                // Validate request settlements request
+                if (!ValidateRequestPaymentReport(res, paymentReportRequest))
+                {
+                    return res;
+                }
+
+                // Create request settlements
+                res = HandleRequestPaymentReport(JsonConvert.SerializeObject(paymentReportRequest, new JsonSerializerSettings
+                {
+                    ContractResolver = new CamelCasePropertyNamesContractResolver()
+                }));
                 return res;
             }
             catch (Exception ex)
@@ -725,6 +758,49 @@ namespace Paytrail_dotnet_sdk
             }
         }
 
+        private PaymentReportResponse HandleRequestPaymentReport(string bodyContent)
+        {
+            Console.WriteLine(bodyContent);
+            PaymentReportResponse res = new PaymentReportResponse();
+            try
+            {
+                // Create header
+                Dictionary<string, string> hdparams = GetHeaders("POST");
+
+                // Add signature for header
+                string signature = CalculateHmac(hdparams, bodyContent);
+                if (string.IsNullOrEmpty(signature))
+                {
+                    res.ReturnCode = (int)ResponseMessage.SignatureNull;
+                    res.ReturnMessage = ResponseMessage.SignatureNull.GetEnumDescription();
+                    return res;
+                }
+                hdparams = GetHeaders(hdparams, "signature", signature);
+
+                // Create new request
+                // TODO: update to string builder
+                string url = API_ENDPOINT + "/payments/report";
+                RestClient client = new RestClient();
+                RestRequest request = SetHeaders(hdparams, url, Method.Post);
+                request.AddParameter("application/json", bodyContent, ParameterType.RequestBody);
+
+                // Execute to Paytrail API 
+                RestResponse response = client.Execute(request) as RestResponse;
+                // Console.WriteLine(JsonConvert.SerializeObject(response));
+                if (!ValidateResponse(response, res))
+                    return res;
+
+                res.Data = JsonConvert.DeserializeObject<PaymentReportData>(response.Content);
+                res.ReturnCode = (int)ResponseMessage.Success;
+                res.ReturnMessage = ResponseMessage.Success.GetEnumDescription();
+                return res;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
         #region Validate Methods
         private bool ValidateRefundRequest(RefundResponse res, RefundRequest refundRequest, string transactionId)
         {
@@ -906,6 +982,26 @@ namespace Paytrail_dotnet_sdk
             {
                 res.ReturnCode = (int)ResponseMessage.RequestNull;
                 res.ReturnMessage = "request settlements can not be null";
+                return false;
+            }
+
+            (bool isValid, StringBuilder valMess) = req.Validate();
+            if (!isValid)
+            {
+                res.ReturnCode = (int)ResponseMessage.ValidateFail;
+                res.ReturnMessage = valMess.ToString();
+                return false;
+            }
+
+            return true;
+        }
+
+        private bool ValidateRequestPaymentReport(PaymentReportResponse res, PaymentReportRequest req)
+        {
+            if (req is null)
+            {
+                res.ReturnCode = (int)ResponseMessage.RequestNull;
+                res.ReturnMessage = "payment report request can not be null";
                 return false;
             }
 
