@@ -333,7 +333,7 @@ namespace Paytrail_dotnet_sdk
         /// <see>https://docs.paytrail.com/#/?id=settlements</see>
         /// <param name="settlementsRequest">A SettlementsRequest class instance</param>
         /// <returns>SettlementsResponse</returns>
-        public SettlementsResponse requestSettlements(SettlementsRequest settlementsRequest)
+        public SettlementsResponse RequestSettlements(SettlementsRequest settlementsRequest)
         {
             SettlementsResponse res = new SettlementsResponse();
             try
