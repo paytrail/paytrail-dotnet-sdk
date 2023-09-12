@@ -13,7 +13,7 @@ namespace Paytrail_dotnet_sdk
 
         public abstract bool ValidateHmac(Dictionary<string, string> hparams, string body = "", string signature = "");
 
-        public Dictionary<string, string> GetHeaders(string method, string transactionId = null)
+        public Dictionary<string, string> GetHeaders(string method, string transactionId = null, string checkoutTokenizationId = null)
         {
             var datetime = new DateTime();
             var headers = new Dictionary<string, string>();
@@ -26,10 +26,17 @@ namespace Paytrail_dotnet_sdk
                 headers["checkout-timestamp"] = datetime.ToString("Y-m-d\\TH:i:s.u\\Z");
                 headers["platform-name"] = this.platformName;
                 headers["content-type"] = "application/json; charset=utf-8";
+
                 if (!string.IsNullOrEmpty(transactionId))
                 {
                     headers["checkout-transaction-id"] = transactionId;
                 }
+
+                if (!string.IsNullOrEmpty(checkoutTokenizationId))
+                {
+                    headers["checkout-tokenization-id"] = checkoutTokenizationId;
+                }
+
                 return headers;
             }
             catch (Exception)
@@ -78,6 +85,10 @@ namespace Paytrail_dotnet_sdk
             if (hdparams.ContainsKey("checkout-transaction-id"))
             {
                 request.AddHeader("checkout-transaction-id", hdparams["checkout-transaction-id"]);
+            }
+            if (hdparams.ContainsKey("checkout-tokenization-id"))
+            {
+                request.AddHeader("checkout-tokenization-id", hdparams["checkout-tokenization-id"]);
             }
             if (hdparams.ContainsKey("signature"))
             {

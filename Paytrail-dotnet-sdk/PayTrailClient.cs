@@ -298,6 +298,35 @@ namespace Paytrail_dotnet_sdk
             }
         }
 
+        /// <summary>
+        /// Returns the actual card token which can then be used to make payments on the card
+        /// </summary>
+        /// <see>https://docs.paytrail.com/#/?id=get-token</see>
+        /// <param name="getTokenRequest">A GetTokenRequest class instance</param>
+        /// <returns>GetTokenResponse</returns>
+        public GetTokenResponse CreateGetTokenRequest(GetTokenRequest getTokenRequest)
+        {
+            GetTokenResponse res = new GetTokenResponse();
+            try
+            {
+                // Validate get token request
+                if (!ValidateCreateGetTokenRequest(res, getTokenRequest))
+                {
+                    return res;
+                }
+
+                // Create get token request
+                res = HandleCreateGetTokenRequest(getTokenRequest);
+                return res;
+            }
+            catch (Exception ex)
+            {
+                res.ReturnCode = (int)ResponseMessage.Exception;
+                res.ReturnMessage = ex.ToString();
+                return res;
+            }
+        }
+
         public override bool ValidateHmac(Dictionary<string, string> hparams, string body = "", string signature = "")
         {
             throw new NotImplementedException();
@@ -587,6 +616,46 @@ namespace Paytrail_dotnet_sdk
             }
         }
 
+        private GetTokenResponse HandleCreateGetTokenRequest(GetTokenRequest getTokenRequest)
+        {
+            GetTokenResponse res = new GetTokenResponse();
+            try
+            {
+                // Create header
+                Dictionary<string, string> hdparams = GetHeaders("POST", null, getTokenRequest.CheckoutTokenizationId);
+
+                // Add signature for header
+                string signature = CalculateHmac(hdparams);
+                if (string.IsNullOrEmpty(signature))
+                {
+                    res.ReturnCode = (int)ResponseMessage.SignatureNull;
+                    res.ReturnMessage = ResponseMessage.SignatureNull.GetEnumDescription();
+                    return res;
+                }
+                hdparams = GetHeaders(hdparams, "signature", signature);
+
+                // Create new request
+                string url = API_ENDPOINT + "/tokenization/" + getTokenRequest.CheckoutTokenizationId;
+                RestClient client = new RestClient();
+
+                RestRequest request = SetHeaders(hdparams, url, Method.Post);
+
+                // Execute to Paytrail API 
+                RestResponse response = client.Execute(request) as RestResponse;
+                if (!ValidateResponse(response, res))
+                    return res;
+
+                res.Data = JsonConvert.DeserializeObject<GetTokenData>(response.Content);
+                res.ReturnCode = (int)ResponseMessage.Success;
+                res.ReturnMessage = ResponseMessage.Success.GetEnumDescription();
+                return res;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
         #region Validate Methods
         private bool ValidateRefundRequest(RefundResponse res, RefundRequest refundRequest, string transactionId)
         {
@@ -728,6 +797,26 @@ namespace Paytrail_dotnet_sdk
             {
                 res.ReturnCode = (int)ResponseMessage.RequestNull;
                 res.ReturnMessage = "email refund request can not be null";
+                return false;
+            }
+
+            (bool isValid, StringBuilder valMess) = req.Validate();
+            if (!isValid)
+            {
+                res.ReturnCode = (int)ResponseMessage.ValidateFail;
+                res.ReturnMessage = valMess.ToString();
+                return false;
+            }
+
+            return true;
+        }
+
+        private bool ValidateCreateGetTokenRequest(GetTokenResponse res, GetTokenRequest req)
+        {
+            if (req is null)
+            {
+                res.ReturnCode = (int)ResponseMessage.RequestNull;
+                res.ReturnMessage = "create get token request can not be null";
                 return false;
             }
 
