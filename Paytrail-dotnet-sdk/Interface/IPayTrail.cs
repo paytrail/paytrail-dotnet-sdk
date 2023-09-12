@@ -78,5 +78,13 @@ namespace Paytrail_dotnet_sdk.Interface
         /// <param name="getTokenRequest">A GetTokenRequest class instance</param>
         /// <returns>GetTokenResponse</returns>
         GetTokenResponse CreateGetTokenRequest(GetTokenRequest getTokenRequest);
+
+        /// <summary>
+        /// Returns merchant's settlement IDs and corresponding bank references
+        /// </summary>
+        /// <see>https://docs.paytrail.com/#/?id=settlements</see>
+        /// <param name="settlementsRequest">A SettlementsRequest class instance</param>
+        /// <returns>SettlementsResponse</returns>
+        SettlementsResponse requestSettlements(SettlementsRequest settlementsRequest);
     }
 }
