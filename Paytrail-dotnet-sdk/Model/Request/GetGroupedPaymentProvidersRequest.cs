@@ -18,10 +18,10 @@ namespace Paytrail_dotnet_sdk.Model.Request
             try
             {
                 bool ret = true;
-                if (Amount < 0)
+                if (Amount <= 0)
                 {
                     ret = false;
-                    message.Append(" amount can't be less than zero.");
+                    message.Append(" amount cannot be less than or equal to 0.");
                 }
 
                 return (ret, message);
@@ -37,7 +37,7 @@ namespace Paytrail_dotnet_sdk.Model.Request
         {
             string query = "";
 
-            if (Amount >= 0)
+            if (Amount > 0)
             {
                 query += $"&amount={Amount}";
             }
@@ -49,7 +49,7 @@ namespace Paytrail_dotnet_sdk.Model.Request
                 query += $"&groups={groupsString}";
             }
 
-            if (Language != null)
+            if (String.IsNullOrEmpty(Language))
             {
                 query += $"&language={Language}";
             }
