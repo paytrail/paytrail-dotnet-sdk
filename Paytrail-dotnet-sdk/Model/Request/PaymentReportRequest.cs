@@ -1,5 +1,5 @@
-﻿using Paytrail_dotnet_sdk.Model.Request.RequestModels;
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -7,15 +7,15 @@ namespace Paytrail_dotnet_sdk.Model.Request
 {
     public class PaymentReportRequest
     {
-        public RequestType RequestType { get; set; }
+        public string RequestType { get; set; }
         public string CallbackUrl { get; set; }
-        public PaymentStatus PaymentStatus { get; set; }
+        public string PaymentStatus { get; set; }
         public string StartDate { get; set; }
         public string EndDate { get; set; }
         public int Limit { get; set; }
-        public ReportFields ReportFields { get; set; }
+        public List<string> ReportFields { get; set; }
         public int Submerchant { get; set; }
-        public Boolean IncludeItems { get; set; }
+        public bool IncludeItems { get; set; }
 
         public (bool, StringBuilder) Validate()
         {
@@ -24,16 +24,16 @@ namespace Paytrail_dotnet_sdk.Model.Request
 
             try
             {
-                if (RequestType != RequestType.json && RequestType != RequestType.csv)
+                if (String.IsNullOrEmpty(RequestType))
                 {
                     ret = false;
-                    message.Append("RequestType must be either 'json' or 'csv'");
+                    message.Append(" RequestType cannot be empty.");
                 }
 
                 if (string.IsNullOrEmpty(CallbackUrl))
                 {
                     ret = false;
-                    message.Append("CallbackUrl cannot be empty");
+                    message.Append(" CallbackUrl cannot be empty.");
                 }
 
                 if (Limit > 50000)

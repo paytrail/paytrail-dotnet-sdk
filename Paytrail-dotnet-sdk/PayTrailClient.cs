@@ -377,7 +377,8 @@ namespace Paytrail_dotnet_sdk
                 // Create request settlements
                 res = HandleRequestPaymentReport(JsonConvert.SerializeObject(paymentReportRequest, new JsonSerializerSettings
                 {
-                    ContractResolver = new CamelCasePropertyNamesContractResolver()
+                    ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                    NullValueHandling = NullValueHandling.Ignore
                 }));
                 return res;
             }
@@ -760,7 +761,6 @@ namespace Paytrail_dotnet_sdk
 
         private PaymentReportResponse HandleRequestPaymentReport(string bodyContent)
         {
-            Console.WriteLine(bodyContent);
             PaymentReportResponse res = new PaymentReportResponse();
             try
             {
@@ -786,7 +786,6 @@ namespace Paytrail_dotnet_sdk
 
                 // Execute to Paytrail API 
                 RestResponse response = client.Execute(request) as RestResponse;
-                // Console.WriteLine(JsonConvert.SerializeObject(response));
                 if (!ValidateResponse(response, res))
                     return res;
 
