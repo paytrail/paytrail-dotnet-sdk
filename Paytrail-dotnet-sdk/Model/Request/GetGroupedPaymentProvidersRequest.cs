@@ -1,30 +1,20 @@
-﻿using Paytrail_dotnet_sdk.Model.Request.RequestModels;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
 using System.Text;
 
 namespace Paytrail_dotnet_sdk.Model.Request
 {
-    public class GetGroupedPaymentProvidersRequest : Request
+    public class GetGroupedPaymentProvidersRequest : GetPaymentProvidersRequest
     {
-        public int Amount { get; set; }
         public string Language { get; set; }
-        public List<PaymentMethodGroup> Groups { get; set; }
 
-        internal (bool, StringBuilder) Validate()
+        internal new (bool, StringBuilder) Validate()
         {
             StringBuilder message = new StringBuilder();
+
             try
             {
-                bool ret = true;
-                if (Amount <= 0)
-                {
-                    ret = false;
-                    message.Append(" amount cannot be less than or equal to 0.");
-                }
-
-                return (ret, message);
+                return base.Validate();
             }
             catch (Exception ex)
             {
