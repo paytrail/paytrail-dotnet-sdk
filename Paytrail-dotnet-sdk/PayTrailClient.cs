@@ -401,16 +401,17 @@ namespace Paytrail_dotnet_sdk
             CreateMitPaymentResponse res = new CreateMitPaymentResponse();
             try
             {
-                // Validate email refund request
+                // Validate create mit payment charge
                 if (!ValidateCreateMitPaymentRequest(res, createMitPaymentChargeRequest, transactionId))
                 {
                     return res;
                 }
 
-                // Create email refund request
-                res = HandleCreateMitPayment(JsonConvert.SerializeObject(createMitPaymentChargeRequest, new JsonSerializerSettings
+                // Create create mit payment charge
+                res = HandleCreateMitPaymentCharge(JsonConvert.SerializeObject(createMitPaymentChargeRequest, new JsonSerializerSettings
                 {
-                    ContractResolver = new CamelCasePropertyNamesContractResolver()
+                    ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                    NullValueHandling = NullValueHandling.Ignore
                 }), transactionId);
                 return res;
             }
@@ -832,7 +833,7 @@ namespace Paytrail_dotnet_sdk
             }
         }
 
-        private CreateMitPaymentResponse HandleCreateMitPayment(string bodyContent, string transactionId)
+        private CreateMitPaymentResponse HandleCreateMitPaymentCharge(string bodyContent, string transactionId)
         {
             CreateMitPaymentResponse res = new CreateMitPaymentResponse();
             try
