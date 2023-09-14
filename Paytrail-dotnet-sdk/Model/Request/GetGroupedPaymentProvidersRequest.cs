@@ -25,21 +25,9 @@ namespace Paytrail_dotnet_sdk.Model.Request
 
         public override string ToString()
         {
-            string query = "";
+            string query = base.ToString();
 
-            if (Amount > 0)
-            {
-                query += $"&amount={Amount}";
-            }
-
-            if (Groups != null && Groups.Count > 0)
-            {
-                string groupsString = string.Join(",", Groups.Select(group => group.ToString().ToLower()));
-
-                query += $"&groups={groupsString}";
-            }
-
-            if (String.IsNullOrEmpty(Language))
+            if (!String.IsNullOrEmpty(Language))
             {
                 query += $"&language={Language}";
             }
