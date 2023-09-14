@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Paytrail_dotnet_sdk.Model.Response
 {
-    public class CreateMitPaymentChargeResponse : Response
+    public class CreateMitPaymentResponse : Response
     {
         public CreateMitPaymentChargeData Data { get; set; }
     }

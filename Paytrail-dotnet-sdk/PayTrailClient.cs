@@ -396,19 +396,19 @@ namespace Paytrail_dotnet_sdk
         /// <see>https://docs.paytrail.com/#/?id=create-authorization-hold-or-charge</see>
         /// <param name="paymentReportRequest">A PaymentReportRequest class instance</param>
         /// <returns>CreateMitPaymentChargeResponse</returns>
-        public CreateMitPaymentChargeResponse CreateMitPaymentCharge(CreateMitPaymentChargeRequest createMitPaymentChargeRequest, string transactionId)
+        public CreateMitPaymentResponse CreateMitPaymentCharge(CreateMitPaymentRequest createMitPaymentChargeRequest, string transactionId)
         {
-            CreateMitPaymentChargeResponse res = new CreateMitPaymentChargeResponse();
+            CreateMitPaymentResponse res = new CreateMitPaymentResponse();
             try
             {
                 // Validate email refund request
-                if (!ValidateCreateMitPaymentChargeRequest(res, createMitPaymentChargeRequest, transactionId))
+                if (!ValidateCreateMitPaymentRequest(res, createMitPaymentChargeRequest, transactionId))
                 {
                     return res;
                 }
 
                 // Create email refund request
-                res = HandleCreateMitPaymentCharge(JsonConvert.SerializeObject(createMitPaymentChargeRequest, new JsonSerializerSettings
+                res = HandleCreateMitPayment(JsonConvert.SerializeObject(createMitPaymentChargeRequest, new JsonSerializerSettings
                 {
                     ContractResolver = new CamelCasePropertyNamesContractResolver()
                 }), transactionId);
@@ -832,9 +832,9 @@ namespace Paytrail_dotnet_sdk
             }
         }
 
-        private CreateMitPaymentChargeResponse HandleCreateMitPaymentCharge(string bodyContent, string transactionId)
+        private CreateMitPaymentResponse HandleCreateMitPayment(string bodyContent, string transactionId)
         {
-            CreateMitPaymentChargeResponse res = new CreateMitPaymentChargeResponse();
+            CreateMitPaymentResponse res = new CreateMitPaymentResponse();
             try
             {
                 // Create header
@@ -1087,7 +1087,7 @@ namespace Paytrail_dotnet_sdk
             return true;
         }
 
-        private bool ValidateCreateMitPaymentChargeRequest(CreateMitPaymentChargeResponse res, CreateMitPaymentChargeRequest req, string transactionId)
+        private bool ValidateCreateMitPaymentRequest(CreateMitPaymentResponse res, CreateMitPaymentRequest req, string transactionId)
         {
             if (string.IsNullOrEmpty(transactionId))
             {
