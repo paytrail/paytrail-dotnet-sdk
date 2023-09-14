@@ -390,6 +390,38 @@ namespace Paytrail_dotnet_sdk
             }
         }
 
+        /// <summary>
+        /// Creates either direct charge for MIT payments
+        /// </summary>
+        /// <see>https://docs.paytrail.com/#/?id=create-authorization-hold-or-charge</see>
+        /// <param name="paymentReportRequest">A PaymentReportRequest class instance</param>
+        /// <returns>CreateMitPaymentChargeResponse</returns>
+        public CreateMitPaymentChargeResponse CreateMitPaymentCharge(CreateMitPaymentChargeRequest createMitPaymentChargeRequest, string transactionId)
+        {
+            CreateMitPaymentChargeResponse res = new CreateMitPaymentChargeResponse();
+            try
+            {
+                // Validate email refund request
+                if (!ValidateCreateMitPaymentChargeRequest(res, createMitPaymentChargeRequest, transactionId))
+                {
+                    return res;
+                }
+
+                // Create email refund request
+                res = HandleCreateMitPaymentCharge(JsonConvert.SerializeObject(createMitPaymentChargeRequest, new JsonSerializerSettings
+                {
+                    ContractResolver = new CamelCasePropertyNamesContractResolver()
+                }), transactionId);
+                return res;
+            }
+            catch (Exception ex)
+            {
+                res.ReturnCode = (int)ResponseMessage.Exception;
+                res.ReturnMessage = ex.ToString();
+                return res;
+            }
+        }
+
         public override bool ValidateHmac(Dictionary<string, string> hparams, string body = "", string signature = "")
         {
             throw new NotImplementedException();
@@ -800,6 +832,46 @@ namespace Paytrail_dotnet_sdk
             }
         }
 
+        private CreateMitPaymentChargeResponse HandleCreateMitPaymentCharge(string bodyContent, string transactionId)
+        {
+            CreateMitPaymentChargeResponse res = new CreateMitPaymentChargeResponse();
+            try
+            {
+                // Create header
+                Dictionary<string, string> hdparams = GetHeaders("POST", transactionId);
+
+                // Add signature for header
+                string signature = CalculateHmac(hdparams, bodyContent);
+                if (string.IsNullOrEmpty(signature))
+                {
+                    res.ReturnCode = (int)ResponseMessage.SignatureNull;
+                    res.ReturnMessage = ResponseMessage.SignatureNull.GetEnumDescription();
+                    return res;
+                }
+                hdparams = GetHeaders(hdparams, "signature", signature);
+
+                // Create new request
+                string url = API_ENDPOINT + "/payments/token/mit/charge";
+                RestClient client = new RestClient();
+                RestRequest request = SetHeaders(hdparams, url, Method.Post);
+                request.AddParameter("application/json", bodyContent, ParameterType.RequestBody);
+
+                // Execute to Paytrail API 
+                RestResponse response = client.Execute(request) as RestResponse;
+                if (!ValidateResponse(response, res))
+                    return res;
+
+                res.Data = JsonConvert.DeserializeObject<CreateMitPaymentChargeData>(response.Content);
+                res.ReturnCode = (int)ResponseMessage.Success;
+                res.ReturnMessage = ResponseMessage.Success.GetEnumDescription();
+                return res;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
         #region Validate Methods
         private bool ValidateRefundRequest(RefundResponse res, RefundRequest refundRequest, string transactionId)
         {
@@ -1001,6 +1073,33 @@ namespace Paytrail_dotnet_sdk
             {
                 res.ReturnCode = (int)ResponseMessage.RequestNull;
                 res.ReturnMessage = "payment report request can not be null";
+                return false;
+            }
+
+            (bool isValid, StringBuilder valMess) = req.Validate();
+            if (!isValid)
+            {
+                res.ReturnCode = (int)ResponseMessage.ValidateFail;
+                res.ReturnMessage = valMess.ToString();
+                return false;
+            }
+
+            return true;
+        }
+
+        private bool ValidateCreateMitPaymentChargeRequest(CreateMitPaymentChargeResponse res, CreateMitPaymentChargeRequest req, string transactionId)
+        {
+            if (string.IsNullOrEmpty(transactionId))
+            {
+                res.ReturnCode = (int)ResponseMessage.RequestNull;
+                res.ReturnMessage = "transactionId can not be null";
+                return false;
+            }
+
+            if (req is null)
+            {
+                res.ReturnCode = (int)ResponseMessage.RequestNull;
+                res.ReturnMessage = "create mit payment charge request can not be null";
                 return false;
             }
 
