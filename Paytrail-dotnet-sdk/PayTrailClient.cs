@@ -369,13 +369,13 @@ namespace Paytrail_dotnet_sdk
             PaymentReportResponse res = new PaymentReportResponse();
             try
             {
-                // Validate request settlements request
+                // Validate payment report request
                 if (!ValidateRequestPaymentReport(res, paymentReportRequest))
                 {
                     return res;
                 }
 
-                // Create request settlements
+                // Create payment report
                 res = HandleRequestPaymentReport(JsonConvert.SerializeObject(paymentReportRequest, new JsonSerializerSettings
                 {
                     ContractResolver = new CamelCasePropertyNamesContractResolver(),
