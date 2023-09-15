@@ -240,7 +240,7 @@ namespace Paytrail_dotnet_sdk
         }
 
         /// <summary>
-        /// Returns an array of following grouped payment providers fields:
+        /// Returns an array of following grouped payment providers fields
         /// </summary>
         /// <see>https://docs.paytrail.com/#/?id=list-grouped-providers</see>
         /// <param name="getGroupedPaymentProvidersRequest">A GetGroupedPaymentProvidersRequest class instance</param>
@@ -287,7 +287,8 @@ namespace Paytrail_dotnet_sdk
                 // Create email refund request
                 res = HandleEmailRefund(JsonConvert.SerializeObject(emailRefundRequest, new JsonSerializerSettings
                 {
-                    ContractResolver = new CamelCasePropertyNamesContractResolver()
+                    ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                    NullValueHandling = NullValueHandling.Ignore
                 }), transactionId);
                 return res;
             }
