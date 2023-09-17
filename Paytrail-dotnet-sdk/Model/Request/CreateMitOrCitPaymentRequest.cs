@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Paytrail_dotnet_sdk.Model.Request
 {
-    public class CreateMitPaymentRequest : PaymentRequest
+    public class CreateMitOrCitPaymentRequest : PaymentRequest
     {
         public string Token { get; set; }
 
