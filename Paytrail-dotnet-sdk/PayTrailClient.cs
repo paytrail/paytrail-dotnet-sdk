@@ -706,7 +706,6 @@ namespace Paytrail_dotnet_sdk
 
                 // Create new request
                 string url = API_ENDPOINT + $"/settlements?{settlementsRequest.ToString()}";
-                Console.WriteLine(url);
                 RestClient client = new RestClient();
                 RestRequest request = SetHeaders(hdparams, url, Method.Get);
 
