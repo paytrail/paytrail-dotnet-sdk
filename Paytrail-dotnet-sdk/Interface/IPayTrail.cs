@@ -70,5 +70,13 @@ namespace Paytrail_dotnet_sdk.Interface
         /// <param name="emailRefundRequest">A EmailRefundRequest class instance</param>
         /// <returns>EmailRefundResponse</returns>
         EmailRefundResponse EmailRefund(EmailRefundRequest emailRefundRequest, string transactionId);
+
+        /// <summary>
+        /// Returns the actual card token which can then be used to make payments on the card
+        /// </summary>
+        /// <see>https://docs.paytrail.com/#/?id=get-token</see>
+        /// <param name="getTokenRequest">A GetTokenRequest class instance</param>
+        /// <returns>GetTokenResponse</returns>
+        GetTokenResponse CreateGetTokenRequest(GetTokenRequest getTokenRequest);
     }
 }
