@@ -266,6 +266,39 @@ namespace Paytrail_dotnet_sdk
             }
         }
 
+        /// <summary>
+        /// Email refunds a payment by transaction ID:
+        /// </summary>
+        /// <see>https://docs.paytrail.com/#/?id=email-refunds</see>
+        /// <param name="emailRefundRequest">A EmailRefundRequest class instance</param>
+        /// <returns>EmailRefundRequest</returns>
+        public EmailRefundResponse EmailRefund(EmailRefundRequest emailRefundRequest, string transactionId)
+        {
+            EmailRefundResponse res = new EmailRefundResponse();
+            try
+            {
+                // Validate email refund request
+                if (!ValidateEmailRefundRequest(res, emailRefundRequest, transactionId))
+                {
+                    return res;
+                }
+
+                // Create email refund request
+                res = HandleEmailRefund(JsonConvert.SerializeObject(emailRefundRequest, new JsonSerializerSettings
+                {
+                    ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                    NullValueHandling = NullValueHandling.Ignore
+                }), transactionId);
+                return res;
+            }
+            catch (Exception ex)
+            {
+                res.ReturnCode = (int)ResponseMessage.Exception;
+                res.ReturnMessage = ex.ToString();
+                return res;
+            }
+        }
+
         public override bool ValidateHmac(Dictionary<string, string> hparams, string body = "", string signature = "")
         {
             throw new NotImplementedException();
@@ -515,6 +548,46 @@ namespace Paytrail_dotnet_sdk
             }
         }
 
+        private EmailRefundResponse HandleEmailRefund(string bodyContent, string transactionId)
+        {
+            EmailRefundResponse res = new EmailRefundResponse();
+            try
+            {
+                // Create header
+                Dictionary<string, string> hdparams = GetHeaders("POST", transactionId);
+
+                // Add signature for header
+                string signature = CalculateHmac(hdparams, bodyContent);
+                if (string.IsNullOrEmpty(signature))
+                {
+                    res.ReturnCode = (int)ResponseMessage.SignatureNull;
+                    res.ReturnMessage = ResponseMessage.SignatureNull.GetEnumDescription();
+                    return res;
+                }
+                hdparams = GetHeaders(hdparams, "signature", signature);
+
+                // Create new request
+                string url = API_ENDPOINT + "/payments/" + transactionId + "/refund/email";
+                RestClient client = new RestClient();
+                RestRequest request = SetHeaders(hdparams, url, Method.Post);
+                request.AddParameter("application/json", bodyContent, ParameterType.RequestBody);
+
+                // Execute to Paytrail API 
+                RestResponse response = client.Execute(request) as RestResponse;
+                if (!ValidateResponse(response, res))
+                    return res;
+
+                res.Data = JsonConvert.DeserializeObject<EmailRefundData>(response.Content);
+                res.ReturnCode = (int)ResponseMessage.Success;
+                res.ReturnMessage = ResponseMessage.Success.GetEnumDescription();
+                return res;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
         #region Validate Methods
         private bool ValidateRefundRequest(RefundResponse res, RefundRequest refundRequest, string transactionId)
         {
@@ -629,6 +702,33 @@ namespace Paytrail_dotnet_sdk
             {
                 res.ReturnCode = (int)ResponseMessage.RequestNull;
                 res.ReturnMessage = "Get payment grouped providers request can not be null";
+                return false;
+            }
+
+            (bool isValid, StringBuilder valMess) = req.Validate();
+            if (!isValid)
+            {
+                res.ReturnCode = (int)ResponseMessage.ValidateFail;
+                res.ReturnMessage = valMess.ToString();
+                return false;
+            }
+
+            return true;
+        }
+
+        private bool ValidateEmailRefundRequest(EmailRefundResponse res, EmailRefundRequest req, string transactionId)
+        {
+            if (string.IsNullOrEmpty(transactionId))
+            {
+                res.ReturnCode = (int)ResponseMessage.RequestNull;
+                res.ReturnMessage = "transactionId can not be null";
+                return false;
+            }
+
+            if (req is null)
+            {
+                res.ReturnCode = (int)ResponseMessage.RequestNull;
+                res.ReturnMessage = "email refund request can not be null";
                 return false;
             }
 

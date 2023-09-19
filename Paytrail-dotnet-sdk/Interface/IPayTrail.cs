@@ -62,5 +62,13 @@ namespace Paytrail_dotnet_sdk.Interface
         /// <param name="getGroupedPaymentProvidersRequest">A GetGroupedPaymentProvidersRequest class instance</param>
         /// <returns>GetGroupedPaymentProvidersResponse</returns>
         GetGroupedPaymentProvidersResponse GetGroupedPaymentProviders(GetGroupedPaymentProvidersRequest getGroupedPaymentProvidersRequest);
+
+        /// <summary>
+        /// Email refunds a payment by transaction ID
+        /// </summary>
+        /// <see>https://docs.paytrail.com/#/?id=email-refunds</see>
+        /// <param name="emailRefundRequest">A EmailRefundRequest class instance</param>
+        /// <returns>EmailRefundResponse</returns>
+        EmailRefundResponse EmailRefund(EmailRefundRequest emailRefundRequest, string transactionId);
     }
 }
