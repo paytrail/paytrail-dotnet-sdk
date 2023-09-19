@@ -328,6 +328,35 @@ namespace Paytrail_dotnet_sdk
             }
         }
 
+        /// <summary>
+        /// Returns merchant's settlement IDs and corresponding bank references
+        /// </summary>
+        /// <see>https://docs.paytrail.com/#/?id=settlements</see>
+        /// <param name="settlementsRequest">A SettlementsRequest class instance</param>
+        /// <returns>SettlementsResponse</returns>
+        public SettlementsResponse RequestSettlements(SettlementsRequest settlementsRequest)
+        {
+            SettlementsResponse res = new SettlementsResponse();
+            try
+            {
+                // Validate request settlements request
+                if (!ValidateRequestSettlements(res, settlementsRequest))
+                {
+                    return res;
+                }
+
+                // Create request settlements
+                res = HandleRequestSettlements(settlementsRequest);
+                return res;
+            }
+            catch (Exception ex)
+            {
+                res.ReturnCode = (int)ResponseMessage.Exception;
+                res.ReturnMessage = ex.ToString();
+                return res;
+            }
+        }
+
         public override bool ValidateHmac(Dictionary<string, string> hparams, string body = "", string signature = "")
         {
             throw new NotImplementedException();
@@ -657,6 +686,45 @@ namespace Paytrail_dotnet_sdk
             }
         }
 
+        private SettlementsResponse HandleRequestSettlements(SettlementsRequest settlementsRequest)
+        {
+            SettlementsResponse res = new SettlementsResponse();
+            try
+            {
+                // Create header
+                Dictionary<string, string> hdparams = GetHeaders("GET");
+
+                // Add signature for header
+                string signature = CalculateHmac(hdparams);
+                if (string.IsNullOrEmpty(signature))
+                {
+                    res.ReturnCode = (int)ResponseMessage.SignatureNull;
+                    res.ReturnMessage = ResponseMessage.SignatureNull.GetEnumDescription();
+                    return res;
+                }
+                hdparams = GetHeaders(hdparams, "signature", signature);
+
+                // Create new request
+                string url = API_ENDPOINT + $"/settlements?{settlementsRequest.ToString()}";
+                RestClient client = new RestClient();
+                RestRequest request = SetHeaders(hdparams, url, Method.Get);
+
+                // Execute to Paytrail API 
+                RestResponse response = client.Execute(request) as RestResponse;
+                if (!ValidateResponse(response, res))
+                    return res;
+
+                res.Data = JsonConvert.DeserializeObject<List<SettlementsData>>(response.Content);
+                res.ReturnCode = (int)ResponseMessage.Success;
+                res.ReturnMessage = ResponseMessage.Success.GetEnumDescription();
+                return res;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
         #region Validate Methods
         private bool ValidateRefundRequest(RefundResponse res, RefundRequest refundRequest, string transactionId)
         {
@@ -818,6 +886,26 @@ namespace Paytrail_dotnet_sdk
             {
                 res.ReturnCode = (int)ResponseMessage.RequestNull;
                 res.ReturnMessage = "create get token request can not be null";
+                return false;
+            }
+
+            (bool isValid, StringBuilder valMess) = req.Validate();
+            if (!isValid)
+            {
+                res.ReturnCode = (int)ResponseMessage.ValidateFail;
+                res.ReturnMessage = valMess.ToString();
+                return false;
+            }
+
+            return true;
+        }
+
+        private bool ValidateRequestSettlements(SettlementsResponse res, SettlementsRequest req)
+        {
+            if (req is null)
+            {
+                res.ReturnCode = (int)ResponseMessage.RequestNull;
+                res.ReturnMessage = "request settlements can not be null";
                 return false;
             }
 
