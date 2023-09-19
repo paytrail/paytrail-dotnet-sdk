@@ -208,7 +208,35 @@ namespace Paytrail_dotnet_sdk
                 response.ReturnMessage = ex.ToString();
                 throw;
             }
-        } 
+        }
+
+        /// <summary>
+        /// Get a list of payment providers.
+        /// </summary>
+        /// <see>https://docs.paytrail.com/#/?id=list-providers</see>
+        /// <param name="getPaymentProvidersRequest">A GetPaymentProvidersRequest class instance</param>
+        /// <returns>GetPaymentProvidersResponse</returns>
+        public GetPaymentProvidersResponse GetPaymentProviders(GetPaymentProvidersRequest getPaymentProvidersRequest)
+        {
+            GetPaymentProvidersResponse res = new GetPaymentProvidersResponse();
+            try
+            {
+                if (!ValidateGetPaymentProviders(res, getPaymentProvidersRequest))
+                {
+                    return res;
+                }
+
+                // Get Payment Providers
+                res = HandleGetPaymentProviders(getPaymentProvidersRequest);
+                return res;
+            }
+            catch (Exception ex)
+            {
+                res.ReturnCode = (int)ResponseMessage.Exception;
+                res.ReturnMessage = ex.ToString();
+                return res;
+            }
+        }
 
         public override bool ValidateHmac(Dictionary<string, string> hparams, string body = "", string signature = "")
         {
@@ -375,6 +403,47 @@ namespace Paytrail_dotnet_sdk
             }
         }
 
+        private GetPaymentProvidersResponse HandleGetPaymentProviders(GetPaymentProvidersRequest getPaymentProvidersRequest)
+        {
+            GetPaymentProvidersResponse res = new GetPaymentProvidersResponse();
+
+            try
+            {
+                // Create header
+                Dictionary<string, string> hdparams = GetHeaders("GET");
+
+                // Add signature for header
+                string signature = CalculateHmac(hdparams);
+                if (string.IsNullOrEmpty(signature))
+                {
+                    res.ReturnCode = (int)ResponseMessage.SignatureNull;
+                    res.ReturnMessage = ResponseMessage.SignatureNull.GetEnumDescription();
+                    return res;
+                }
+                hdparams = GetHeaders(hdparams, "signature", signature);
+
+                // Create new request
+                string url = API_ENDPOINT + $"/merchants/payment-providers?{getPaymentProvidersRequest.ToString()}";
+
+                RestClient client = new RestClient();
+                RestRequest request = SetHeaders(hdparams, url, Method.Get);
+
+                // Execute to Paytrail API 
+                RestResponse response = client.Execute(request) as RestResponse;
+                if (!ValidateResponse(response, res))
+                    return res;
+
+                res.Data = JsonConvert.DeserializeObject<List<GetPaymentProvidersData>>(response.Content);
+                res.ReturnCode = (int)ResponseMessage.Success;
+                res.ReturnMessage = ResponseMessage.Success.GetEnumDescription();
+                return res;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
         #region Validate Methods
         private bool ValidateRefundRequest(RefundResponse res, RefundRequest refundRequest, string transactionId)
         {
@@ -457,6 +526,26 @@ namespace Paytrail_dotnet_sdk
             {
                 response.ReturnCode = (int)ResponseMessage.ValidateFail;
                 response.ReturnMessage = valMess.ToString();
+                return false;
+            }
+
+            return true;
+        }
+
+        private bool ValidateGetPaymentProviders(GetPaymentProvidersResponse res, GetPaymentProvidersRequest req)
+        {
+            if (req is null)
+            {
+                res.ReturnCode = (int)ResponseMessage.RequestNull;
+                res.ReturnMessage = "Get payment providers request can not be null";
+                return false;
+            }
+
+            (bool isValid, StringBuilder valMess) = req.Validate();
+            if (!isValid)
+            {
+                res.ReturnCode = (int)ResponseMessage.ValidateFail;
+                res.ReturnMessage = valMess.ToString();
                 return false;
             }
 

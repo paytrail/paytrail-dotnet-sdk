@@ -46,5 +46,13 @@ namespace Paytrail_dotnet_sdk.Interface
         /// <param name="transactionId">the transaction ID</param>
         /// <returns>RefundResponse</returns>
         RefundResponse RefundPartiallyPayment(RefundRequest refundRequest, string transactionId, double refundRate);
+
+        /// <summary>
+        /// Get a list of payment providers.
+        /// </summary>
+        /// <see>https://docs.paytrail.com/#/?id=list-providers</see>
+        /// <param name="getPaymentProvidersRequest">A GetPaymentProvidersRequest class instance</param>
+        /// <returns>GetPaymentProvidersResponse</returns>
+        GetPaymentProvidersResponse GetPaymentProviders(GetPaymentProvidersRequest getPaymentProvidersRequest);
     }
 }
