@@ -8,7 +8,7 @@ namespace Paytrail_dotnet_sdk.Model.Request
 {
     public class EmailRefundRequest
     {
-        public int Amount { get; set; }
+        public int? Amount { get; set; }
         public string Email { get; set; }
         public RefundItem[] Items { get; set; }
         public CallbackUrl CallbackUrls { get; set; }
@@ -19,7 +19,7 @@ namespace Paytrail_dotnet_sdk.Model.Request
             StringBuilder message = new StringBuilder();
             try
             {
-                if (Amount < 0)
+                if (Amount.HasValue && Amount < 0)
                 {
                     ret = false;
                     message.Append(" item's unitPrice can't be a negative number.");
