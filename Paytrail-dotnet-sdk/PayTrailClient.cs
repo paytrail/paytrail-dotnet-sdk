@@ -525,6 +525,40 @@ namespace Paytrail_dotnet_sdk
             }
         }
 
+        /// <summary>
+        /// Commits an existing authorization hold
+        /// </summary>
+        /// <see>https://docs.paytrail.com/#/?id=commit-authorization-hold</see>
+        /// <param name="createMitPaymentCommitRequest">A CreateMitOrCitPaymentRequest class instance</param>
+        /// <param name="transactionId">the transaction ID</param>
+        /// <returns>CreateMitOrCitPaymentResponse</returns>
+        public CreateMitOrCitPaymentResponse CreateMitPaymentCommit(CreateMitOrCitPaymentRequest createMitPaymentCommitRequest, string transactionId)
+        {
+            CreateMitOrCitPaymentResponse res = new CreateMitOrCitPaymentResponse();
+            try
+            {
+                // Validate create mit payment commit
+                if (!ValidateCreateMitOrCitPaymentRequest(res, createMitPaymentCommitRequest, transactionId))
+                {
+                    return res;
+                }
+
+                // Create mit payment commit
+                res = HandleCreateMitOrCitPaymentCommit(JsonConvert.SerializeObject(createMitPaymentCommitRequest, new JsonSerializerSettings
+                {
+                    ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                    NullValueHandling = NullValueHandling.Ignore
+                }), transactionId);
+                return res;
+            }
+            catch (Exception ex)
+            {
+                res.ReturnCode = (int)ResponseMessage.Exception;
+                res.ReturnMessage = ex.ToString();
+                return res;
+            }
+        }
+
         public override bool ValidateHmac(Dictionary<string, string> hparams, string body = "", string signature = "")
         {
             throw new NotImplementedException();
@@ -1075,6 +1109,46 @@ namespace Paytrail_dotnet_sdk
 
                 // Create new request
                 string url = API_ENDPOINT + "/payments/token/cit/authorization-hold";
+                RestClient client = new RestClient();
+                RestRequest request = SetHeaders(hdparams, url, Method.Post);
+                request.AddParameter("application/json", bodyContent, ParameterType.RequestBody);
+
+                // Execute to Paytrail API 
+                RestResponse response = client.Execute(request) as RestResponse;
+                if (!ValidateResponse(response, res))
+                    return res;
+
+                res.Data = JsonConvert.DeserializeObject<CreateMitPaymentChargeData>(response.Content);
+                res.ReturnCode = (int)ResponseMessage.Success;
+                res.ReturnMessage = ResponseMessage.Success.GetEnumDescription();
+                return res;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        private CreateMitOrCitPaymentResponse HandleCreateMitOrCitPaymentCommit(string bodyContent, string transactionId)
+        {
+            CreateMitOrCitPaymentResponse res = new CreateMitOrCitPaymentResponse();
+            try
+            {
+                // Create header
+                Dictionary<string, string> hdparams = GetHeaders("POST", transactionId);
+
+                // Add signature for header
+                string signature = CalculateHmac(hdparams, bodyContent);
+                if (string.IsNullOrEmpty(signature))
+                {
+                    res.ReturnCode = (int)ResponseMessage.SignatureNull;
+                    res.ReturnMessage = ResponseMessage.SignatureNull.GetEnumDescription();
+                    return res;
+                }
+                hdparams = GetHeaders(hdparams, "signature", signature);
+
+                // Create new request
+                string url = API_ENDPOINT + "/payments/" + transactionId + "/token/commit";
                 RestClient client = new RestClient();
                 RestRequest request = SetHeaders(hdparams, url, Method.Post);
                 request.AddParameter("application/json", bodyContent, ParameterType.RequestBody);
