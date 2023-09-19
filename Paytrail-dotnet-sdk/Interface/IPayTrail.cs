@@ -86,5 +86,13 @@ namespace Paytrail_dotnet_sdk.Interface
         /// <param name="settlementsRequest">A SettlementsRequest class instance</param>
         /// <returns>SettlementsResponse</returns>
         SettlementsResponse RequestSettlements(SettlementsRequest settlementsRequest);
+
+        /// <summary>
+        /// Results in a callback containing the payment report
+        /// </summary>
+        /// <see>https://docs.paytrail.com/#/?id=payment-reports</see>
+        /// <param name="paymentReportRequest">A PaymentReportRequest class instance</param>
+        /// <returns>PaymentReportResponse</returns>
+        PaymentReportResponse RequestPaymentReport(PaymentReportRequest paymentReportRequest);
     }
 }
