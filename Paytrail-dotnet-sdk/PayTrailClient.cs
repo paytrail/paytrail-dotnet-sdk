@@ -503,13 +503,13 @@ namespace Paytrail_dotnet_sdk
             CreateMitOrCitPaymentResponse res = new CreateMitOrCitPaymentResponse();
             try
             {
-                // Validate create mit payment authorization hold
+                // Validate create cit payment authorization hold
                 if (!ValidateCreateMitOrCitPaymentRequest(res, createCitPaymentAuthorizationHold, transactionId))
                 {
                     return res;
                 }
 
-                // Create create mit payment authorization hold
+                // Create create cit payment authorization hold
                 res = HandleCreateCitPaymentAuthorizationHold(JsonConvert.SerializeObject(createCitPaymentAuthorizationHold, new JsonSerializerSettings
                 {
                     ContractResolver = new CamelCasePropertyNamesContractResolver(),
