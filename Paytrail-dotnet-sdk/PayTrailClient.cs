@@ -403,7 +403,7 @@ namespace Paytrail_dotnet_sdk
             try
             {
                 // Validate create mit payment charge
-                if (!ValidateCreateMitPaymentRequest(res, createMitPaymentChargeRequest, transactionId))
+                if (!ValidateCreateMitOrCitPaymentRequest(res, createMitPaymentChargeRequest, transactionId))
                 {
                     return res;
                 }
@@ -437,13 +437,47 @@ namespace Paytrail_dotnet_sdk
             try
             {
                 // Validate create mit payment authorization hold
-                if (!ValidateCreateMitPaymentRequest(res, createMitPaymentAuthorizationHold, transactionId))
+                if (!ValidateCreateMitOrCitPaymentRequest(res, createMitPaymentAuthorizationHold, transactionId))
                 {
                     return res;
                 }
 
                 // Create create mit payment authorization hold
                 res = HandleCreateMitPaymentAuthorizationHold(JsonConvert.SerializeObject(createMitPaymentAuthorizationHold, new JsonSerializerSettings
+                {
+                    ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                    NullValueHandling = NullValueHandling.Ignore
+                }), transactionId);
+                return res;
+            }
+            catch (Exception ex)
+            {
+                res.ReturnCode = (int)ResponseMessage.Exception;
+                res.ReturnMessage = ex.ToString();
+                return res;
+            }
+        }
+
+        /// <summary>
+        /// Creates either direct charge for MIT payments
+        /// </summary>
+        /// <see>https://docs.paytrail.com/#/?id=create-authorization-hold-or-charge</see>
+        /// <param name="createCitPaymentChargeRequest">A CreateMitOrCitPaymentRequest class instance</param>
+        /// <param name="transactionId">the transaction ID</param>
+        /// <returns>CreateMitOrCitPaymentResponse</returns>
+        public CreateMitOrCitPaymentResponse CreateCitPaymentCharge(CreateMitOrCitPaymentRequest createCitPaymentChargeRequest, string transactionId)
+        {
+            CreateMitOrCitPaymentResponse res = new CreateMitOrCitPaymentResponse();
+            try
+            {
+                // Validate create mit payment charge
+                if (!ValidateCreateMitOrCitPaymentRequest(res, createCitPaymentChargeRequest, transactionId))
+                {
+                    return res;
+                }
+
+                // Create create mit payment charge
+                res = HandleCreateCitPaymentCharge(JsonConvert.SerializeObject(createCitPaymentChargeRequest, new JsonSerializerSettings
                 {
                     ContractResolver = new CamelCasePropertyNamesContractResolver(),
                     NullValueHandling = NullValueHandling.Ignore
@@ -947,6 +981,46 @@ namespace Paytrail_dotnet_sdk
             }
         }
 
+        private CreateMitOrCitPaymentResponse HandleCreateCitPaymentCharge(string bodyContent, string transactionId)
+        {
+            CreateMitOrCitPaymentResponse res = new CreateMitOrCitPaymentResponse();
+            try
+            {
+                // Create header
+                Dictionary<string, string> hdparams = GetHeaders("POST", transactionId);
+
+                // Add signature for header
+                string signature = CalculateHmac(hdparams, bodyContent);
+                if (string.IsNullOrEmpty(signature))
+                {
+                    res.ReturnCode = (int)ResponseMessage.SignatureNull;
+                    res.ReturnMessage = ResponseMessage.SignatureNull.GetEnumDescription();
+                    return res;
+                }
+                hdparams = GetHeaders(hdparams, "signature", signature);
+
+                // Create new request
+                string url = API_ENDPOINT + "/payments/token/cit/charge";
+                RestClient client = new RestClient();
+                RestRequest request = SetHeaders(hdparams, url, Method.Post);
+                request.AddParameter("application/json", bodyContent, ParameterType.RequestBody);
+
+                // Execute to Paytrail API 
+                RestResponse response = client.Execute(request) as RestResponse;
+                if (!ValidateResponse(response, res))
+                    return res;
+
+                res.Data = JsonConvert.DeserializeObject<CreateMitPaymentChargeData>(response.Content);
+                res.ReturnCode = (int)ResponseMessage.Success;
+                res.ReturnMessage = ResponseMessage.Success.GetEnumDescription();
+                return res;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
         #region Validate Methods
         private bool ValidateRefundRequest(RefundResponse res, RefundRequest refundRequest, string transactionId)
         {
@@ -1162,7 +1236,7 @@ namespace Paytrail_dotnet_sdk
             return true;
         }
 
-        private bool ValidateCreateMitPaymentRequest(CreateMitOrCitPaymentResponse res, CreateMitOrCitPaymentRequest req, string transactionId)
+        private bool ValidateCreateMitOrCitPaymentRequest(CreateMitOrCitPaymentResponse res, CreateMitOrCitPaymentRequest req, string transactionId)
         {
             if (string.IsNullOrEmpty(transactionId))
             {
