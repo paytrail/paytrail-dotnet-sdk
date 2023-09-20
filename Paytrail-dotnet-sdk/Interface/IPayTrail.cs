@@ -149,5 +149,13 @@ namespace Paytrail_dotnet_sdk.Interface
         /// <param name="transactionId">the transaction ID</param>
         /// <returns>CreateMitOrCitPaymentResponse</returns>
         CreateMitOrCitPaymentResponse CreateCitPaymentCommit(CreateMitOrCitPaymentRequest createCitPaymentCommitRequest, string transactionId);
+
+        /// <summary>
+        /// Reverts an existing authorization hold
+        /// </summary>
+        /// <see>https://docs.paytrail.com/#/?id=revert-authorization-hold</see>
+        /// <param name="transactionId">the transaction ID</param>
+        /// <returns>RevertAuthorizationHoldResponse</returns>
+        RevertAuthorizationHoldResponse RevertPaymentAuthorizationHold(string transactionId);
     }
 }
