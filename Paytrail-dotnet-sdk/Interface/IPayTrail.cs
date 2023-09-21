@@ -165,5 +165,13 @@ namespace Paytrail_dotnet_sdk.Interface
         /// <param name="paymentReportBySettlementRequest">A PaymentReportBySettlementRequest class instance</param>
         /// <returns>RevertAuthorizationHoldResponse</returns>
         PaymentReportResponse RequestPaymentReportBySettlement(PaymentReportBySettlementRequest paymentReportBySettlementRequest, string settlementId);
+
+        /// <summary>
+        /// A form post requested from the user's browser
+        /// </summary>
+        /// <see>https://docs.paytrail.com/#/?id=add-card-form</see>
+        /// <param name="addCardFormRequest">A AddCardFormRequest class instance</param>
+        /// <returns>AddCardFormResponse</returns>
+        AddCardFormResponse CreateAddCardFormRequest(AddCardFormRequest addCardFormRequest);
     }
 }
