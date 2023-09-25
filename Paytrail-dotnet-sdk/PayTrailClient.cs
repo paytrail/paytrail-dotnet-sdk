@@ -240,7 +240,7 @@ namespace Paytrail_dotnet_sdk
         }
 
         /// <summary>
-        /// Returns an array of following grouped payment providers fields:
+        /// Returns an array of following grouped payment providers fields
         /// </summary>
         /// <see>https://docs.paytrail.com/#/?id=list-grouped-providers</see>
         /// <param name="getGroupedPaymentProvidersRequest">A GetGroupedPaymentProvidersRequest class instance</param>
@@ -287,7 +287,8 @@ namespace Paytrail_dotnet_sdk
                 // Create email refund request
                 res = HandleEmailRefund(JsonConvert.SerializeObject(emailRefundRequest, new JsonSerializerSettings
                 {
-                    ContractResolver = new CamelCasePropertyNamesContractResolver()
+                    ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                    NullValueHandling = NullValueHandling.Ignore
                 }), transactionId);
                 return res;
             }
@@ -368,13 +369,13 @@ namespace Paytrail_dotnet_sdk
             PaymentReportResponse res = new PaymentReportResponse();
             try
             {
-                // Validate request settlements request
+                // Validate payment report request
                 if (!ValidateRequestPaymentReport(res, paymentReportRequest))
                 {
                     return res;
                 }
 
-                // Create request settlements
+                // Create payment report
                 res = HandleRequestPaymentReport(JsonConvert.SerializeObject(paymentReportRequest, new JsonSerializerSettings
                 {
                     ContractResolver = new CamelCasePropertyNamesContractResolver(),
@@ -503,13 +504,13 @@ namespace Paytrail_dotnet_sdk
             CreateMitOrCitPaymentResponse res = new CreateMitOrCitPaymentResponse();
             try
             {
-                // Validate create mit payment authorization hold
+                // Validate create cit payment authorization hold
                 if (!ValidateCreateMitOrCitPaymentRequest(res, createCitPaymentAuthorizationHold, transactionId))
                 {
                     return res;
                 }
 
-                // Create create mit payment authorization hold
+                // Create create cit payment authorization hold
                 res = HandleCreateCitPaymentAuthorizationHold(JsonConvert.SerializeObject(createCitPaymentAuthorizationHold, new JsonSerializerSettings
                 {
                     ContractResolver = new CamelCasePropertyNamesContractResolver(),
@@ -628,7 +629,7 @@ namespace Paytrail_dotnet_sdk
         /// <see>https://docs.paytrail.com/#/?id=payment-report-request-by-settlement-id</see>
         /// <param name="paymentReportBySettlementRequest">A PaymentReportBySettlementRequest class instance</param>
         /// <returns>RevertAuthorizationHoldResponse</returns>
-        public PaymentReportResponse RequestPaymentReportBySettlement(PaymentReportBySettlementRequest paymentReportBySettlementRequest, string settlementId)
+        public PaymentReportResponse RequestPaymentReportBySettlement(PaymentReportBySettlementRequest paymentReportBySettlementRequest, int settlementId)
         {
             PaymentReportResponse res = new PaymentReportResponse();
             try
@@ -1037,7 +1038,6 @@ namespace Paytrail_dotnet_sdk
 
                 // Create new request
                 string url = API_ENDPOINT + $"/settlements?{settlementsRequest.ToString()}";
-                Console.WriteLine(url);
                 RestClient client = new RestClient();
                 RestRequest request = SetHeaders(hdparams, url, Method.Get);
 
@@ -1337,7 +1337,7 @@ namespace Paytrail_dotnet_sdk
             }
         }
 
-        private PaymentReportResponse HandleRequestPaymentReportBySettlement(string bodyContent, string settlementId)
+        private PaymentReportResponse HandleRequestPaymentReportBySettlement(string bodyContent, int settlementId)
         {
             PaymentReportResponse res = new PaymentReportResponse();
             try
@@ -1660,9 +1660,9 @@ namespace Paytrail_dotnet_sdk
             return true;
         }
 
-        private bool ValidateRequestPaymentReportBySettlement(PaymentReportResponse res, PaymentReportBySettlementRequest req, string settlementId)
+        private bool ValidateRequestPaymentReportBySettlement(PaymentReportResponse res, PaymentReportBySettlementRequest req, int? settlementId)
         {
-            if (string.IsNullOrEmpty(settlementId))
+            if (!settlementId.HasValue)
             {
                 res.ReturnCode = (int)ResponseMessage.RequestNull;
                 res.ReturnMessage = "settlementId can not be null";

@@ -101,7 +101,7 @@ namespace Paytrail_dotnet_sdk.Interface
         /// <see>https://docs.paytrail.com/#/?id=create-authorization-hold-or-charge</see>
         /// <param name="createMitPaymentChargeRequest">A CreateMitOrCitPaymentRequest class instance</param>
         /// <param name="transactionId">the transaction ID</param>
-        /// <returns>CreateMitPaymentResponse</returns>
+        /// <returns>CreateMitOrCitPaymentResponse</returns>
         CreateMitOrCitPaymentResponse CreateMitPaymentCharge(CreateMitOrCitPaymentRequest createMitPaymentChargeRequest, string transactionId);
 
         /// <summary>
@@ -164,7 +164,7 @@ namespace Paytrail_dotnet_sdk.Interface
         /// <see>https://docs.paytrail.com/#/?id=payment-report-request-by-settlement-id</see>
         /// <param name="paymentReportBySettlementRequest">A PaymentReportBySettlementRequest class instance</param>
         /// <returns>RevertAuthorizationHoldResponse</returns>
-        PaymentReportResponse RequestPaymentReportBySettlement(PaymentReportBySettlementRequest paymentReportBySettlementRequest, string settlementId);
+        PaymentReportResponse RequestPaymentReportBySettlement(PaymentReportBySettlementRequest paymentReportBySettlementRequest, int settlementId);
 
         /// <summary>
         /// A form post requested from the user's browser
