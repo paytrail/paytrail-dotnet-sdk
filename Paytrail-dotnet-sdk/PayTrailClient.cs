@@ -594,6 +594,35 @@ namespace Paytrail_dotnet_sdk
             }
         }
 
+        /// <summary>
+        /// Reverts an existing authorization hold
+        /// </summary>
+        /// <see>https://docs.paytrail.com/#/?id=revert-authorization-hold</see>
+        /// <param name="transactionId">the transaction ID</param>
+        /// <returns>RevertAuthorizationHoldResponse</returns>
+        public RevertAuthorizationHoldResponse RevertPaymentAuthorizationHold(string transactionId)
+        {
+            RevertAuthorizationHoldResponse res = new RevertAuthorizationHoldResponse();
+            try
+            {
+                // Validate revert payment authorization hold
+                if (!ValidateRevertPaymentAuthorizationHoldRequest(res, transactionId))
+                {
+                    return res;
+                }
+
+                // Revert payment authorization hold
+                res = HandleRevertPaymentAuthorizationHold(transactionId);
+                return res;
+            }
+            catch (Exception ex)
+            {
+                res.ReturnCode = (int)ResponseMessage.Exception;
+                res.ReturnMessage = ex.ToString();
+                return res;
+            }
+        }
+
         public override bool ValidateHmac(Dictionary<string, string> hparams, string body = "", string signature = "")
         {
             throw new NotImplementedException();
@@ -1203,6 +1232,45 @@ namespace Paytrail_dotnet_sdk
             }
         }
 
+        private RevertAuthorizationHoldResponse HandleRevertPaymentAuthorizationHold(string transactionId)
+        {
+            RevertAuthorizationHoldResponse res = new RevertAuthorizationHoldResponse();
+            try
+            {
+                // Create header
+                Dictionary<string, string> hdparams = GetHeaders("POST", transactionId);
+
+                // Add signature for header
+                string signature = CalculateHmac(hdparams);
+                if (string.IsNullOrEmpty(signature))
+                {
+                    res.ReturnCode = (int)ResponseMessage.SignatureNull;
+                    res.ReturnMessage = ResponseMessage.SignatureNull.GetEnumDescription();
+                    return res;
+                }
+                hdparams = GetHeaders(hdparams, "signature", signature);
+
+                // Create new request
+                string url = API_ENDPOINT + "/payments/" + transactionId + "/token/revert";
+                RestClient client = new RestClient();
+                RestRequest request = SetHeaders(hdparams, url, Method.Post);
+
+                // Execute to Paytrail API 
+                RestResponse response = client.Execute(request) as RestResponse;
+                if (!ValidateResponse(response, res))
+                    return res;
+
+                res.Data = JsonConvert.DeserializeObject<RevertAuthorizationHoldData>(response.Content);
+                res.ReturnCode = (int)ResponseMessage.Success;
+                res.ReturnMessage = ResponseMessage.Success.GetEnumDescription();
+                return res;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
         #region Validate Methods
         private bool ValidateRefundRequest(RefundResponse res, RefundRequest refundRequest, string transactionId)
         {
@@ -1444,6 +1512,18 @@ namespace Paytrail_dotnet_sdk
 
             return true;
         }
+        private bool ValidateRevertPaymentAuthorizationHoldRequest(RevertAuthorizationHoldResponse res, string transactionId)
+        {
+            if (string.IsNullOrEmpty(transactionId))
+            {
+                res.ReturnCode = (int)ResponseMessage.RequestNull;
+                res.ReturnMessage = "transactionId can not be null";
+                return false;
+            }
+
+            return true;
+        }
+
 
         private bool ValidateResponse(RestResponse response, Response res)
         {
