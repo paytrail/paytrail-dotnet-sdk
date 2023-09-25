@@ -131,5 +131,14 @@ namespace Paytrail_dotnet_sdk.Interface
         /// <param name="transactionId">the transaction ID</param>
         /// <returns>CreateMitOrCitPaymentResponse</returns>
         CreateMitOrCitPaymentResponse CreateCitPaymentAuthorizationHold(CreateMitOrCitPaymentRequest createCitPaymentAuthorizationHold, string transactionId);
+
+        /// <summary>
+        /// Commits an existing authorization hold
+        /// </summary>
+        /// <see>https://docs.paytrail.com/#/?id=commit-authorization-hold</see>
+        /// <param name="createMitPaymentCommitRequest">A CreateMitOrCitPaymentRequest class instance</param>
+        /// <param name="transactionId">the transaction ID</param>
+        /// <returns>CreateMitOrCitPaymentResponse</returns>
+        CreateMitOrCitPaymentResponse CreateMitPaymentCommit(CreateMitOrCitPaymentRequest createMitPaymentCommitRequest, string transactionId);
     }
 }
