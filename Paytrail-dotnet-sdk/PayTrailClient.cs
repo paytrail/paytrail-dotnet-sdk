@@ -628,7 +628,7 @@ namespace Paytrail_dotnet_sdk
         /// <see>https://docs.paytrail.com/#/?id=payment-report-request-by-settlement-id</see>
         /// <param name="paymentReportBySettlementRequest">A PaymentReportBySettlementRequest class instance</param>
         /// <returns>RevertAuthorizationHoldResponse</returns>
-        public PaymentReportResponse RequestPaymentReportBySettlement(PaymentReportBySettlementRequest paymentReportBySettlementRequest, string settlementId)
+        public PaymentReportResponse RequestPaymentReportBySettlement(PaymentReportBySettlementRequest paymentReportBySettlementRequest, int settlementId)
         {
             PaymentReportResponse res = new PaymentReportResponse();
             try
@@ -1304,7 +1304,7 @@ namespace Paytrail_dotnet_sdk
             }
         }
 
-        private PaymentReportResponse HandleRequestPaymentReportBySettlement(string bodyContent, string settlementId)
+        private PaymentReportResponse HandleRequestPaymentReportBySettlement(string bodyContent, int settlementId)
         {
             PaymentReportResponse res = new PaymentReportResponse();
             try
@@ -1597,9 +1597,9 @@ namespace Paytrail_dotnet_sdk
             return true;
         }
 
-        private bool ValidateRequestPaymentReportBySettlement(PaymentReportResponse res, PaymentReportBySettlementRequest req, string settlementId)
+        private bool ValidateRequestPaymentReportBySettlement(PaymentReportResponse res, PaymentReportBySettlementRequest req, int? settlementId)
         {
-            if (string.IsNullOrEmpty(settlementId))
+            if (!settlementId.HasValue)
             {
                 res.ReturnCode = (int)ResponseMessage.RequestNull;
                 res.ReturnMessage = "settlementId can not be null";

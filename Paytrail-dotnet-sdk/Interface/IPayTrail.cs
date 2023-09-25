@@ -164,6 +164,6 @@ namespace Paytrail_dotnet_sdk.Interface
         /// <see>https://docs.paytrail.com/#/?id=payment-report-request-by-settlement-id</see>
         /// <param name="paymentReportBySettlementRequest">A PaymentReportBySettlementRequest class instance</param>
         /// <returns>RevertAuthorizationHoldResponse</returns>
-        PaymentReportResponse RequestPaymentReportBySettlement(PaymentReportBySettlementRequest paymentReportBySettlementRequest, string settlementId);
+        PaymentReportResponse RequestPaymentReportBySettlement(PaymentReportBySettlementRequest paymentReportBySettlementRequest, int settlementId);
     }
 }
