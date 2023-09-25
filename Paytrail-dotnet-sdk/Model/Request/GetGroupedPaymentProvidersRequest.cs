@@ -1,30 +1,20 @@
-﻿using Paytrail_dotnet_sdk.Model.Request.RequestModels;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
 using System.Text;
 
 namespace Paytrail_dotnet_sdk.Model.Request
 {
-    public class GetGroupedPaymentProvidersRequest : Request
+    public class GetGroupedPaymentProvidersRequest : GetPaymentProvidersRequest
     {
-        public int Amount { get; set; }
         public string Language { get; set; }
-        public List<PaymentMethodGroup> Groups { get; set; }
 
-        internal (bool, StringBuilder) Validate()
+        internal new (bool, StringBuilder) Validate()
         {
             StringBuilder message = new StringBuilder();
+
             try
             {
-                bool ret = true;
-                if (Amount < 0)
-                {
-                    ret = false;
-                    message.Append(" amount can't be less than zero.");
-                }
-
-                return (ret, message);
+                return base.Validate();
             }
             catch (Exception ex)
             {
@@ -35,21 +25,9 @@ namespace Paytrail_dotnet_sdk.Model.Request
 
         public override string ToString()
         {
-            string query = "";
+            string query = base.ToString();
 
-            if (Amount >= 0)
-            {
-                query += $"&amount={Amount}";
-            }
-
-            if (Groups != null && Groups.Count > 0)
-            {
-                string groupsString = string.Join(",", Groups.Select(group => group.ToString().ToLower()));
-
-                query += $"&groups={groupsString}";
-            }
-
-            if (Language != null)
+            if (!String.IsNullOrEmpty(Language))
             {
                 query += $"&language={Language}";
             }
