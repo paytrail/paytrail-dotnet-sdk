@@ -656,6 +656,39 @@ namespace Paytrail_dotnet_sdk
             }
         }
 
+        /// <summary>
+        /// A form post requested from the user's browser
+        /// </summary>
+        /// <see>https://docs.paytrail.com/#/?id=add-card-form</see>
+        /// <param name="addCardFormRequest">A AddCardFormRequest class instance</param>
+        /// <returns>AddCardFormResponse</returns>
+        public AddCardFormResponse CreateAddCardFormRequest(AddCardFormRequest addCardFormRequest)
+        {
+            AddCardFormResponse res = new AddCardFormResponse();
+            try
+            {
+                // Validate add card form request
+                if (!ValidateAddCardFormRequest(res, addCardFormRequest))
+                {
+                    return res;
+                }
+
+                // Handle add card form request
+                res = HandleAddCardFormRequest(JsonConvert.SerializeObject(addCardFormRequest, new JsonSerializerSettings
+                {
+                    ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                    NullValueHandling = NullValueHandling.Ignore
+                }));
+                return res;
+            }
+            catch (Exception ex)
+            {
+                res.ReturnCode = (int)ResponseMessage.Exception;
+                res.ReturnMessage = ex.ToString();
+                return res;
+            }
+        }
+
         public override bool ValidateHmac(Dictionary<string, string> hparams, string body = "", string signature = "")
         {
             throw new NotImplementedException();
@@ -1344,6 +1377,36 @@ namespace Paytrail_dotnet_sdk
             }
         }
 
+        private AddCardFormResponse HandleAddCardFormRequest(string bodyContent)
+        {
+            AddCardFormResponse res = new AddCardFormResponse();
+            try
+            {
+                // Create new request
+                string url = API_ENDPOINT + "/tokenization/addcard-form";
+                RestClient client = new RestClient();
+                RestRequest request = new RestRequest(url, Method.Post);
+                request.AddParameter("application/json", bodyContent, ParameterType.RequestBody);
+
+                // Execute to Paytrail API 
+                RestResponse response = client.Execute(request) as RestResponse;
+                if (!ValidateResponse(response, res))
+                    return res;
+
+                res.Data = new AddCardFormData
+                {
+                    Content = response.Content
+                };
+                res.ReturnCode = (int)ResponseMessage.Success;
+                res.ReturnMessage = ResponseMessage.Success.GetEnumDescription();
+                return res;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
         #region Validate Methods
         private bool ValidateRefundRequest(RefundResponse res, RefundRequest refundRequest, string transactionId)
         {
@@ -1610,6 +1673,26 @@ namespace Paytrail_dotnet_sdk
             {
                 res.ReturnCode = (int)ResponseMessage.RequestNull;
                 res.ReturnMessage = "payment report by settlement request can not be null";
+                return false;
+            }
+
+            (bool isValid, StringBuilder valMess) = req.Validate();
+            if (!isValid)
+            {
+                res.ReturnCode = (int)ResponseMessage.ValidateFail;
+                res.ReturnMessage = valMess.ToString();
+                return false;
+            }
+
+            return true;
+        }
+
+        private bool ValidateAddCardFormRequest(AddCardFormResponse res, AddCardFormRequest req)
+        {
+            if (req is null)
+            {
+                res.ReturnCode = (int)ResponseMessage.RequestNull;
+                res.ReturnMessage = "add card form request can not be null";
                 return false;
             }
 
