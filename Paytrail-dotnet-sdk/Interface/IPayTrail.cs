@@ -157,5 +157,13 @@ namespace Paytrail_dotnet_sdk.Interface
         /// <param name="transactionId">the transaction ID</param>
         /// <returns>RevertAuthorizationHoldResponse</returns>
         RevertAuthorizationHoldResponse RevertPaymentAuthorizationHold(string transactionId);
+
+        /// <summary>
+        /// Results in a callback containing the payment report
+        /// </summary>
+        /// <see>https://docs.paytrail.com/#/?id=payment-report-request-by-settlement-id</see>
+        /// <param name="paymentReportBySettlementRequest">A PaymentReportBySettlementRequest class instance</param>
+        /// <returns>RevertAuthorizationHoldResponse</returns>
+        PaymentReportResponse RequestPaymentReportBySettlement(PaymentReportBySettlementRequest paymentReportBySettlementRequest, int settlementId);
     }
 }

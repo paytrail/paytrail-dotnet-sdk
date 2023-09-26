@@ -623,6 +623,39 @@ namespace Paytrail_dotnet_sdk
             }
         }
 
+        /// <summary>
+        /// Results in a callback containing the payment report
+        /// </summary>
+        /// <see>https://docs.paytrail.com/#/?id=payment-report-request-by-settlement-id</see>
+        /// <param name="paymentReportBySettlementRequest">A PaymentReportBySettlementRequest class instance</param>
+        /// <returns>RevertAuthorizationHoldResponse</returns>
+        public PaymentReportResponse RequestPaymentReportBySettlement(PaymentReportBySettlementRequest paymentReportBySettlementRequest, int settlementId)
+        {
+            PaymentReportResponse res = new PaymentReportResponse();
+            try
+            {
+                // Validate request payment report by settlement
+                if (!ValidateRequestPaymentReportBySettlement(res, paymentReportBySettlementRequest, settlementId))
+                {
+                    return res;
+                }
+
+                // Handle request payment report by settlement
+                res = HandleRequestPaymentReportBySettlement(JsonConvert.SerializeObject(paymentReportBySettlementRequest, new JsonSerializerSettings
+                {
+                    ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                    NullValueHandling = NullValueHandling.Ignore
+                }), settlementId);
+                return res;
+            }
+            catch (Exception ex)
+            {
+                res.ReturnCode = (int)ResponseMessage.Exception;
+                res.ReturnMessage = ex.ToString();
+                return res;
+            }
+        }
+
         public override bool ValidateHmac(Dictionary<string, string> hparams, string body = "", string signature = "")
         {
             throw new NotImplementedException();
@@ -1271,6 +1304,46 @@ namespace Paytrail_dotnet_sdk
             }
         }
 
+        private PaymentReportResponse HandleRequestPaymentReportBySettlement(string bodyContent, int settlementId)
+        {
+            PaymentReportResponse res = new PaymentReportResponse();
+            try
+            {
+                // Create header
+                Dictionary<string, string> hdparams = GetHeaders("POST");
+
+                // Add signature for header
+                string signature = CalculateHmac(hdparams, bodyContent);
+                if (string.IsNullOrEmpty(signature))
+                {
+                    res.ReturnCode = (int)ResponseMessage.SignatureNull;
+                    res.ReturnMessage = ResponseMessage.SignatureNull.GetEnumDescription();
+                    return res;
+                }
+                hdparams = GetHeaders(hdparams, "signature", signature);
+
+                // Create new request
+                string url = API_ENDPOINT + "/settlements/" + settlementId + "/payments/report";
+                RestClient client = new RestClient();
+                RestRequest request = SetHeaders(hdparams, url, Method.Post);
+                request.AddParameter("application/json", bodyContent, ParameterType.RequestBody);
+
+                // Execute to Paytrail API 
+                RestResponse response = client.Execute(request) as RestResponse;
+                if (!ValidateResponse(response, res))
+                    return res;
+
+                res.Data = JsonConvert.DeserializeObject<PaymentReportData>(response.Content);
+                res.ReturnCode = (int)ResponseMessage.Success;
+                res.ReturnMessage = ResponseMessage.Success.GetEnumDescription();
+                return res;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
         #region Validate Methods
         private bool ValidateRefundRequest(RefundResponse res, RefundRequest refundRequest, string transactionId)
         {
@@ -1524,6 +1597,32 @@ namespace Paytrail_dotnet_sdk
             return true;
         }
 
+        private bool ValidateRequestPaymentReportBySettlement(PaymentReportResponse res, PaymentReportBySettlementRequest req, int? settlementId)
+        {
+            if (!settlementId.HasValue)
+            {
+                res.ReturnCode = (int)ResponseMessage.RequestNull;
+                res.ReturnMessage = "settlementId can not be null";
+                return false;
+            }
+
+            if (req is null)
+            {
+                res.ReturnCode = (int)ResponseMessage.RequestNull;
+                res.ReturnMessage = "payment report by settlement request can not be null";
+                return false;
+            }
+
+            (bool isValid, StringBuilder valMess) = req.Validate();
+            if (!isValid)
+            {
+                res.ReturnCode = (int)ResponseMessage.ValidateFail;
+                res.ReturnMessage = valMess.ToString();
+                return false;
+            }
+
+            return true;
+        }
 
         private bool ValidateResponse(RestResponse response, Response res)
         {
