@@ -3,7 +3,7 @@ using Paytrail_dotnet_sdk.Model.Response;
 
 namespace Paytrail_dotnet_sdk.Interface
 {
-    interface IPaytrail
+    public interface IPaytrail
     {
         /// <summary>
         /// Create a payment request
