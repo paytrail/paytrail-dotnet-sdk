@@ -20,7 +20,7 @@ namespace Paytrail_dotnet_sdk.UnitTest
             //Act
             PaytrailClient payTrail = new PaytrailClient(MERCHANTIDSIS, SECRETKEYSIS, "test");
             SettlementsRequest? request = null;
-            SettlementsResponse res = payTrail.RequestSettlements(request);
+            SettlementsResponse res = payTrail.GetSettlements(request);
             int actual = res.ReturnCode;
 
             //Assert
@@ -44,7 +44,7 @@ namespace Paytrail_dotnet_sdk.UnitTest
                 Limit = 10,
             };
 
-            SettlementsResponse res = payTrail.RequestSettlements(request);
+            SettlementsResponse res = payTrail.GetSettlements(request);
             int actual = res.ReturnCode;
 
             //Assert
@@ -67,7 +67,7 @@ namespace Paytrail_dotnet_sdk.UnitTest
                 Limit = 10,
             };
 
-            SettlementsResponse res = payTrail.RequestSettlements(request);
+            SettlementsResponse res = payTrail.GetSettlements(request);
             int actual = res.ReturnCode;
 
             //Assert
