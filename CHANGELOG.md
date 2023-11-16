@@ -19,7 +19,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Added commit CiT authorization hold
 - Added revert existing Mit or CiT authorization hold
 - Added request payment report by settlement ID
-- Added save card details
+- Added save card detail
 
 # [1.0.7] - 2023-05-17
 ### Added
