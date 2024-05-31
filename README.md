@@ -27,13 +27,13 @@ Install with Nuget Package Management
 Install with .NET Core CLI
 
 ```
-Nuget\Install-Package Paytrail-dotnet-sdk -Version 1.0.2
+Nuget\Install-Package Paytrail-dotnet-sdk -Version 1.0.9
 ```
 
 Install with Package Manager Console`
 
 ```
-dotnet add package Paytrail-dotnet-sdk --version 1.0.2
+dotnet add package Paytrail-dotnet-sdk --version 1.0.9
 ```
 
 ## Usage
