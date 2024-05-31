@@ -9,9 +9,9 @@
     <RepositoryUrl>https://github.com/paytrail/paytrail-dotnet-sdk</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>pay payment </PackageTags>
-    <Version>1.0.8</Version>
+    <Version>1.0.9</Version>
     <Company>Paytrail</Company>
-    <Authors>Paytrail by nets</Authors>
+    <Authors>Paytrail</Authors>
     <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
     <PackageProjectUrl>https://www.paytrail.com/</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
