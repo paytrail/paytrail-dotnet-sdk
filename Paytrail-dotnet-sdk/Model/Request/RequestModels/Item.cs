@@ -17,8 +17,7 @@ namespace Paytrail_dotnet_sdk.Model.Request.RequestModels
         //public string reference { get; set; }
         //public string merchant { get; set; }
         //public Commission commission { get; set; }
-
-        public (bool, StringBuilder) Validate()
+        public virtual (bool, StringBuilder) Validate()
         {
             bool ret = true;
             StringBuilder message = new StringBuilder();
@@ -26,12 +25,6 @@ namespace Paytrail_dotnet_sdk.Model.Request.RequestModels
             //
             try
             {
-                if (UnitPrice < 0)
-                {
-                    ret = false;
-                    message.Append(" item's unitPrice can't be a negative number.");
-                }
-
                 //
                 if (Units < 0)
                 {
@@ -50,7 +43,7 @@ namespace Paytrail_dotnet_sdk.Model.Request.RequestModels
                     if (ProductCode.Length > 100)
                     {
                         ret = false;
-                        message.Append(" item's productCode is more than 100 characters.");
+                        message.Append(" item's productCode should have less than 100 characters.");
                     }
                 }
 
@@ -58,9 +51,15 @@ namespace Paytrail_dotnet_sdk.Model.Request.RequestModels
                 if (!string.IsNullOrEmpty(Description) && Description.Length > 1000)
                 {
                     ret = false;
-                    message.Append(" item's description is more than 1000 characters.");
+                    message.Append(" item's description should have less than 1000 characters.");
                 }
 
+                //Merchant specific item category. Maximum of 100 characters.
+                if (!string.IsNullOrEmpty(Category) && Category.Length > 100)
+                {
+                    ret = false;
+                    message.Append(" item's Category should have less than 100 characters.");
+                }
                 return (ret, message);
             }
             catch (Exception ex)

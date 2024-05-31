@@ -4,6 +4,11 @@ using System.Text;
 
 namespace Paytrail_dotnet_sdk.Model.Request
 {
+    // Define the generic base class PaymentRequest<T> where T is constrained to Item
+    public class PaymentRequest<T> : PaymentRequest where T : Item
+    {
+        public new T[] Items { get; set; }
+    }
     public class PaymentRequest: Request
     {
         public string Stamp { get; set; }
