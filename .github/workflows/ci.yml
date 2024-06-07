@@ -26,4 +26,4 @@ jobs:
       run: dotnet build Paytrail-dotnet-sdk/Paytrail-dotnet-sdk.csproj --no-restore --configuration Release
       
     - name: Test
-      run: dotnet test Paytrail-dotnet-sdk.UnitTest/Paytrail-dotnet-sdk.UnitTest.csproj
+      run: dotnet test Paytrail-dotnet-sdk.UnitTest/Paytrail-dotnet-sdk.UnitTest.csproj --no-restore
