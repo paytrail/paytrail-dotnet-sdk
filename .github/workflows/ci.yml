@@ -21,11 +21,11 @@ jobs:
         dotnet-version: 8.0.x
 
     - name: Restore dependencies
-      run: dotnet restore Paytrail-dotnet-sdk/Paytrail-dotnet-sdk.csproj
+      run: dotnet restore Paytrail-dotnet-sdk.UnitTest/Paytrail-dotnet-sdk.UnitTest.csproj
 
       
     - name: Build
-      run: dotnet build Paytrail-dotnet-sdk/Paytrail-dotnet-sdk.csproj --no-restore 
+      run: dotnet build Paytrail-dotnet-sdk.UnitTest/Paytrail-dotnet-sdk.UnitTest.csproj --no-restore 
       
     - name: Test
       run: dotnet test Paytrail-dotnet-sdk.UnitTest/Paytrail-dotnet-sdk.UnitTest.csproj --no-build --verbosity normal
