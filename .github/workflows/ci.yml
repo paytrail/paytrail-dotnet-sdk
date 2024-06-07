@@ -23,7 +23,7 @@ jobs:
       run: dotnet restore Paytrail-dotnet-sdk/Paytrail-dotnet-sdk.csproj
       
     - name: Build
-      run: dotnet build Paytrail-dotnet-sdk/Paytrail-dotnet-sdk.csproj --no-restore --configuration Release
+      run: dotnet build Paytrail-dotnet-sdk/Paytrail-dotnet-sdk.csproj
       
     - name: Test
-      run: dotnet test Paytrail-dotnet-sdk.UnitTest/Paytrail-dotnet-sdk.UnitTest.csproj --configuration release --no-build --verbosity normal
+      run: dotnet test Paytrail-dotnet-sdk.UnitTest/Paytrail-dotnet-sdk.UnitTest.csproj --no-build 
