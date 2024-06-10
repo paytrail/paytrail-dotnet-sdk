@@ -22,16 +22,16 @@ jobs:
 
     - name: Restore dependencies
       run: |
-        cd Paytrail-dotnet-sdk.UnitTest/Paytrail-dotnet-sdk.UnitTest.csproj
+        cd Paytrail-dotnet-sdk.UnitTest
         dotnet restore 
 
       
     - name: Build
       run: |
-        cd Paytrail-dotnet-sdk.UnitTest/Paytrail-dotnet-sdk.UnitTest.csproj
+        cd Paytrail-dotnet-sdk.UnitTest
         dotnet build -c Release --no-restore 
       
     - name: Test
       run: |
-        cd Paytrail-dotnet-sdk.UnitTest/Paytrail-dotnet-sdk.UnitTest.csproj
+        cd Paytrail-dotnet-sdk.UnitTest
         dotnet test -c Release --no-build --verbosity normal
