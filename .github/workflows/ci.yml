@@ -28,4 +28,4 @@ jobs:
       run: dotnet build Paytrail-dotnet-sdk/Paytrail-dotnet-sdk.csproj --no-restore 
       
     - name: Test
-      run: dotnet test Paytrail-dotnet-sdk.UnitTest/Paytrail-dotnet-sdk.UnitTest.csproj --verbosity normal
+      run: dotnet test Paytrail-dotnet-sdk.UnitTest/Paytrail-dotnet-sdk.UnitTest.csproj --no-build --verbosity normal
