@@ -21,11 +21,17 @@ jobs:
         dotnet-version: 6.0.x
 
     - name: Restore dependencies
-      run: dotnet restore Paytrail-dotnet-sdk.UnitTest/Paytrail-dotnet-sdk.UnitTest.csproj
+      run: |
+        cd Paytrail-dotnet-sdk.UnitTest/Paytrail-dotnet-sdk.UnitTest.csproj
+        dotnet restore 
 
       
     - name: Build
-      run: dotnet build Paytrail-dotnet-sdk.UnitTest/Paytrail-dotnet-sdk.UnitTest.csproj -c Release --no-restore 
+      run: |
+        cd Paytrail-dotnet-sdk.UnitTest/Paytrail-dotnet-sdk.UnitTest.csproj
+        dotnet build -c Release --no-restore 
       
     - name: Test
-      run: dotnet test Paytrail-dotnet-sdk.UnitTest/Paytrail-dotnet-sdk.UnitTest.csproj -c Release --no-build --verbosity normal
+      run: |
+        cd Paytrail-dotnet-sdk.UnitTest/Paytrail-dotnet-sdk.UnitTest.csproj
+        dotnet test -c Release --no-build --verbosity normal
