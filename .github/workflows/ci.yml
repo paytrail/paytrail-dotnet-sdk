@@ -18,20 +18,14 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 6.0.x
+        dotnet-version: 8.0.x
 
     - name: Restore dependencies
-      run: |
-        cd Paytrail-dotnet-sdk.UnitTest
-        dotnet restore 
+      run: dotnet restore Paytrail-dotnet-sdk/Paytrail-dotnet-sdk.csproj
 
       
     - name: Build
-      run: |
-        cd Paytrail-dotnet-sdk.UnitTest
-        dotnet build -c Release --no-restore 
+      run: dotnet build Paytrail-dotnet-sdk/Paytrail-dotnet-sdk.csproj --no-restore 
       
     - name: Test
-      run: |
-        cd Paytrail-dotnet-sdk.UnitTest
-        dotnet test -c Release --no-build --verbosity normal
+      run: dotnet test Paytrail-dotnet-sdk.UnitTest/Paytrail-dotnet-sdk.UnitTest.csproj --verbosity normal
