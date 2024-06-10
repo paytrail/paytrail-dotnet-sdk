@@ -4,21 +4,22 @@
     <RootNamespace>Paytrail_dotnet_sdk</RootNamespace>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Description>C# Software Development Kit for Paytrail payment service</Description>
-    <PackageIcon>dotnet-logo.png</PackageIcon>
+    <PackageIcon>paytraillogo_160.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/paytrail/paytrail-dotnet-sdk</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>pay payment </PackageTags>
-    <Version>1.0.8</Version>
+    <Version>1.0.9</Version>
     <Company>Paytrail</Company>
     <Authors>Paytrail by nets</Authors>
     <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
     <PackageProjectUrl>https://www.paytrail.com/</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReleaseNotes>Fixed shop-in-shop validation</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="dotnet-logo.png">
+    <None Include="..\paytraillogo_160.png">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
