@@ -1,0 +1,55 @@
+name: CI/CD
+
+on:
+  release:
+    types:
+    - created
+
+env:
+  PROJECT_PATH: 'Paytrail-dotnet-sdk/Paytrail-dotnet-sdk.csproj'
+
+jobs:
+  build:
+    name: Run unit tests
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+        
+    - name: Restore dependencies
+      run: dotnet restore Paytrail-dotnet-sdk.UnitTest/Paytrail-dotnet-sdk.UnitTest.csproj
+
+    - name: Build
+      run: dotnet build Paytrail-dotnet-sdk.UnitTest/Paytrail-dotnet-sdk.UnitTest.csproj --configuration Release --no-restore
+      
+    - name: Test
+      run: dotnet test Paytrail-dotnet-sdk.UnitTest/Paytrail-dotnet-sdk.UnitTest.csproj --configuration Release --no-build
+      continue-on-error: true
+
+  deploy:
+    name: Publish Nuget
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Get Version
+      id: version
+      uses: battila7/get-version-action@v2
+
+    # Publish
+    - name: Publish NuGet
+      id: publish_nuget
+      uses: brandedoutcast/publish-nuget@v2.5.5
+      with:
+        # Filepath of the project to be packaged, relative to root of repository
+        PROJECT_FILE_PATH: ${{ env.PROJECT_PATH }}
+
+        # Useful with external providers like Nerdbank.GitVersioning, ignores VERSION_FILE_PATH & VERSION_REGEX
+        VERSION_STATIC: ${{ steps.version.outputs.version }}
+
+        # API key to authenticate with NuGet server
+        NUGET_KEY: ${{ secrets.NUGET_API_KEY }}
