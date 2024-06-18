@@ -9,6 +9,7 @@ env:
   PROJECT_PATH: 'Paytrail-dotnet-sdk/Paytrail-dotnet-sdk.csproj'
   PACKAGE_OUTPUT_DIRECTORY: ${{ github.workspace }}/output/
   NUGET_SOURCE_URL: 'https://api.nuget.org/v3/index.json'
+  NUGET_API_KEY: 'oy2nr6qorpnv64awjhcacxyib7p5sjrenoe5uvofap3zoa'
 
 jobs:
   build:
@@ -53,5 +54,4 @@ jobs:
       run: dotnet pack ${{ env.PROJECT_PATH }} --no-restore --no-build --configuration Release --include-symbols --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
 
     - name: Push package
-      run: dotnet nuget push ${{ env.PACKAGE_OUTPUT_DIRECTORY }}\*.nupkg -k ${{ secrets.NUGET_API_KEY }} -s ${{ env.NUGET_SOURCE_URL }}
-
+      run: dotnet nuget push ${{ env.PACKAGE_OUTPUT_DIRECTORY }}\*.nupkg -k ${{ env.NUGET_API_KEY }} -s ${{ env.NUGET_SOURCE_URL }}
