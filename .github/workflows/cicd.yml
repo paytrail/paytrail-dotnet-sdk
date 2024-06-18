@@ -7,6 +7,8 @@ on:
 
 env:
   PROJECT_PATH: 'Paytrail-dotnet-sdk/Paytrail-dotnet-sdk.csproj'
+  PACKAGE_OUTPUT_DIRECTORY: ${{ github.workspace }}/output/
+  NUGET_SOURCE_URL: 'https://api.nuget.org/v3/index.json'
 
 jobs:
   build:
@@ -34,22 +36,17 @@ jobs:
     name: Publish Nuget
     runs-on: ubuntu-latest
     steps:
+
     - uses: actions/checkout@v4
 
-    - name: Get Version
-      id: version
-      uses: battila7/get-version-action@v2
-
-    # Publish
-    - name: Publish NuGet
-      id: publish_nuget
-      uses: brandedoutcast/publish-nuget@v2.5.5
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
       with:
-        # Filepath of the project to be packaged, relative to root of repository
-        PROJECT_FILE_PATH: ${{ env.PROJECT_PATH }}
+        dotnet-version: 8.0.x
 
-        # Useful with external providers like Nerdbank.GitVersioning, ignores VERSION_FILE_PATH & VERSION_REGEX
-        VERSION_STATIC: ${{ steps.version.outputs.version }}
+    - name: 'Pack project'
+      run: dotnet pack ${{ env.PROJECT_PATH }} --no-restore --no-build --configuration Release --include-symbols --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
 
-        # API key to authenticate with NuGet server
-        NUGET_KEY: ${{ secrets.NUGET_API_KEY }}
+    - name: 'Push package'
+      run: dotnet nuget push ${{ env.PACKAGE_OUTPUT_DIRECTORY }}\*.nupkg -k ${{ secrets.NUGET_API_KEY }} -s ${{ env.NUGET_SOURCE_URL }}
+
