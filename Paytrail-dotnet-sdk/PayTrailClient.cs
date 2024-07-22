@@ -44,7 +44,8 @@ namespace Paytrail_dotnet_sdk
                 // Create payment
                 res = CreatePayment(JsonConvert.SerializeObject(paymentRequest, new JsonSerializerSettings
                 {
-                    ContractResolver = new CamelCasePropertyNamesContractResolver()
+                    ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                    NullValueHandling = NullValueHandling.Ignore
                 }));
                 return res;
             }
@@ -76,7 +77,8 @@ namespace Paytrail_dotnet_sdk
                 // Create SiS payment
                 res = CreatePayment(JsonConvert.SerializeObject(paymentRequest, new JsonSerializerSettings
                 {
-                    ContractResolver = new CamelCasePropertyNamesContractResolver()
+                    ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                    NullValueHandling = NullValueHandling.Ignore
                 }));
                 return res;
             }
@@ -138,7 +140,8 @@ namespace Paytrail_dotnet_sdk
                 // Create refund request
                 res = CreateRefundRequest(JsonConvert.SerializeObject(refundRequest, new JsonSerializerSettings
                 {
-                    ContractResolver = new CamelCasePropertyNamesContractResolver()
+                    ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                    NullValueHandling = NullValueHandling.Ignore
                 }), transactionId);
                 return res;
             }
@@ -173,7 +176,8 @@ namespace Paytrail_dotnet_sdk
                 // Create refund request
                 res = CreateRefundRequest(JsonConvert.SerializeObject(refundRequest, new JsonSerializerSettings
                 {
-                    ContractResolver = new CamelCasePropertyNamesContractResolver()
+                    ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                    NullValueHandling = NullValueHandling.Ignore
                 }), transactionId);
                 return res;
             }
@@ -189,7 +193,7 @@ namespace Paytrail_dotnet_sdk
         {
             PayAddCardResponse response = new PayAddCardResponse();
             try
-            {   
+            {
                 // Validate pay and add card request
                 if (!ValidatePayAndAddCardRequest(response, request))
                 {
@@ -197,10 +201,11 @@ namespace Paytrail_dotnet_sdk
                 }
 
                 // Create pay and add card request
-                response = CreatePayAndAddCardRequest(JsonConvert.SerializeObject(request,new JsonSerializerSettings
-                    {
-                       ContractResolver = new CamelCasePropertyNamesContractResolver()
-                    }));
+                response = CreatePayAndAddCardRequest(JsonConvert.SerializeObject(request, new JsonSerializerSettings
+                {
+                    ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                    NullValueHandling = NullValueHandling.Ignore
+                }));
                 return response;
             }
             catch (Exception ex)
@@ -475,7 +480,6 @@ namespace Paytrail_dotnet_sdk
                 {
                     return res;
                 }
-
                 // Create create mit payment charge
                 res = HandleCreateCitPaymentCharge(JsonConvert.SerializeObject(createCitPaymentChargeRequest, new JsonSerializerSettings
                 {
@@ -722,7 +726,7 @@ namespace Paytrail_dotnet_sdk
                 RestResponse response = client.Execute(request) as RestResponse;
                 if (!ValidateResponse(response, res))
                     return res;
-                
+
                 res.Data = JsonConvert.DeserializeObject<PaymentData>(response.Content);
                 res.ReturnCode = (int)ResponseMessage.Success;
                 res.ReturnMessage = ResponseMessage.Success.GetEnumDescription();
@@ -1709,7 +1713,7 @@ namespace Paytrail_dotnet_sdk
 
         private bool ValidateResponse(RestResponse response, Response res)
         {
-            if (response == null) 
+            if (response == null)
             {
                 res.ReturnCode = (int)ResponseMessage.ResponseNull;
                 res.ReturnMessage = ResponseMessage.ResponseNull.GetEnumDescription();
