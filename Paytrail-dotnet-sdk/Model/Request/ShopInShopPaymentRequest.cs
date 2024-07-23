@@ -1,5 +1,6 @@
 ﻿using Paytrail_dotnet_sdk.Model.Request.RequestModels;
 using System;
+using System.Linq;
 using System.Text;
 
 namespace Paytrail_dotnet_sdk.Model.Request
@@ -89,8 +90,12 @@ namespace Paytrail_dotnet_sdk.Model.Request
                     }
                 }
 
-                //
-                if (Items != null)
+                if (Items is null || Items.Count() == 0)
+                {
+                    ret = false;
+                    message.Append("items can't be empty.");
+                }
+                else
                 {
                     foreach (var item in Items)
                     {
