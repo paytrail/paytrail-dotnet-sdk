@@ -402,13 +402,13 @@ namespace Paytrail_dotnet_sdk
         /// <see>https://docs.paytrail.com/#/?id=create-authorization-hold-or-charge</see>
         /// <param name="paymentReportRequest">A PaymentReportRequest class instance</param>
         /// <returns>CreateMitPaymentChargeResponse</returns>
-        public CreateMitOrCitPaymentResponse CreateMitPaymentCharge(CreateMitOrCitPaymentRequest createMitPaymentChargeRequest, string transactionId)
+        public CreateMitOrCitPaymentResponse CreateMitPaymentCharge(CreateMitOrCitPaymentRequest createMitPaymentChargeRequest)
         {
             CreateMitOrCitPaymentResponse res = new CreateMitOrCitPaymentResponse();
             try
             {
                 // Validate create mit payment charge
-                if (!ValidateCreateMitOrCitPaymentRequest(res, createMitPaymentChargeRequest, transactionId))
+                if (!ValidateCreateMitOrCitPaymentRequest(res, createMitPaymentChargeRequest))
                 {
                     return res;
                 }
@@ -418,7 +418,7 @@ namespace Paytrail_dotnet_sdk
                 {
                     ContractResolver = new CamelCasePropertyNamesContractResolver(),
                     NullValueHandling = NullValueHandling.Ignore
-                }), transactionId);
+                }));
                 return res;
             }
             catch (Exception ex)
@@ -436,13 +436,13 @@ namespace Paytrail_dotnet_sdk
         /// <param name="createMitPaymentAuthorizationHold">A CreateMitPaymentRequest class instance</param>
         /// <param name="transactionId">the transaction ID</param>
         /// <returns>CreateMitPaymentResponse</returns>
-        public CreateMitOrCitPaymentResponse CreateMitPaymentAuthorizationHold(CreateMitOrCitPaymentRequest createMitPaymentAuthorizationHold, string transactionId)
+        public CreateMitOrCitPaymentResponse CreateMitPaymentAuthorizationHold(CreateMitOrCitPaymentRequest createMitPaymentAuthorizationHold)
         {
             CreateMitOrCitPaymentResponse res = new CreateMitOrCitPaymentResponse();
             try
             {
                 // Validate create mit payment authorization hold
-                if (!ValidateCreateMitOrCitPaymentRequest(res, createMitPaymentAuthorizationHold, transactionId))
+                if (!ValidateCreateMitOrCitPaymentRequest(res, createMitPaymentAuthorizationHold))
                 {
                     return res;
                 }
@@ -452,7 +452,7 @@ namespace Paytrail_dotnet_sdk
                 {
                     ContractResolver = new CamelCasePropertyNamesContractResolver(),
                     NullValueHandling = NullValueHandling.Ignore
-                }), transactionId);
+                }));
                 return res;
             }
             catch (Exception ex)
@@ -470,13 +470,13 @@ namespace Paytrail_dotnet_sdk
         /// <param name="createCitPaymentChargeRequest">A CreateMitOrCitPaymentRequest class instance</param>
         /// <param name="transactionId">the transaction ID</param>
         /// <returns>CreateMitOrCitPaymentResponse</returns>
-        public CreateMitOrCitPaymentResponse CreateCitPaymentCharge(CreateMitOrCitPaymentRequest createCitPaymentChargeRequest, string transactionId)
+        public CreateMitOrCitPaymentResponse CreateCitPaymentCharge(CreateMitOrCitPaymentRequest createCitPaymentChargeRequest)
         {
             CreateMitOrCitPaymentResponse res = new CreateMitOrCitPaymentResponse();
             try
             {
                 // Validate create mit payment charge
-                if (!ValidateCreateMitOrCitPaymentRequest(res, createCitPaymentChargeRequest, transactionId))
+                if (!ValidateCreateMitOrCitPaymentRequest(res, createCitPaymentChargeRequest))
                 {
                     return res;
                 }
@@ -485,7 +485,7 @@ namespace Paytrail_dotnet_sdk
                 {
                     ContractResolver = new CamelCasePropertyNamesContractResolver(),
                     NullValueHandling = NullValueHandling.Ignore
-                }), transactionId);
+                }));
                 return res;
             }
             catch (Exception ex)
@@ -503,13 +503,13 @@ namespace Paytrail_dotnet_sdk
         /// <param name="createCitPaymentAuthorizationHold">A CreateMitOrCitPaymentRequest class instance</param>
         /// <param name="transactionId">the transaction ID</param>
         /// <returns>CreateMitOrCitPaymentResponse</returns>
-        public CreateMitOrCitPaymentResponse CreateCitPaymentAuthorizationHold(CreateMitOrCitPaymentRequest createCitPaymentAuthorizationHold, string transactionId)
+        public CreateMitOrCitPaymentResponse CreateCitPaymentAuthorizationHold(CreateMitOrCitPaymentRequest createCitPaymentAuthorizationHold)
         {
             CreateMitOrCitPaymentResponse res = new CreateMitOrCitPaymentResponse();
             try
             {
                 // Validate create cit payment authorization hold
-                if (!ValidateCreateMitOrCitPaymentRequest(res, createCitPaymentAuthorizationHold, transactionId))
+                if (!ValidateCreateMitOrCitPaymentRequest(res, createCitPaymentAuthorizationHold))
                 {
                     return res;
                 }
@@ -519,7 +519,7 @@ namespace Paytrail_dotnet_sdk
                 {
                     ContractResolver = new CamelCasePropertyNamesContractResolver(),
                     NullValueHandling = NullValueHandling.Ignore
-                }), transactionId);
+                }));
                 return res;
             }
             catch (Exception ex)
@@ -543,8 +543,14 @@ namespace Paytrail_dotnet_sdk
             try
             {
                 // Validate create mit payment commit
-                if (!ValidateCreateMitOrCitPaymentRequest(res, createMitPaymentCommitRequest, transactionId))
+                if (!ValidateCreateMitOrCitPaymentRequest(res, createMitPaymentCommitRequest))
                 {
+                    return res;
+                }
+                if (string.IsNullOrEmpty(transactionId))
+                {
+                    res.ReturnCode = (int)ResponseMessage.RequestNull;
+                    res.ReturnMessage = "transactionId can not be null";
                     return res;
                 }
 
@@ -577,11 +583,16 @@ namespace Paytrail_dotnet_sdk
             try
             {
                 // Validate create mit payment commit
-                if (!ValidateCreateMitOrCitPaymentRequest(res, createCitPaymentCommitRequest, transactionId))
+                if (!ValidateCreateMitOrCitPaymentRequest(res, createCitPaymentCommitRequest))
                 {
                     return res;
                 }
-
+                if (string.IsNullOrEmpty(transactionId))
+                {
+                    res.ReturnCode = (int)ResponseMessage.RequestNull;
+                    res.ReturnMessage = "transactionId can not be null";
+                    return res;
+                }
                 // Create mit payment commit
                 res = HandleCreateMitOrCitPaymentCommit(JsonConvert.SerializeObject(createCitPaymentCommitRequest, new JsonSerializerSettings
                 {
@@ -1102,13 +1113,13 @@ namespace Paytrail_dotnet_sdk
             }
         }
 
-        private CreateMitOrCitPaymentResponse HandleCreateMitPaymentCharge(string bodyContent, string transactionId)
+        private CreateMitOrCitPaymentResponse HandleCreateMitPaymentCharge(string bodyContent)
         {
             CreateMitOrCitPaymentResponse res = new CreateMitOrCitPaymentResponse();
             try
             {
                 // Create header
-                Dictionary<string, string> hdparams = GetHeaders("POST", transactionId);
+                Dictionary<string, string> hdparams = GetHeaders("POST");
 
                 // Add signature for header
                 string signature = CalculateHmac(hdparams, bodyContent);
@@ -1142,13 +1153,13 @@ namespace Paytrail_dotnet_sdk
             }
         }
 
-        private CreateMitOrCitPaymentResponse HandleCreateMitPaymentAuthorizationHold(string bodyContent, string transactionId)
+        private CreateMitOrCitPaymentResponse HandleCreateMitPaymentAuthorizationHold(string bodyContent)
         {
             CreateMitOrCitPaymentResponse res = new CreateMitOrCitPaymentResponse();
             try
             {
                 // Create header
-                Dictionary<string, string> hdparams = GetHeaders("POST", transactionId);
+                Dictionary<string, string> hdparams = GetHeaders("POST");
 
                 // Add signature for header
                 string signature = CalculateHmac(hdparams, bodyContent);
@@ -1182,13 +1193,13 @@ namespace Paytrail_dotnet_sdk
             }
         }
 
-        private CreateMitOrCitPaymentResponse HandleCreateCitPaymentCharge(string bodyContent, string transactionId)
+        private CreateMitOrCitPaymentResponse HandleCreateCitPaymentCharge(string bodyContent)
         {
             CreateMitOrCitPaymentResponse res = new CreateMitOrCitPaymentResponse();
             try
             {
                 // Create header
-                Dictionary<string, string> hdparams = GetHeaders("POST", transactionId);
+                Dictionary<string, string> hdparams = GetHeaders("POST");
 
                 // Add signature for header
                 string signature = CalculateHmac(hdparams, bodyContent);
@@ -1222,13 +1233,13 @@ namespace Paytrail_dotnet_sdk
             }
         }
 
-        private CreateMitOrCitPaymentResponse HandleCreateCitPaymentAuthorizationHold(string bodyContent, string transactionId)
+        private CreateMitOrCitPaymentResponse HandleCreateCitPaymentAuthorizationHold(string bodyContent)
         {
             CreateMitOrCitPaymentResponse res = new CreateMitOrCitPaymentResponse();
             try
             {
                 // Create header
-                Dictionary<string, string> hdparams = GetHeaders("POST", transactionId);
+                Dictionary<string, string> hdparams = GetHeaders("POST");
 
                 // Add signature for header
                 string signature = CalculateHmac(hdparams, bodyContent);
@@ -1626,15 +1637,8 @@ namespace Paytrail_dotnet_sdk
             return true;
         }
 
-        private bool ValidateCreateMitOrCitPaymentRequest(CreateMitOrCitPaymentResponse res, CreateMitOrCitPaymentRequest req, string transactionId)
+        private bool ValidateCreateMitOrCitPaymentRequest(CreateMitOrCitPaymentResponse res, CreateMitOrCitPaymentRequest req)
         {
-            if (string.IsNullOrEmpty(transactionId))
-            {
-                res.ReturnCode = (int)ResponseMessage.RequestNull;
-                res.ReturnMessage = "transactionId can not be null";
-                return false;
-            }
-
             if (req is null)
             {
                 res.ReturnCode = (int)ResponseMessage.RequestNull;

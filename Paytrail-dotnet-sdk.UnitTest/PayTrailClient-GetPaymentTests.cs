@@ -49,7 +49,7 @@ namespace Paytrail_dotnet_sdk.UnitTest
         public void GetPayment_CallPaytrailReturnNull_ReturnCode404()
         {
             //Arrage
-            int expected = (int)Paytrail_dotnet_sdk.Util.ResponseMessage.ResponseNull;
+            int expected = (int)Paytrail_dotnet_sdk.Util.ResponseMessage.RequestNull;
 
             //Act
             PaytrailClient payTrail = new PaytrailClient(MERCHANTIDN, SECRETKEYN, "test");
