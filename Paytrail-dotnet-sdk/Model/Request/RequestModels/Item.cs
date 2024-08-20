@@ -13,8 +13,8 @@ namespace Paytrail_dotnet_sdk.Model.Request.RequestModels
         public string Category { get; set; }
 
         //public string orderId { get; set; }
-        //public string stamp { get; set; }
-        //public string reference { get; set; }
+        public string Stamp { get; set; }
+        public string Reference { get; set; }
         //public string merchant { get; set; }
         //public Commission commission { get; set; }
         public virtual (bool, StringBuilder) Validate()

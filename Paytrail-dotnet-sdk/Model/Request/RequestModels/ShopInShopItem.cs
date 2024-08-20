@@ -6,8 +6,6 @@ namespace Paytrail_dotnet_sdk.Model.Request.RequestModels
     public class ShopInShopItem : Item
     {
         public string OrderId { get; set; }
-        public string Stamp { get; set; }
-        public string Reference { get; set; }
         public string Merchant { get; set; }
         public Commission Commission { get; set; }
 
@@ -30,11 +28,11 @@ namespace Paytrail_dotnet_sdk.Model.Request.RequestModels
                     return (false, valMess);
 
                 //Item level order ID (suborder ID). Mainly useful for Shop-in-Shop purchases. not required
-                //if (this.OrderId is null)
-                //{
-                //    message.Append(" Item's orderId can't be null.");
-                //    ret = false;
-                //}
+                if (this.OrderId is null)
+                {
+                   message.Append(" Item's orderId can't be null.");
+                   ret = false;
+                }
 
                 //Unique identifier for this item. Required for Shop-in-Shop payments. Required for item refunds.
                 if (string.IsNullOrEmpty(this.Stamp))
