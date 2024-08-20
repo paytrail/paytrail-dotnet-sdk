@@ -49,7 +49,7 @@ class Program
 {
     static void Main()
     {
-        PayTrailClient payTrail = new PayTrailClient("123456", "xxx", "xxx");
+        PaytrailClient payTrail = new PaytrailClient("375917", "SAIPPUAKAUPPIAS", "xxx");
 
         GetPaymentProvidersRequest payload = new GetPaymentProvidersRequest
         {

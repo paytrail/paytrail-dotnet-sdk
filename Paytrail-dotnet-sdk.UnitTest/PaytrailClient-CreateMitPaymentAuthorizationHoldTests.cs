@@ -21,7 +21,7 @@ namespace Paytrail_dotnet_sdk.UnitTest
             //Act
             PaytrailClient payTrail = new PaytrailClient(MERCHANTIDN, SECRETKEYSIS, "test");
             CreateMitOrCitPaymentRequest? request = null;
-            CreateMitOrCitPaymentResponse res = payTrail.CreateMitPaymentAuthorizationHold(request, "0e056dd8-408f-11ee-9cb4-e3059a523029");
+            CreateMitOrCitPaymentResponse res = payTrail.CreateMitPaymentAuthorizationHold(request);
             int actual = res.ReturnCode;
 
             //Assert
@@ -37,7 +37,7 @@ namespace Paytrail_dotnet_sdk.UnitTest
             //Act
             PaytrailClient payTrail = new PaytrailClient(MERCHANTIDN, SECRETKEYSIS, "test");
             CreateMitOrCitPaymentRequest request = new CreateMitOrCitPaymentRequest();
-            CreateMitOrCitPaymentResponse res = payTrail.CreateMitPaymentAuthorizationHold(request, "0e056dd8-408f-11ee-9cb4-e3059a523029");
+            CreateMitOrCitPaymentResponse res = payTrail.CreateMitPaymentAuthorizationHold(request);
             int actual = res.ReturnCode;
 
             //Assert
@@ -119,7 +119,7 @@ namespace Paytrail_dotnet_sdk.UnitTest
                 }.ToArray()
             };
 
-            CreateMitOrCitPaymentResponse res = payTrail.CreateMitPaymentAuthorizationHold(payload, "0e056dd8-408f-11ee-9cb4-e3059a523029");
+            CreateMitOrCitPaymentResponse res = payTrail.CreateMitPaymentAuthorizationHold(payload);
             int actual = res.ReturnCode;
 
             //Assert
@@ -201,7 +201,7 @@ namespace Paytrail_dotnet_sdk.UnitTest
                 }.ToArray()
             };
 
-            CreateMitOrCitPaymentResponse res = payTrail.CreateMitPaymentAuthorizationHold(payload, "0e056dd8-408f-11ee-9cb4-e3059a523029");
+            CreateMitOrCitPaymentResponse res = payTrail.CreateMitPaymentAuthorizationHold(payload);
             int actual = res.ReturnCode;
 
             //Assert

@@ -1,5 +1,6 @@
 ﻿using Paytrail_dotnet_sdk.Model.Request.RequestModels;
 using System;
+using System.Linq;
 using System.Text;
 
 namespace Paytrail_dotnet_sdk.Model.Request
@@ -20,9 +21,9 @@ namespace Paytrail_dotnet_sdk.Model.Request
         public CallbackUrl CallbackUrls { get; set; }
         public int CallbackDelay { get; set; }
         public string[] Groups { get; set; }
-        public bool UsePricesWithoutVat { get; set; }
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow; //Coordinated Universal Time (UTC)
-
+        public bool? UsePricesWithoutVat { get; set; }
+        public bool? ManualInvoiceActivation { get; set; }
+        
         internal (bool, StringBuilder) Validate()
         {
             StringBuilder message = new StringBuilder();
@@ -59,13 +60,6 @@ namespace Paytrail_dotnet_sdk.Model.Request
                 }
 
                 //
-                if (OrderId is null)
-                {
-                    ret = false;
-                    message.Append(" orderId can't be null.");
-                }
-
-                //
                 if (Amount < 0)
                 {
                     ret = false;
@@ -96,11 +90,10 @@ namespace Paytrail_dotnet_sdk.Model.Request
                     }
                 }
 
-                //
-                if (Items is null)
+                if (Items is null || Items.Count() == 0)
                 {
                     ret = false;
-                    message.Append(" object items can't be null.");
+                    message.Append("items can't be empty.");
                 }
                 else
                 {
@@ -118,12 +111,7 @@ namespace Paytrail_dotnet_sdk.Model.Request
                 }
 
                 //
-                if (DeliveryAddress is null)
-                {
-                    ret = false;
-                    message.Append(" object deliveryAddress can't be null.");
-                }
-                else
+                if (DeliveryAddress != null)
                 {
                     (bool isSuccess, StringBuilder valMess) = DeliveryAddress.Validate();
 
@@ -135,12 +123,7 @@ namespace Paytrail_dotnet_sdk.Model.Request
                 }
 
                 //
-                if (InvoicingAddress is null)
-                {
-                    ret = false;
-                    message.Append(" object invoicingAddress can't be null.");
-                }
-                else
+                if (InvoicingAddress != null)
                 {
                     (bool isSuccess, StringBuilder valMess) = InvoicingAddress.Validate();
 
@@ -168,12 +151,7 @@ namespace Paytrail_dotnet_sdk.Model.Request
                 }
 
                 //
-                if (CallbackUrls is null)
-                {
-                    ret = false;
-                    message.Append(" object callbackUrls can't be null.");
-                }
-                else
+                if (CallbackUrls != null)
                 {
                     (bool isSuccess, StringBuilder valMess) = CallbackUrls.Validate();
                     if (!isSuccess)
@@ -184,12 +162,7 @@ namespace Paytrail_dotnet_sdk.Model.Request
                 }
 
                 //
-                if (Groups is null)
-                {
-                    ret = false;
-                    message.Append(" object groups can't be null.");
-                }
-                else
+                if (Groups != null)
                 {
                     for (int i = 0; i < Groups.Length; i++)
                     {

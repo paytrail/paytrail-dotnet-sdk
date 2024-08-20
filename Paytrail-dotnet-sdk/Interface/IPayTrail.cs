@@ -100,18 +100,16 @@ namespace Paytrail_dotnet_sdk.Interface
         /// </summary>
         /// <see>https://docs.paytrail.com/#/?id=create-authorization-hold-or-charge</see>
         /// <param name="createMitPaymentChargeRequest">A CreateMitOrCitPaymentRequest class instance</param>
-        /// <param name="transactionId">the transaction ID</param>
         /// <returns>CreateMitOrCitPaymentResponse</returns>
-        CreateMitOrCitPaymentResponse CreateMitPaymentCharge(CreateMitOrCitPaymentRequest createMitPaymentChargeRequest, string transactionId);
+        CreateMitOrCitPaymentResponse CreateMitPaymentCharge(CreateMitOrCitPaymentRequest createMitPaymentChargeRequest);
 
         /// <summary>
         /// Creates either an authorization hold MIT payments
         /// </summary>
         /// <see>https://docs.paytrail.com/#/?id=create-authorization-hold-or-charge</see>
         /// <param name="createMitPaymentAuthorizationHold">A CreateMitOrCitPaymentRequest class instance</param>
-        /// <param name="transactionId">the transaction ID</param>
         /// <returns>CreateMitOrCitPaymentResponse</returns>
-        CreateMitOrCitPaymentResponse CreateMitPaymentAuthorizationHold(CreateMitOrCitPaymentRequest createMitPaymentAuthorizationHold, string transactionId);
+        CreateMitOrCitPaymentResponse CreateMitPaymentAuthorizationHold(CreateMitOrCitPaymentRequest createMitPaymentAuthorizationHold);
 
 
         /// <summary>
@@ -119,18 +117,16 @@ namespace Paytrail_dotnet_sdk.Interface
         /// </summary>
         /// <see>https://docs.paytrail.com/#/?id=create-authorization-hold-or-charge</see>
         /// <param name="createCitPaymentChargeRequest">A CreateMitOrCitPaymentRequest class instance</param>
-        /// <param name="transactionId">the transaction ID</param>
         /// <returns>CreateMitOrCitPaymentResponse</returns>
-        CreateMitOrCitPaymentResponse CreateCitPaymentCharge(CreateMitOrCitPaymentRequest createCitPaymentChargeRequest, string transactionId);
+        CreateMitOrCitPaymentResponse CreateCitPaymentCharge(CreateMitOrCitPaymentRequest createCitPaymentChargeRequest);
 
         /// <summary>
         /// Creates either an authorization hold MIT payments
         /// </summary>
         /// <see>https://docs.paytrail.com/#/?id=create-authorization-hold-or-charge</see>
         /// <param name="createCitPaymentAuthorizationHold">A CreateMitOrCitPaymentRequest class instance</param>
-        /// <param name="transactionId">the transaction ID</param>
         /// <returns>CreateMitOrCitPaymentResponse</returns>
-        CreateMitOrCitPaymentResponse CreateCitPaymentAuthorizationHold(CreateMitOrCitPaymentRequest createCitPaymentAuthorizationHold, string transactionId);
+        CreateMitOrCitPaymentResponse CreateCitPaymentAuthorizationHold(CreateMitOrCitPaymentRequest createCitPaymentAuthorizationHold);
 
         /// <summary>
         /// Commits an existing authorization hold

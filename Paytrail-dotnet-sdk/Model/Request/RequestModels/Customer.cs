@@ -61,29 +61,6 @@ namespace Paytrail_dotnet_sdk.Model.Request.RequestModels
                         message.Append(" customer's lastName is more than 100 characters.");
                     }
                 }
-
-                //
-                if (Phone is null)
-                {
-                    ret = false;
-                    message.Append(" customer's phone can't be null.");
-                }
-
-                //
-                if (VatId is null)
-                {
-                    ret = false;
-                    message.Append(" customer's vatId can't be null.");
-                }
-
-                //
-                if (CompanyName is null)
-                {
-                    ret = false;
-                    message.Append(" customer's companyName can't be null.");
-                }
-
-                //
                 return (ret, message);
             }
             catch (Exception ex)
