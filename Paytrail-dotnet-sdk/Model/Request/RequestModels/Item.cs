@@ -73,7 +73,7 @@ namespace Paytrail_dotnet_sdk.Model.Request.RequestModels
                 string[] parts = VatPercentage.ToString().Split('.');
 
                 // If there is a decimal part and its length is 1, return true
-                bool hasOneDecimal =  parts.Length == 2 && parts[1].Length == 1;
+                bool hasOneDecimal =  parts.Length == 2 && parts[1].Length <= 1;
                 if (!hasOneDecimal)
                 {
                     ret = false;
