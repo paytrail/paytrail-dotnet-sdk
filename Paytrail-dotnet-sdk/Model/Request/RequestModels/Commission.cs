@@ -9,7 +9,7 @@ namespace Paytrail_dotnet_sdk.Model.Request.RequestModels
         public int Amount { get; set; }
         public (bool, StringBuilder) Validate()
         {
-            bool ret = false;
+            bool ret = true;
             StringBuilder message = new StringBuilder();
             try
             {
