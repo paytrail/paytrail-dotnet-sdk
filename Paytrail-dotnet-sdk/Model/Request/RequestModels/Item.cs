@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Text;
 
 namespace Paytrail_dotnet_sdk.Model.Request.RequestModels
@@ -7,7 +8,7 @@ namespace Paytrail_dotnet_sdk.Model.Request.RequestModels
     {
         public int UnitPrice { get; set; }
         public int Units { get; set; }
-        public int VatPercentage { get; set; }
+        public double VatPercentage { get; set; }
         public string ProductCode { get; set; }
         public string Description { get; set; }
         public string Category { get; set; }
@@ -59,6 +60,24 @@ namespace Paytrail_dotnet_sdk.Model.Request.RequestModels
                 {
                     ret = false;
                     message.Append(" item's Category should have less than 100 characters.");
+                }
+                // Check if value is within the specified range
+                if (VatPercentage < 0 || VatPercentage > 100)
+                {
+                    ret = false;
+                    message.Append("VAT percentage. Values between 0 and 100 are allowed with one number in decimal part.");
+                    
+                }
+
+                // Check if value has one decimal place
+                string[] parts = VatPercentage.ToString().Split('.');
+
+                // If there is a decimal part and its length is 1, return true
+                bool hasOneDecimal = parts.Length <2 || parts.Length == 2 && parts[1].Length <= 1;
+                if (!hasOneDecimal)
+                {
+                    ret = false;
+                    message.Append("VAT percentage. Values between 0 and 100 are allowed with one number in decimal part.");
                 }
                 return (ret, message);
             }
