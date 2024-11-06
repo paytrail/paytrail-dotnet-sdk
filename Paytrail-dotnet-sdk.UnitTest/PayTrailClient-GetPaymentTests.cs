@@ -36,7 +36,7 @@ namespace Paytrail_dotnet_sdk.UnitTest
 
             //Act
             PaytrailClient ptrail = new PaytrailClient(MERCHANTIDN, SECRETKEYN, "test");
-            GetPaymentResponse res = ptrail.GetPaymentInfo("4bd78702-c9ea-11ed-beb7-ab93e0fdf0aa");
+            GetPaymentResponse res = ptrail.GetPaymentInfo("c1c131e2-9c2b-11ef-bf87-6b0aea70c7d9");
             int actual = res.ReturnCode;
 
             //Assert

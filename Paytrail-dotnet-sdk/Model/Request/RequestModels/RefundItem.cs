@@ -10,7 +10,6 @@ namespace Paytrail_dotnet_sdk.Model.Request.RequestModels
         public string RefundStamp { get; set; }
         public string RefundReference { get; set; }
         public Commission Commission { get; set; }
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow; //Coordinated Universal Time (UTC)
 
         internal (bool, StringBuilder) Validate()
         {
