@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+# [1.0.15] - 2024-11-06
+### Fixed
+- Bump RestSharp from 109.0.1 to 112.0.0
+- Updated tests
+- Fixed refund requests
+
+# [1.0.14] - 2024-08-29
+### Added
+- Added decimal VAT rate support
+
+# [1.0.13] - 2024-06-18
+### Fixed
+- Fixed ci/cd
+
+# [1.0.12] - 2024-06-18
+### Fixed
+- Fixed ci/cd
+
+# [1.0.11] - 2024-06-18
+### Fixed
+- Fixed ci/cd
+
+# [1.0.10] - 2024-06-14
+### Added
+- Added ci/cd
+
+# [1.0.9] - 2024-06-05
+### Fixed
+- Fixed shop-in-shop validation
+
 # [1.0.8] - 2023-11-16
 ### Added
 - Added get a list of payment providers
