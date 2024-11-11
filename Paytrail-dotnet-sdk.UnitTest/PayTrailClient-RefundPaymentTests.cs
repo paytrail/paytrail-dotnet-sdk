@@ -38,7 +38,7 @@ namespace Paytrail_dotnet_sdk.UnitTest
 
             //Act
             PaytrailClient ptrail = new PaytrailClient(MERCHANTIDN, SECRETKEYN, "test");
-            string transactionId = "4bd78702-c9ea-11ed-beb7-ab93e0fdf0aa"; 
+            string transactionId = "6dfe2adc-9c2c-11ef-bb6c-7f82a9de6664"; 
             string refundStamp = Guid.NewGuid().ToString();
             RefundRequest refundRequest = new RefundRequest()
             {

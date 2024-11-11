@@ -8,7 +8,8 @@ namespace Paytrail_dotnet_sdk.UnitTest
     {
         const string MERCHANTIDN = "375917";
         const string MERCHANTIDSIS = "695861";
-        const string SECRETKEYSIS = "SAIPPUAKAUPPIAS";
+        const string SECRETKEYN = "SAIPPUAKAUPPIAS";
+        const string SECRETKEYSIS = "MONISAIPPUAKAUPPIAS";
 
         #region Revert Payment Authorization Hold
 
@@ -34,11 +35,11 @@ namespace Paytrail_dotnet_sdk.UnitTest
             int expected = (int)Paytrail_dotnet_sdk.Util.ResponseMessage.Success;
 
             //Act
-            PaytrailClient payTrail = new PaytrailClient(MERCHANTIDN, SECRETKEYSIS, "test");
+            PaytrailClient payTrail = new PaytrailClient(MERCHANTIDSIS, SECRETKEYSIS, "test");
 
             CreateMitOrCitPaymentRequest payload = new CreateMitOrCitPaymentRequest
             {
-                Token = "c7441208-c2a1-4a10-8eb6-458bd8eaa64f",
+                Token = "7a6f5b02-e288-47ab-bfda-46b6c5a710ee",
                 Stamp = Guid.NewGuid().ToString(),
                 Reference = "9187445",
                 Amount = 1590,
@@ -53,10 +54,12 @@ namespace Paytrail_dotnet_sdk.UnitTest
                         Units = 1,
                         VatPercentage = 24,
                         ProductCode = "#927502759",
+                        OrderId = "123",
                         Category = "Pet supplies",
                         Description = "Cat ladder",
                         Stamp = Guid.NewGuid().ToString(),
                         Reference = "9187445",
+                        Merchant = "695874"
                     }
                 }.ToArray(),
                 Customer = new Customer()

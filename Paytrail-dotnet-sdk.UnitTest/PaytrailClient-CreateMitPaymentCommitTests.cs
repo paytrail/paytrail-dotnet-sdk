@@ -8,7 +8,10 @@ namespace Paytrail_dotnet_sdk.UnitTest
     {
         const string MERCHANTIDN = "375917";
         const string MERCHANTIDSIS = "695861";
-        const string SECRETKEYSIS = "SAIPPUAKAUPPIAS";
+        const string SECRETKEYN = "SAIPPUAKAUPPIAS";
+        const string SECRETKEYSIS = "MONISAIPPUAKAUPPIAS";
+        const string TOKEN = "7a6f5b02-e288-47ab-bfda-46b6c5a710ee";
+        const string TRANSACTION = "246e6d2a-9c25-11ef-af1d-fbc48acf2052";
 
         #region Create Mit Payment Commit
 
@@ -19,9 +22,9 @@ namespace Paytrail_dotnet_sdk.UnitTest
             int expected = (int)Paytrail_dotnet_sdk.Util.ResponseMessage.RequestNull;
 
             //Act
-            PaytrailClient payTrail = new PaytrailClient(MERCHANTIDN, SECRETKEYSIS, "test");
+            PaytrailClient payTrail = new PaytrailClient(MERCHANTIDSIS, SECRETKEYSIS, "test");
             CreateMitOrCitPaymentRequest? request = null;
-            CreateMitOrCitPaymentResponse res = payTrail.CreateMitPaymentCommit(request, "0e056dd8-408f-11ee-9cb4-e3059a523029");
+            CreateMitOrCitPaymentResponse res = payTrail.CreateMitPaymentCommit(request, TRANSACTION);
             int actual = res.ReturnCode;
 
             //Assert
@@ -35,9 +38,9 @@ namespace Paytrail_dotnet_sdk.UnitTest
             int expected = (int)Paytrail_dotnet_sdk.Util.ResponseMessage.ValidateFail;
 
             //Act
-            PaytrailClient payTrail = new PaytrailClient(MERCHANTIDN, SECRETKEYSIS, "test");
+            PaytrailClient payTrail = new PaytrailClient(MERCHANTIDSIS, SECRETKEYSIS, "test");
             CreateMitOrCitPaymentRequest request = new CreateMitOrCitPaymentRequest();
-            CreateMitOrCitPaymentResponse res = payTrail.CreateMitPaymentCommit(request, "0e056dd8-408f-11ee-9cb4-e3059a523029");
+            CreateMitOrCitPaymentResponse res = payTrail.CreateMitPaymentCommit(request, TRANSACTION);
             int actual = res.ReturnCode;
 
             //Assert
@@ -51,11 +54,11 @@ namespace Paytrail_dotnet_sdk.UnitTest
             int expected = (int)Paytrail_dotnet_sdk.Util.ResponseMessage.Success;
 
             //Act
-            PaytrailClient payTrail = new PaytrailClient(MERCHANTIDN, SECRETKEYSIS, "test");
+            PaytrailClient payTrail = new PaytrailClient(MERCHANTIDSIS, SECRETKEYSIS, "test");
 
             CreateMitOrCitPaymentRequest payload = new CreateMitOrCitPaymentRequest
             {
-                Token = "c7441208-c2a1-4a10-8eb6-458bd8eaa64f",
+                Token = TOKEN,
                 Stamp = Guid.NewGuid().ToString(),
                 Reference = "9187445",
                 Amount = 1590,
@@ -70,10 +73,12 @@ namespace Paytrail_dotnet_sdk.UnitTest
                         Units = 1,
                         VatPercentage = 24,
                         ProductCode = "#927502759",
+                        OrderId = "123",
                         Category = "Pet supplies",
                         Description = "Cat ladder",
                         Stamp = Guid.NewGuid().ToString(),
                         Reference = "9187445",
+                        Merchant = "695874"
                     }
                 }.ToArray(),
                 Customer = new Customer()
@@ -119,7 +124,7 @@ namespace Paytrail_dotnet_sdk.UnitTest
                 }.ToArray()
             };
 
-            CreateMitOrCitPaymentResponse res = payTrail.CreateMitPaymentCommit(payload, "0e056dd8-408f-11ee-9cb4-e3059a523029");
+            CreateMitOrCitPaymentResponse res = payTrail.CreateMitPaymentCommit(payload, TRANSACTION);
             int actual = res.ReturnCode;
 
             //Assert
@@ -137,7 +142,7 @@ namespace Paytrail_dotnet_sdk.UnitTest
 
             CreateMitOrCitPaymentRequest payload = new CreateMitOrCitPaymentRequest
             {
-                Token = "c7441208-c2a1-4a10-8eb6-458bd8eaa64f",
+                Token = TOKEN,
                 Stamp = Guid.NewGuid().ToString(),
                 Reference = "9187445",
                 Amount = 1590,
@@ -152,10 +157,12 @@ namespace Paytrail_dotnet_sdk.UnitTest
                         Units = 1,
                         VatPercentage = 24,
                         ProductCode = "#927502759",
+                        OrderId = "123",
                         Category = "Pet supplies",
                         Description = "Cat ladder",
                         Stamp = Guid.NewGuid().ToString(),
                         Reference = "9187445",
+                        Merchant = "695874"
                     }
                 }.ToArray(),
                 Customer = new Customer()
@@ -201,7 +208,7 @@ namespace Paytrail_dotnet_sdk.UnitTest
                 }.ToArray()
             };
 
-            CreateMitOrCitPaymentResponse res = payTrail.CreateMitPaymentCommit(payload, "0e056dd8-408f-11ee-9cb4-e3059a523029");
+            CreateMitOrCitPaymentResponse res = payTrail.CreateMitPaymentCommit(payload, "0e056dd8-408f-11ee-9cb4-e3059a523029dd");
             int actual = res.ReturnCode;
 
             //Assert
