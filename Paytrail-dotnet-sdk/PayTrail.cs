@@ -23,7 +23,8 @@ namespace Paytrail_dotnet_sdk
                 headers["checkout-algorithm"] = "sha256";
                 headers["checkout-method"] = method.ToUpper();
                 headers["checkout-nonce"] = Guid.NewGuid().ToString();
-                headers["checkout-timestamp"] = datetime.ToString("Y-m-d\\TH:i:s.u\\Z");
+                string iso8601String = datetime.ToString("yyyy-MM-ddTHH:mm:ss.fffZ");
+                headers["checkout-timestamp"] = iso8601String;
                 headers["platform-name"] = this.platformName;
                 headers["content-type"] = "application/json; charset=utf-8";
 
