@@ -15,7 +15,6 @@ namespace Paytrail_dotnet_sdk
 
         public Dictionary<string, string> GetHeaders(string method, string transactionId = null, string checkoutTokenizationId = null)
         {
-            var datetime = new DateTime();
             var headers = new Dictionary<string, string>();
             try
             {
@@ -23,7 +22,8 @@ namespace Paytrail_dotnet_sdk
                 headers["checkout-algorithm"] = "sha256";
                 headers["checkout-method"] = method.ToUpper();
                 headers["checkout-nonce"] = Guid.NewGuid().ToString();
-                headers["checkout-timestamp"] = datetime.ToString("Y-m-d\\TH:i:s.u\\Z");
+                string iso8601String = DateTimeOffset.Now.ToString("yyyy-MM-dd'T'HH:mm:ss.fffzzz");
+                headers["checkout-timestamp"] = iso8601String;
                 headers["platform-name"] = this.platformName;
                 headers["content-type"] = "application/json; charset=utf-8";
 
